@@ -1,0 +1,56 @@
+@import '@/assets/styles/components/record-voice-box';
+.panel-student-content-item.question-answer{
+    .form-textarea.large-height {
+        height: 210px !important;
+        &:focus {
+            outline-color: $lilac-color;
+        }
+    }
+
+    &.continue-question {
+        .teacher-answer-box {
+            .title {
+                font-size: $font-size-1;
+                font-weight: $font-weight-medium;
+                color: $main-dark-text-color;
+                margin: 7px 0;
+            }
+            .message {
+                font-size: $font-size-2;
+                font-weight: $font-weight-light;
+                max-height: 180px;
+                overflow: auto;
+                margin: 4px 0;
+                line-height: 1.8;
+            }
+            footer {
+                margin: 20px 0 14px;
+                display: flex;
+                justify-content: flex-end;
+
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .panel-student-content-item.question-answer{
+       
+    
+        &.continue-question {
+            .teacher-answer-box {
+                .title {
+                    font-size: $font-size-2-mobile;
+                }
+                .message {
+                    font-size: $font-size-3-mobile;
+                    max-height: 150px;
+                }
+                footer {
+                    margin: 20px 0 14px;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}

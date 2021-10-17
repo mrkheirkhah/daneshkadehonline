@@ -1,0 +1,633 @@
+.panel-table {
+    position: relative;
+
+    .box-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 3px;
+        margin: 7px 0;
+        position: relative;
+        align-items: center;
+
+        form {
+            width: 200px;
+        }
+
+        span {
+            color: $green-color;
+        }
+
+        h3 {
+            font-weight: $font-weight-medium;
+            font-size: $font-size-1;
+        }
+    }
+
+    .box-content {
+        background-color: #fff;
+        box-shadow: $item-box-shadow;
+        border-radius: 10px;
+        padding-bottom: 60px;
+        max-height: 615px;
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        .table-row {
+            padding: 0 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 13px;
+            cursor: pointer;
+            margin: 23px 0;
+            width: 100%;
+
+            &:hover span {
+                color: $active-color;
+            }
+
+            span {
+                width: 25%;
+                min-width: 105px;
+            }
+
+            span.course-owner {
+                min-width: 150px;
+            }
+
+            &>span {
+                text-align: center;
+            }
+
+            &>span:last-child {
+                text-align: left;
+            }
+
+            &>span:first-child {
+                text-align: right;
+            }
+
+            .btn {
+                border: 0;
+                font-size: $font-size-3;
+                background-color: transparent;
+                transition: color .3s linear;
+                cursor: pointer;
+
+                &.delete {
+                    color: $active-color;
+                }
+
+                &.edit {
+                    color: $orange-color;
+                }
+
+                &:hover {
+                    color: #6D7682;
+                }
+            }
+        }
+
+
+
+        .table-row.table-header {
+            padding: 22px 35px;
+            position: sticky;
+            border: 0 !important;
+            top: 0;
+            right: 0;
+            min-width: max-content;
+            margin: 0;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, .08);
+            background-color: $admin-teacher-bg-color;
+
+            span {
+                color: $table-header-color !important;
+
+            }
+        }
+
+        footer {
+            padding: 15px 0;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            background-color: #fff;
+            bottom: 5px;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+
+            a {
+                color: $active-color;
+                font-weight: $font-weight-medium;
+                font-size: $font-size-2;
+            }
+
+            hr {
+                width: 80%;
+                margin: -6px auto 15px;
+                border: 0;
+                height: 1px;
+                background-color: #70707030
+            }
+        }
+    }
+
+    .search-box {
+        width: fit-content;
+        height: 45px;
+        position: absolute;
+        left: 0;
+        top: 10px;
+
+        img {
+            position: absolute;
+            left: 9px;
+            cursor: pointer;
+            top: 9px;
+            transition: all .33s linear;
+            object-fit: contain;
+            width: 25px;
+            background-color: #fff;
+
+        }
+
+        .search-btn {
+            width: 45px;
+            transition: width .3s linear;
+            height: 100%;
+            border-radius: 10px;
+            box-shadow: 0 3px 18px rgba(0, 0, 0, .08);
+            background-color: #fff;
+            border: 0;
+            padding: 3px 10px 3px 37px;
+
+            &:focus {
+                width: 450px;
+                outline-color: $orange-color;
+            }
+
+        }
+    }
+
+    span {
+        font-size: $font-size-2;
+        font-weight: $font-weight-regular;
+        color: $main-dark-text-color;
+        transition: all .3s linear;
+    }
+
+}
+
+.panel-table.teachers-list,
+.panel-table.news-list,
+.panel-table.contact-us-list,
+.panel-table.submit-admin,
+.panel-table.main-content-transactions,
+.panel-table.specialty-list,
+.panel-table.settlement-request-list,
+.panel-table.about-us-list {
+    .box-content {
+        .table-row {
+            span {
+                font-size: $font-size-3;
+                color: $main-dark-text-color;
+                font-weight: $font-weight-medium;
+            }
+            span.delete {
+                color: $active-color;
+            }
+            
+            span.edit {
+                color: $green-color;
+            }
+            span.image img {
+                width: 70px;
+                height: 70px;
+                border-radius: 4px;
+                object-fit: cover;
+            }
+
+            .state.edited {
+                color: $orange-color;
+            }
+
+            .state.accepted {
+                color: $green-color;
+            }
+
+            .state.not-accepted {
+                color: $active-color;
+            }
+
+            button {
+                color: $main-dark-text-color;
+                border: 0;
+                background-color: transparent;
+                font-size: inherit;
+                cursor: pointer;
+            }
+
+            button.ban,
+            button.send-message,
+            button.view {
+                color: $active-color;
+
+            }
+
+            button.request {
+                color: $blue-color;
+            }
+
+            button:hover {
+                color: #6D7682;
+            }
+        }
+
+        .table-row.table-header {
+            span {
+                min-width: 107.5px;
+            }
+        }
+    }
+}
+
+.panel-table.contact-us-list,
+.panel-table.about-us-list {
+
+    span.status,
+    span.view {
+        width: 15%;
+        min-width: 120px !important;
+    }
+
+    span.email {
+        min-width: 215px !important;
+    }
+
+    .table-row {
+
+        span.seen {
+            color: $green-color;
+        }
+
+        span.not-seen,
+        span.view button {
+            color: $active-color;
+        }
+
+        span.answered {
+            color: $orange-color;
+        }
+    }
+}
+
+.panel-table.news-list,
+.panel-table.about-us-list {
+    .box-content .table-row {
+        span.delete button {
+            color: $active-color;
+        }
+
+        span.edit button {
+            color: $green-color;
+        }
+        
+    }
+
+    .box-content {
+
+        span.delete,
+        span.edit {
+            width: 13%;
+            min-width: 73px !important;
+        }
+    }
+}
+
+.panel-table.submit-admin {
+    .box-content {
+
+        .table-row .option-buttons {
+            min-width: 220px !important;
+            max-width: 240px;
+            text-align: center;
+        }
+
+        .option-buttons {
+            .delete {
+                color: $active-color;
+            }
+
+            .edit {
+                color: $green-color;
+            }
+
+            .ban {
+                color: $orange-color !important;
+            }
+        }
+    }
+}
+   .panel-table.specialty-list {
+       .table-row.table-header,
+       .box-content {
+           box-shadow: unset !important;
+       }
+       footer {
+           box-shadow: 0 7px 8px rgba(0,0,0,.04);
+       }
+       .box-content .table-row {
+        span.delete button ,
+        span.edit button {
+            border: 0;
+            background-color: transparent;
+        }
+        span.delete button  {
+            color: $active-color;
+        }
+        span.edit button  {
+            color: $green-color;
+        }
+       }
+   }
+
+
+.panel-table.settlement-request-list {
+    .box-header {
+        .confirm-all {
+            margin: 3px 32px 0 0;
+        }
+    }
+
+    .box-content {
+        .table-row {
+
+            span.time,
+            span.date,
+            span.confirm-reject {
+                max-width: 85px;
+                min-width: 80px;
+            }
+
+        }
+    }
+
+    .box-content .table-row {
+        
+        span.reject {
+            color: $active-color;
+        }
+
+        span.confirm {
+            color: $green-color;
+        }
+        button.reject {
+            color: $active-color;
+        }
+
+        button.confirm {
+            color: $green-color;
+        }
+    }
+}
+
+.panel-table.package-request {
+    .box-content .table-row {
+        &>span:last-child {
+            width: 15%;
+            min-width: 80px;
+        }
+    }
+
+}
+span.delete {
+    color: $active-color;
+}
+
+span.edit {
+    color: $green-color;
+}
+.panel-table.courses-list {
+    .box-content {
+        display: flex;
+        justify-content: flex-start;
+        flex-flow: column nowrap;
+    }
+}
+
+.panel-table.transaction-list,
+.panel-table.withdraw-list {
+    .search-box img:hover {
+        transform: rotate(-8deg) scale(1.07);
+    }
+
+    .box-content {
+        .table-row:not(.table-row.table-header) span:last-child {
+            padding-left: 10px;
+        }
+    }
+
+    .transaction-type.settle {
+        color: $green-color;
+
+    }
+
+    .transaction-type.withdraw {
+        color: $active-color;
+    }
+
+    span.transaction-type,
+    span.transaction-type-header {
+        min-width: 65px;
+    }
+
+    .table-row {
+
+        &:not(.table-row:last-of-type) {
+
+            border-bottom: 1px solid #70707030;
+        }
+
+        span.card-number {
+            min-width: 128px;
+        }
+    }
+
+    .table-row:not(.table-row.table-header) {
+        padding: 0 35px 27px;
+    }
+}
+
+.panel-table.main-content-transactions {
+    .box-content {
+        .table-row {
+            span.name {
+                min-width: 130px !important;
+            }
+            span.time,
+            span.date {
+                max-width: 85px !important;
+                min-width: 80px !important;
+            }
+            span.buy-course {
+                color: $green-color;
+            }
+            span.buy-volume {
+                color: $orange-color;
+            }
+            span.pay-off {
+                color: $lilac-color;
+            }
+
+        }
+        .table-row:not(.table-header) span {
+            min-width: 105px;
+        }
+    }
+}
+@media screen and (max-width: 570px) {
+    .panel-table {
+        .box-header {
+            .search-box .search-btn {
+
+                &:focus {
+                    width: 250px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .panel-table {
+        .box-header {
+            margin: 17px 0;
+
+            h3 {
+                font-size: 14px;
+            }
+
+            form {
+                width: 170px;
+            }
+        }
+
+        .box-content {
+            padding-bottom: 55px;
+
+            .table-row {
+                padding: 0 15px;
+
+                span.course-owner {
+                    min-width: 120px;
+                }
+
+                .btn {
+                    font-size: $font-size-3-mobile;
+                }
+
+                &.table-header>span:last-child {
+                    text-align: left;
+                    padding-left: 12px;
+                }
+
+                &>span:last-child {
+                    text-align: center !important;
+                }
+
+            }
+
+            .table-row.table-header {
+                padding: 15px 15px;
+            }
+        }
+
+        span {
+            font-size: $font-size-3-mobile;
+        }
+
+        .search-box {
+
+            height: 42px;
+
+            img {
+                width: 21px;
+
+            }
+
+            .search-btn {
+                width: 42px;
+                padding: 3px 10px 3px 32px;
+                border-radius: 5px;
+
+            }
+        }
+
+    }
+
+    .panel-table.teachers-list,
+    .panel-table.news-list,
+    .panel-table.main-content-transactions,
+    .panel-table.settlement-request-list,
+    .panel-table.contact-us-list,
+    .panel-table.submit-admin,
+    .panel-table.specialty-list,
+    .panel-table.about-us-list {
+        .box-content {
+            .table-row {
+                span {
+                    font-size: $font-size-3-mobile;
+                }
+
+                span.image,
+                &.table-header span:first-child {
+                    min-width: 80px;
+                }
+
+                span.image img {
+                    width: 50px;
+                    height: 50px;
+                }
+
+                &>span:last-child {
+                    text-align: left;
+                }
+
+
+            }
+        }
+    }
+
+    .panel-table.package-request,
+    .panel-table.courses-list {
+        .box-content .table-row {
+            &>span:last-child {
+                text-align: center;
+                padding-left: 4px;
+            }
+        }
+    }
+
+    .panel-table.settlement-request-list {
+        .box-header {
+            .confirm-all {
+                margin: 5px 32px 0 0;
+                border-radius: 3px;
+            }
+        }
+
+    }
+
+    .panel-table.settlement-request-list,
+    .panel-table.about-us-list,
+    .panel-table.contact-us-list,
+    .panel-table.submit-admin,
+    .panel-table.news-list,
+    .panel-table.specialty-list    {
+        .box-content .table-header.table-row span:first-child {
+            min-width: 105px;
+        }
+    }
+
+}

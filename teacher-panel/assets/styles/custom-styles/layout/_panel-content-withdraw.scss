@@ -1,0 +1,38 @@
+.panel-teacher-content-item.withdraw-wallet {
+    background-color: #fff;
+    padding: 25px 35px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08);
+    
+    .hint-text {
+        margin: 5px 3px 0 0;
+        color: $main-dark-text-color;
+        font-size: $font-size-3;
+        font-weight: $font-weight-regular;
+    }
+    .withdraw-total {
+        color: $blue-color;
+        cursor: pointer;
+    }
+    .form-btn {
+        padding: 8px 48px;
+    }
+}
+
+
+@media screen and (max-width: $mobile-responsive) {
+    
+    .panel-teacher-content-item.withdraw-wallet {
+        padding: 23px 20px;
+
+        
+    .hint-text {
+        font-size: $font-size-3-mobile;
+    }
+    .withdraw-total {
+        display: block;
+    }
+    .form-btn {
+        padding: 5px 32px;
+    }
+    }
+}

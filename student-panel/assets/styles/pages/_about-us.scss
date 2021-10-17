@@ -1,0 +1,11 @@
+@import '@/assets/styles/core/reset';
+@import '@/assets/styles/font/fonts';
+@import '@/assets/styles/core/main-pages/typography';
+@import '@/assets/styles/core/main-pages/bootstrap-like-grid';
+@import '../abstracts/main-pages/mixins';
+@import '../abstracts/main-pages/variables';
+@import '../components/main-pages/school-header';
+@import '../components/main-pages/school-footer';
+@import '../components/main-pages/header-banner';
+@import '../components/main-pages/category-list';
+@import '../layout/main-pages/about-us';

@@ -1,0 +1,132 @@
+.record-voice-box {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+
+    .pseudo-form-input {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        column-gap: 8px;
+    }
+    audio {
+        display: none;
+    }
+    .record-btn {
+        padding: 5px 8px;
+        background-color: $lilac-color;
+        border-radius: 6px;
+        box-shadow: 3px 3px 8px rgba(0,0,0,.08);
+        border: 2px solid transparent;
+        width: 60px;
+        height: 55px;
+        cursor: pointer;
+        transition: all .3s linear;
+
+        svg {
+            width: 24px;
+            height: 28px;
+        }
+        svg path ,
+        svg rect{
+            fill: #fff;
+            transition: fill .3s linear;
+        }
+        &:hover {
+            background-color: transparent;
+            border-color: $lilac-color;
+            svg path,
+            svg rect {
+                fill: $lilac-color;
+            }
+        }
+    }
+    .record-btn.green {
+        background-color: $green-color;
+        &:hover {
+            background-color: transparent;
+            border-color: $green-color;
+            svg path,
+            svg rect {
+                fill: $green-color;
+            }
+        }
+    }
+    .btn-container {
+        display: flex;
+
+        .delete-btn,
+        .play-btn {
+            border: 0;
+            background-color: transparent;
+            cursor: pointer;
+            svg path {
+                transition: fill .3s linear;
+            }
+            
+        }
+        .play-btn  svg {
+            width: 21px;
+            margin-left: 23px;
+            &:hover path {
+                fill: $lilac-color;
+            }
+        }
+        .delete-btn svg {
+            width: 23px;
+            &:hover path {
+                fill: $active-hover-color;
+            }
+        }
+    }
+    .btn-container.green {
+        .play-btn  svg {
+            &:hover path {
+                fill: $green-color;
+            }
+        }
+    }
+    .voice-timer {
+        font-size: $font-size-2;
+        font-weight: $font-weight-medium;
+        color: #131923;
+        margin-top: 2px;
+    }
+}
+@media screen and (max-width: $laptop-responsive) {
+    .record-voice-box {
+       
+      
+    
+        .pseudo-form-input {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            column-gap: 8px;
+        }
+        .record-btn {
+            padding: 3px 6px;
+            width: 52px;
+            height: 48px;;
+    
+            svg {
+                width: 22px;
+                height: 26px;
+            }
+        }
+        .btn-container {
+             
+        
+            .play-btn  svg {
+                width: 17px;
+                margin-left: 15px;     
+            }
+            .delete-btn svg {
+                width: 19px;
+            }
+        }
+        .voice-timer {
+            font-size: $font-size-2;
+        }
+    }
+}

@@ -1,0 +1,47 @@
+.istatistic-admin {
+    overflow: auto;
+    table {
+        font-weight: $font-weight-medium;
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0 auto;
+        min-width: 575px;
+
+        th {
+            width: 200px;
+            background-color: #F9F9FA;
+            font-weight: 500;
+            padding: 3px 15px;
+        }
+
+        thead {
+            th {
+                padding: 3px 3px 7px 3px;
+            }
+        }
+
+        tr>* {
+            border: 1px solid #ececec;
+        }
+
+        tbody {
+            tr {
+                td {
+                    text-align: center;
+                    padding: 8px 5px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .istatistic-admin {
+        table {
+            td,th {
+
+                font-size: 15px;
+            }
+        }
+    }
+}

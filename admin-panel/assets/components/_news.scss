@@ -1,0 +1,138 @@
+.news {
+    .news-content.comments,
+    .news-content.messages-form-box {
+        border: 1px solid #ececec;
+        border-radius: 4px;
+        padding: 20px 14px 0 14px;
+
+        &>header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            color: #131923;
+
+            h3 {
+                font-size: $font-size-1;
+                font-weight: $font-weight-medium;
+            }
+        }
+    }
+
+    .news-content+.news-content {
+        margin-top: 10px;
+    }
+
+
+    .news-content.comments {
+        &>header {
+            justify-content: flex-start;
+            column-gap: 12px;
+        }
+    }
+
+    .news-content.messages-form-box {
+        display: flex;
+        flex-flow: row nowrap;
+        padding: 0;
+        overflow: hidden;
+
+        .aside {
+            padding: 26px 10px;
+            -ms-writing-mode: vertical-rl;
+            writing-mode: vertical-rl;
+            background-color: #4A4A4A;
+            color: #fff;
+            font-size: $font-size-2;
+            font-weight: $font-weight-medium;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            padding: 30px 15px 15px;
+            flex-grow: 1;
+            background-color: #fff;
+
+            input {
+                height: 45px;
+                min-width: 200px;
+                flex-grow: 1;
+                padding: 3px 14px;
+                width: 48%;
+
+                &::placeholder {
+                    text-align: right;
+                    direction: rtl;
+                }
+            }
+
+            input[type=email] {
+                direction: ltr;
+            }
+
+            textarea {
+                width: 100%;
+                resize: none;
+                height: 180px;
+                padding: 8px 14px;
+            }
+
+            input,
+            textarea {
+                font-weight: $font-weight-regular;
+                font-size: $font-size-3;
+                color: #131923;
+                border: 1px solid #ececec;
+                border-radius: 3px;
+
+                &:focus {
+                    outline-color: $active-color;
+                }
+            }
+
+            button.submit-comment {
+                align-self: flex-end;
+                border-radius: 4px;
+                background-color: #4A4A4A;
+                color: #fff;
+                transition: .3s ease;
+                border: 2px solid transparent;
+                cursor: pointer;
+                padding: 5px 8px;
+                margin-right: auto;
+
+                &:hover {
+                    background-color: darken($color: #4a4a4a, $amount: 12%);
+                }
+            }
+        }
+    }
+
+    
+}
+
+@media screen and (max-width: 570px) {
+    .news {
+        .comments-ads-container {
+            margin: 0 7px 20px;
+            width: fit-content;
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .news {
+
+        .news-content.comments,
+        .news-content.messages-form-box {
+            &>header h3 {
+                font-size: $font-size-2;
+            }
+        }
+    }
+}

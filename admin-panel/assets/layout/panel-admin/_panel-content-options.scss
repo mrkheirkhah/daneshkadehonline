@@ -1,0 +1,62 @@
+
+.options-buttons {
+    margin: 40px 0 75px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    button {
+        margin: 0;
+    }
+ 
+}
+@media screen and (max-width: $laptop-responsive) {
+    .panel-admin-content-item.options {
+
+        .finanical-btn-container {
+            .finanical-btn {
+                width: 48%;
+            }
+        }
+    }
+}
+@media screen and (max-width: $big-mobile-responsive) {
+
+        .options-buttons {
+            margin: 35px 0 55px;
+            button {
+                width: 48%;
+                flex-grow: 1;
+            }
+        
+    }
+}
+@media screen and (max-width: $mobile-responsive) {
+    .panel-admin-content-item.options {
+       
+        .finanical-btn-container {
+
+            .finanical-btn {
+                
+                font-size: $font-size-3;
+                min-height: 125px;
+    
+                svg {
+                    width: 35px;
+                    height: 35px;
+                }
+    
+                p {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+    .options-buttons {
+         
+        button {
+            font-size: $font-size-3-mobile;
+        }
+    }
+}

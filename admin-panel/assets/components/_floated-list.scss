@@ -1,0 +1,234 @@
+ul.floated-list {
+    //display: flex;
+    display: none;
+    list-style-type: none;
+    flex-direction: column;
+    row-gap: 8px;
+    font-size: 13px;
+    z-index: 4;
+    position: absolute;
+    align-items: flex-start;
+    text-align: right;
+    font-weight: $font-weight-regular;
+    background: #fff;
+    padding: 5px;
+    width: max-content;
+    top: 50px;
+    right: 0px;
+    border: 1px solid #e7e2e2;
+    border-radius: 6px;
+    width: 100%;
+    max-height: 229px;
+    overflow-y: auto;
+
+    li {
+        width: 100%;
+        padding: 4px 10px;
+        cursor: pointer;
+        color: $main-dark-text-color;
+        border-radius: 4px;
+
+        &:hover {
+            color: #fff;
+            background-color: $orange-color;
+
+        }
+    }
+}
+
+.floated-list-container {
+    position: relative;
+    cursor: pointer;
+    font-weight: $font-weight-light;
+
+    &:hover {
+        color: $orange-color;
+
+        svg path {
+            stroke: $orange-color;
+        }
+    }
+
+    &>svg {
+        margin-right: 4px;
+    }
+
+
+}
+.floated-list-container.in-header {
+  
+
+    &:hover {
+        color: $active-color;
+
+        svg path {
+            stroke: $active-color;
+        }
+    }
+    ul.floated-list {
+        li:hover {
+            background-color: $active-color;
+        }
+    }
+
+
+}
+
+.floated-list-container.filter {
+    margin-left: 55px;
+    width: fit-content;
+    background-color: #fff;
+    border-radius: 8px;
+    padding:10px 13px;
+    box-shadow: 0 3px 18px rgba(0, 0, 0, .08);
+   
+    input {
+        border: 0;
+        width: 80%;
+        cursor: pointer;
+        &:focus {
+            outline: 0;
+        }
+        min-width: auto;
+    }
+}
+
+.floated-list-container.show {
+    ul.floated-list {
+        display: flex;
+    }
+    color: $orange-color;
+
+    svg path {
+        stroke: $orange-color;
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    
+    ul.floated-list {
+        row-gap: 6px;
+        font-size: 12px;
+
+    }
+    .floated-list-container.filter {
+        margin-left: 45px;
+      font-size: 15px;
+        border-radius: 5px;
+        padding:9px 10px;
+    }
+}
+
+
+// this floated list customized for panel inputs
+// width,top,right is changed
+ul.floated-list.in-panel {
+    //display: flex;
+    display: none;
+    list-style-type: none;
+    flex-direction: column;
+    row-gap: 8px;
+    font-size: 13px;
+    width: 100%;
+    z-index: 4;
+    position: absolute;
+    align-items: flex-start;
+    text-align: right;
+    font-weight: $font-weight-regular;
+    background: #fff;
+    padding: 5px;
+   max-height: 229px;
+   overflow-y: auto;
+    top: 73px;
+    right: 0px;
+    border: 1px solid #e7e2e2;
+    border-radius: 6px;
+
+    li {
+        width: 100%;
+        padding: 8px 12px;
+        cursor: pointer;
+        color: $main-dark-text-color;
+        border-radius: 4px;
+
+        &:hover {
+            color: #fff;
+            background-color: $orange-color;
+
+        }
+    }
+}
+.floated-list-container.select-multiple {
+    ul.floated-list {
+        li.selected {
+            color: #fff;
+            background-color: $orange-color;
+        }
+    }
+}
+.floated-list-container.in-panel.show {
+    ul.floated-list {
+        display: flex;
+    }
+}
+.floated-list-container.in-panel{
+    position: relative;
+    cursor: pointer;
+    & > input {
+        cursor: pointer;
+    }
+    &::after {
+        content: '';
+        width: 12px;
+        height: 10px;
+        background-color: #898080;
+        position: absolute;
+        left: 20px;
+        top: 36px;
+        clip-path: polygon(0 0 , 100% 0, 50% 100%);
+    }
+  
+}
+.sort-floated{
+    width: 85%!important;
+    li{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .sort-btns{
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            margin: 0 5px 0 5px;
+            &.red{
+                color: $active-color;
+            }
+            &.yellow{
+                color: $orange-hover-color;
+            }
+            &:hover{
+                color: #fff;
+            }
+        }
+    }
+}
+@media screen and (max-width: $laptop-responsive) {
+    .floated-list-container.in-panel{
+      
+        &::after {
+            left: 18px;
+            top: 33px;
+        }
+      
+    }
+    
+}
+@media screen and (max-width: $mobile-responsive) {
+    
+    ul.floated-list.in-panel {
+        row-gap: 6px;
+        font-size: 11px;
+
+    }
+}

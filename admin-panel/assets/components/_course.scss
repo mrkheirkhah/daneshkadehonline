@@ -1,0 +1,261 @@
+
+.course-content.messages-form-box ,
+.course-content.answer-form-box{
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 0;
+    overflow: hidden;
+
+    .aside {
+        padding: 26px 10px;
+        -ms-writing-mode: vertical-rl;
+        writing-mode: vertical-rl;
+        background-color: #4A4A4A;
+        color: #fff;
+        font-size: $font-size-2;
+        font-weight: $font-weight-medium;
+        text-align: center;
+    }
+
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 30px 15px 15px;
+        flex-grow: 1;
+
+        input {
+            height: 45px;
+            min-width: 200px;
+            flex-grow: 1;
+            padding: 3px 14px;
+            width: 48%;
+
+            &::placeholder {
+                text-align: right;
+                direction: rtl;
+            }
+        }
+
+        input[type=email] {
+            direction: ltr;
+        }
+
+        textarea {
+            width: 100%;
+            resize: none;
+            height: 180px;
+            padding: 8px 14px;
+        }
+
+        input,
+        textarea {
+            font-weight: $font-weight-regular;
+            font-size: $font-size-3;
+            color: #131923;
+            border: 1px solid #ececec;
+            border-radius: 3px;
+
+            &:focus {
+                outline-color: $active-color;
+            }
+        }
+
+        button.submit-comment {
+            align-self: flex-end;
+            border-radius: 4px;
+            background-color: #4A4A4A;
+            color: #fff;
+            transition: .3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+            padding: 5px 8px;
+            margin-right: auto;
+
+            &:hover {
+                background-color: darken($color: #4a4a4a, $amount: 12%);
+            }
+        }
+    }
+}
+
+.course-content.answer-form-box  {
+    
+    .cover-btn {
+        color: $active-color !important;
+        background-color: transparent;
+    }
+    .form-row .pseudo-form-input {
+        border-radius: 4px;
+        background-color: #fff;
+        border: 1px solid #ececec;
+        box-shadow: none;
+    }
+}
+@media screen and (max-width: $big-mobile-responsive) {
+
+    .messages-box {
+        .person-message {
+
+            &__image {
+                width: 65px;
+                height: 65px;
+            }
+        }
+
+    }
+
+
+
+}
+
+@media screen and (max-width: 570px) {
+    form {
+        .form-row-col {
+            position: relative;
+        }
+
+        .search-btn {
+            top: 26px;
+
+            img {
+                width: 20px;
+            }
+        }
+    }
+
+    .messages-box {
+        padding: 5px 8px 44px;
+
+        .person-message {
+            border-radius: 5px;
+            padding: 9px 3vw 9px 2vw;
+            gap: 9px;
+            flex-wrap: wrap;
+
+            &__image {
+                display: none;
+            }
+
+            &__info {
+                width: 100%;
+
+                .person-name {
+                    font-size: $font-size-2-mobile;
+                }
+
+                .person-text {
+                    font-size: $font-size-3-mobile;
+                    line-height: 1.7;
+                }
+            }
+
+            &__sidebox {
+                width: 100%;
+                font-size: $font-size-5;
+
+                .reply-btn {
+                    font-size: $font-size-4;
+                    margin-right: 8px;
+                }
+
+
+                form {
+                    margin-top: 17px;
+                    justify-content: flex-end;
+
+                    label {
+                        width: 27px;
+                        height: 26px;
+
+                        svg {
+                            transform: scale(.8);
+                        }
+                    }
+                }
+            }
+        }
+
+        .person-message+.person-message {
+            margin-top: 14px;
+        }
+
+        footer {
+            padding: 12px 4px;
+
+            .end-conversation-btn {
+                font-size: $font-size-3-mobile;
+            }
+        }
+
+    }
+
+    .messages-box:not(.messages-box:last-of-type) {
+        &::after {
+            bottom: -8px;
+        }
+    }
+
+    .messages-box+.messages-box {
+        margin-top: 16px;
+    }
+
+    .notifications-box {
+        padding: 10px 20px;
+
+        .notification-item {
+            border-radius: 10px;
+            padding: 14px;
+
+            .text {
+                font-size: $font-size-3-mobile;
+            }
+
+            .time {
+                font-size: $font-size-4-mobile;
+
+            }
+        }
+
+        .notification-item+.notification-item {
+            margin-top: 10px;
+        }
+    }
+}
+
+
+
+
+
+
+
+@media screen and (max-width: $mobile-responsive) {
+
+
+    .ask-questions {
+        font-size: $font-size-2-mobile !important;
+    }
+    .course-content.messages-form-box ,
+    .course-content.answer-form-box{
+    
+        .aside {
+            font-size: $font-size-3 !important;
+        }
+    
+        form {
+            padding: 20px 15px 15px;
+            textarea {
+
+                height: 150px;
+            }
+    
+            input,
+            textarea {
+                font-size: $font-size-4;
+            }
+    
+        }
+    }
+
+}

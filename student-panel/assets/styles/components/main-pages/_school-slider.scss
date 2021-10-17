@@ -1,0 +1,199 @@
+@import './course-item';
+.school-slider {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 13px 0;
+    overflow: hidden;
+    .header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px dashed #ECECEC;
+        height: 0;
+        margin: 30px 0;
+
+        .title {
+            font-weight: $font-weight-medium;
+            font-size: $font-size-1;
+            color: $main-dark-text-color
+        }
+
+        .options,
+        .title {
+            position: relative;
+            top: -4px;
+            background-color: #fff;
+            padding: 3px 8px;
+        }
+
+        .options {
+            gap: 10px;
+            top: -2px;
+            display: inline-flex;
+            align-items: center;
+
+            a {
+                font-weight: $font-weight-light;
+                font-size: $font-size-2;
+                color: #6D7682;
+
+                &:hover {
+                    color: $active-color;
+                }
+            }
+
+            .controls {
+                button {
+                    width: 30px;
+                    height: 38px;
+                    @include center-flex(row, wrap);
+                    display: inline-flex;
+                    border-radius: 4px;
+                    background-color: #F8F8F8;
+                    padding: 7px 10px;
+                    border: 0;
+                    cursor: pointer;
+                    transition: all .3s ease;
+
+                    svg {
+                        transition: inherit;
+                    }
+
+                    &:hover {
+                        background-color: #e7e4e4;
+
+                        svg {
+                            transform: translateX(2.5px);
+                        }
+                    }
+
+                    &[class*="to-end"]{
+                        transform: rotate(.5turn);
+                    }
+                }
+            }
+
+        }
+    }
+
+    .items-container {
+        width: 100%;
+        // column-gap: 24px;
+        
+        padding: 10px 0 18px;
+        display: flex !important;
+        justify-content: flex-start;
+
+        .news {
+            width: 310px;
+           // min-width: 310px;
+            border-radius: 5px;
+            height: 208.11px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+
+            transition: .3s ease;
+
+            &::after {
+                inset: 0;
+                position: absolute;
+                content: '';
+                transition: .3s ease;
+                background-color: rgba(207, 0, 0, 0.1);
+            }
+
+            &:hover {
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+                transform: translateY(-3px);
+
+                &::after {
+                    background-color: transparent;
+                }
+            }
+
+            .image-container,
+            img {
+                width: 100%;
+                height: 100%;
+            }
+
+            img {
+                object-fit: cover;
+            }
+
+            .title {
+                position: absolute;
+                left: 0;
+                font-weight: $font-weight-regular;
+                right: 0;
+                bottom: 0;
+                font-size: $font-size-2;
+                color: #fff;
+                text-align: center;
+                padding: 8px;
+                z-index: 1;
+                background-color: #21212180;
+            }
+
+        }
+
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .school-slider {
+        margin-bottom: 15px;
+
+        .header {
+
+            margin: 25px 0;
+
+            .title {
+                font-size: $font-size-3;
+            }
+
+            .options,
+            .title {
+                top: -1px;
+            }
+
+            .options {
+                gap: 10px;
+                top: -2px;
+
+                a {
+                    font-size: $font-size-3-mobile;
+                }
+
+                .controls {
+                    button {
+                        width: 24px;
+                        height: 30px;
+                        padding: 5px;
+                    }
+                }
+
+            }
+        }
+
+        .items-container {
+
+
+            .news {
+                width: 270px;
+              //  min-width: 270px;
+                border-radius: 5px;
+                height: 181.26px;
+
+                .title {
+                    font-size: $font-size-2-mobile;
+                    padding: 7px;
+                }
+
+            }
+
+        }
+    }
+}

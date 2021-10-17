@@ -1,0 +1,40 @@
+.panel-admin-content-item.add-course{
+    
+    .terms-conditions {
+        background-color: $panel-background-color;
+        border-radius: 8px;
+        padding: 35px 25px 30px;
+        max-height: 190px;
+        overflow-y: auto;
+        line-height: 1.8;
+        box-shadow: 3px 3px 8px rgba(0,0,0,.08);
+
+        .text {
+            color: #707070;
+            font-size: $font-size-2;
+            font-weight: $font-weight-regular;
+        }
+    }
+    .checkbox-label {
+        cursor: pointer;
+    }
+    .course-parts-container {
+        max-height: 324px;
+        overflow: auto;
+        padding: 6px;
+    }
+} 
+@media  screen and (max-width: $mobile-responsive) {
+    .panel-admin-content-item.add-course .adding-course{
+
+        .terms-conditions {
+            border-radius: 8px;
+            padding: 25px 15px 20px;
+            max-height: 150px;
+            line-height: 1.6;
+            .text {
+                font-size: $font-size-2-mobile;
+            }
+        }
+    }
+}

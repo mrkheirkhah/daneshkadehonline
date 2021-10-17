@@ -1,0 +1,302 @@
+.aside-item {
+    width: 100%;
+    border: 1px solid #ececec;
+    background-color: #fff;
+    color: $main-dark-text-color;
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .header {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+        width: 100%;
+        border-bottom: 1px solid #ececec;
+
+        .title {
+            font-weight: $font-weight-medium;
+        }
+    }
+
+    .body {
+        padding: 16px;
+        width: 100%;
+    }
+
+    .footer {
+        padding: 9px 16px;
+        width: 100%;
+        align-self: flex-end;
+        a {
+            display: block;
+            border-radius: 4px;
+            background-color: $active-color;
+            color: #fff;
+            font-weight: $font-weight-medium;
+            font-size: $font-size-3;
+            text-align: center;
+            padding: 6px;
+            transition: .3s ease;
+
+            &:hover {
+                background-color: darken($color: $active-color, $amount: 12%);
+            }
+        }
+    }
+}
+
+.aside-item.course-info {
+    .header {
+        justify-content: space-between;
+
+        .title {
+            font-size: $font-size-2;
+        }
+
+        .price {
+            .currency {
+                font-size: 13px;
+                position: relative;
+                top: 2px;
+                right: 1px;
+            }
+        }
+    }
+
+    ul.info-list {
+        li {
+            width: 100%;
+            display: inline-flex;
+            justify-content: space-between;
+            color: #8F96A2;
+            font-size: 14px;
+            font-weight: $font-weight-medium;
+            padding: 3px 0;
+        }
+
+        li+li {
+            margin-top: 5px;
+        }
+
+        li.course-status {
+            .on-performing {
+                color: $green-color;
+            }
+            .ended{
+                color: $active-color;
+            }
+        }
+    }
+
+
+}
+
+.aside-item.teacher-info {
+    .header {
+        justify-content: flex-start;
+        align-items: center;
+
+        .teacher-profile {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 4px solid #eee;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .name-job {
+            margin-right: 10px;
+            font-size: 16px;
+            color: $main-dark-text-color;
+
+            h4 {
+                font-weight: $font-weight-regular;
+            }
+
+            h4+h4 {
+                margin-top: 3px;
+            }
+        }
+    }
+    .body {
+        .details {
+            width: 92%;
+            margin: 10px auto 0;
+            font-size: $font-size-3;
+            font-weight: $font-weight-light;
+        }
+    }
+
+    .footer {
+        a {
+            margin: 0 auto;
+            width: 70%;
+            padding: 6px 26px;
+
+        }
+    }
+}
+ul.redbullet-list {
+        width: fit-content;
+        margin: 0 auto;
+        list-style-type: none;
+
+        li {
+            padding: 3px;
+            align-items: center;
+            font-size: 16px;
+            font-weight: $font-weight-regular;
+            position: relative;
+
+            &::before {
+                position: absolute;
+                right: -12px;
+                top: 11px;
+                width: 8px;
+                height: 8px;
+                background-color: $active-color;
+                content: '';
+                border-radius: 50%;
+            }
+        }
+}
+.aside-item.sharing {
+    
+    .header {
+        justify-content: space-between;
+        border: 0;
+        .title {
+            font-size: $font-size-2;
+        }
+        .social-media {
+            display: inline-flex;
+            align-items: center;
+            column-gap: 0px;
+            a {
+                transform: scale(.5);
+                margin: 0 -2px;
+                @include center-flex(row,nowrap);
+                color: $main-dark-text-color;
+            }
+            .twitter {
+                margin-top: 3px;
+            }
+
+            a:hover {
+                color: $active-color;
+                svg path {
+                    fill: $active-color;
+                }
+            }
+        }
+    }
+}
+.aside-item.new-courses,
+.aside-item.related-courses {
+   .header .title {
+       font-size: $font-size-2;
+   }
+    ul.redbullet-list {
+        padding-right: 16px;
+        width: 100%;
+        margin: 0;
+    }
+}
+@media screen and (max-width: 1199px) {
+    .aside-item.teacher-info {
+        .footer {
+            a {
+                width: 100%;
+            }
+        }
+    }
+    .aside-item.sharing,
+     .ask-questions {
+        order: 1;
+    }
+}
+@media screen and (min-width: $big-mobile-responsive) and (max-width: 1199px) {
+    .aside-item.course-info,
+    .aside-item.teacher-info,
+    .aside-item.related-courses,
+    .aside-item.new-courses {
+        width: 46%;
+        flex-grow: 1;
+    }
+}
+@media screen and (max-width: $mobile-responsive) {
+    .aside-item {
+    
+        .header ,
+        .body{
+            padding: 13px;
+        }
+        
+        .footer {
+            padding: 9px 13px;
+            a {
+                padding: 6px;
+            }
+        }
+    }
+    .aside-item.course-info {
+        .header {    
+            .title {
+                font-size: $font-size-3;
+            }
+    
+            .price {
+                .currency {
+                    font-size: 12px;
+                }
+            }
+        }
+    
+        ul.info-list {
+            li {
+                font-size: 13px;
+            }
+        }
+    
+    
+    }
+    .aside-item.teacher-info {
+        .header {
+            .teacher-profile {
+                width: 75px;
+                height: 75px;
+                border: 3px solid #eee;
+            }
+    
+            .name-job {
+                font-size: 14px;
+            }
+        }
+        .body {
+            .details {
+                font-size: $font-size-3-mobile;
+            }
+        }
+    }
+    ul.redbullet-list {
+        li {
+            
+            font-size: 14px;
+        }
+}
+
+    .aside-item.sharing,
+    .aside-item.new-courses,
+    .aside-item.related-courses {
+        .header .title {
+            font-size: $font-size-3;
+        }
+    }
+}

@@ -1,0 +1,93 @@
+.panel-table.my-questions {
+
+    .table-row:not(.table-row.table-header) + .table-row {
+        border-top: 1px solid #70707030;
+        padding-top: 20px;
+    }
+   .details {
+       @include center-flex(row,nowrap);
+       
+       gap: 8px;
+       .play-btn,
+       .file-btn {
+           cursor: pointer;
+           padding: 3px;
+           background-color: transparent;
+           border: 0;
+           svg {
+               width: 18px;
+               path {
+                   transition: fill .3s linear;
+                   fill: $main-dark-text-color;
+               }
+           }
+           &:hover {
+               svg path {
+                   fill: $active-color;
+               }
+           }
+       }
+       .file-btn {
+           svg {
+               height: 19px;
+           }
+       }
+   }
+   .box-content {
+       .table-row {
+           .question-state {
+               display: inline-flex;
+               flex-direction: column;
+               row-gap: 4px;
+               align-items: center;
+               .view-answer,
+               .state {
+                   font-size: $font-size-3;
+                   transition: inherit;
+               }
+               .view-answer {
+                   background-color: transparent;
+                   border: 0;
+                   cursor: pointer;
+                   color: $lilac-color;
+                   &:hover {
+                       color: $lilac-hover-color;
+                   }
+               }
+           }
+          & > span:last-child {
+              min-width: 50px;
+              width: fit-content;
+          }
+       }
+   }
+}
+@media screen and (max-width: $big-mobile-responsive){
+   .panel-table.my-questions {
+      
+      .box-content .table-row {
+        
+       width: fit-content;
+     }
+   }
+}
+@media screen and (max-width: $mobile-responsive){
+   .panel-table.my-questions {
+       .table-row:not(.table-row.table-header) + .table-row {
+           padding-top: 12px;
+       }
+      .box-content .table-row {
+         margin: 10px 0;
+
+         .question-state {
+           .view-answer,
+           .state {
+               font-size: $font-size-3-mobile;
+           }
+     }
+    
+           
+        
+   }
+   }
+}

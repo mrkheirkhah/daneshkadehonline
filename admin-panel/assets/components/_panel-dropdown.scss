@@ -1,0 +1,110 @@
+.panel-dropdown {
+    position: relative;
+    padding: 0 !important;
+
+    .dropdown-preview {
+        display: flex;
+        width: 100%;
+        padding: 9px 18px;
+        border-radius: 7px;
+        font-size: $font-size-2;
+        align-items: center;
+        justify-content: space-between;
+
+        .right-section {
+            @include center-flex(row, nowrap);
+            column-gap: 15px
+        }
+
+        .angle-bottom {
+            transform: rotate(90deg);
+            transition: transform .2s linear;
+
+            &-line {
+                align-self: flex-start;
+                stroke: $main-dark-text-color;
+                stroke-width: 2px;
+            }
+
+        }
+    }
+
+    &:hover {
+        .angle-bottom-line {
+            stroke: $panel-background-color
+        }
+
+        .dropdown-container {
+            color: $main-dark-text-color;
+        }
+    }
+
+    .dropdown-container {
+        display: block;
+        max-height: 0px;
+        font-size: $font-size-3;
+        width: 100%;
+        overflow: hidden;
+        list-style-type: none;
+        text-align: right;
+        transition: max-height .3s linear, padding .3s linear;
+        background-color: $panel-background-color;
+        padding: 0 50px 0 0;
+        path {
+            transition: all .3s linear;
+        }
+
+        .dropdown-item {
+            transition: all .3s linear;
+            &:hover {
+                transform: translateX(-7px);
+                a {
+                    color: $active-color;
+                }
+
+                path {
+                    fill: $active-color;
+                }
+            }
+        }
+
+        .dropdown-item+.dropdown-item {
+            margin-top: 8px;
+
+        }
+
+    }
+}
+
+.panel-dropdown.expanded {
+    .angle-bottom {
+        transform: rotate(0);
+
+        .angle-bottom-line {
+            stroke: $panel-background-color
+        }
+    }
+
+    .cls-1 {
+        fill: $panel-background-color;
+    }
+
+    .dropdown-preview {
+        background-color: $active-color;
+        color: $panel-background-color;
+    }
+
+    .dropdown-container {
+        padding: 15px 50px 15px 0;
+        max-height: 500px;
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .panel-dropdown {
+
+        .dropdown-container {
+            font-size: $font-size-3-mobile;
+        }
+    }
+}

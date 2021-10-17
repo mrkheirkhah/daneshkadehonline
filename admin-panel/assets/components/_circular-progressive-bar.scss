@@ -1,0 +1,104 @@
+.charts-container {
+    $status-color: #6D7682;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-flow: row wrap;
+    margin-bottom: 24px;
+
+    .chart{
+        padding: 10px 24px;
+        flex-grow: 1;
+        background-color: #fff;
+        box-shadow: $item-box-shadow;
+        align-items: center;
+        display: flex;
+        border-radius: 10px;
+        width: 30%;
+        min-width: 275px;
+        min-height: 250px;
+        cursor: pointer;
+
+    }
+
+    .chart {
+        position: relative;
+        flex-flow: column nowrap;
+        .pie-container {
+            position: relative;
+        }
+        svg {
+            width: 190px;
+            height: 190px;
+            transform: rotate(122deg);
+
+            circle {
+                width: 100%;
+                height: 100%;
+                fill: none;
+                stroke: #f3f3f3;
+                stroke-width: 20;
+                stroke-linecap: round;
+                transform: translate(5px, 5px);
+
+                &.filled-bar {
+                    stroke-dasharray: 464;
+                    stroke-dashoffset: 464;
+                }
+            }
+        }
+
+        svg circle.filled-bar {
+            transition: all .8s ease;
+            stroke: #C77DFF;
+            stroke-dashoffset: calc(464 - (464 * 50) / 100);
+        }
+        .chart-title {
+            margin: 8px 0 17px;
+            font-size: $font-size-2;
+            font-weight: $font-weight-regular;
+        }
+        .status {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            font-size: 16px;
+            transform: translate(-43%,-50%);
+            text-align: center;
+            line-height: 1.85;
+            color: $status-color;
+            font-weight: $font-weight-regular;
+        }
+
+    }
+    .chart.green {
+        .filled-bar {
+            stroke: $green-color;
+            stroke-dashoffset: calc(464 - (464 * 35) / 100);
+        }
+    }
+    .chart.orange {
+        .filled-bar {
+            stroke: $orange-color;
+            stroke-dashoffset: calc(464 - (464 * 35) / 100);
+        }
+        .status {
+            transform: translate(-31%, -50%);
+        }
+    }
+    
+}
+@media screen and (max-width: $mobile-responsive) {
+    .charts-container {
+        .chart {
+            .chart-title {
+                font-size: $font-size-2-mobile;
+            }
+
+            svg circle {
+                stroke-width: 15px;
+            }
+        }
+       
+    }
+}

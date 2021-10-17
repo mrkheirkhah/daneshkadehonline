@@ -1,0 +1,314 @@
+.about-us {
+    .banner {
+        .bg-image {
+            background-image: url("@/static/images/main-page-images/about-us-bg.png");
+        }
+    }
+
+    .rb-title {
+        // lb mean right-border
+        font-size: 20px;
+        color: $main-dark-text-color;
+        font-weight: 500;
+        margin: 12px 0 18px;
+        padding-right: 8px;
+        border-right: 2.3px solid $active-color;
+    }
+    .get-know-us {
+        font-size: $font-size-2;
+        font-weight: $font-weight-regular;
+        color: #1b212c;
+        padding: 4px;
+        margin-bottom: 38px;
+    }
+    .team-information {
+        margin: 45px 0;
+        padding: 14px 0;
+        position: relative;
+        h2 {
+            &:first-child {
+                text-align: right;
+            }
+            font-weight: 900;
+            font-size: 63px;
+            background-image: linear-gradient(to bottom, rgba(163, 159, 159, 0.795),#fff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .persian-number {
+            font-size: 65px;
+        }
+        .experience {
+            text-align: left;
+        }
+
+        .istatistic {
+            img {
+                border-radius: 5px;
+                max-width: 100%;
+            }
+        }
+        .istatistic-table {
+            display: flex;
+            position: absolute;
+            left: 0;
+            bottom: -10%;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            padding: 15px 28px;
+            background-color: #fff;
+            box-shadow: 0 20px 55px rgba(0, 0, 0,.08);
+            border-radius: 5px;
+            width: 550px;
+            .table-cell {
+                width: 50%;
+                padding: 15px 3vw 15px 5px;
+                &:nth-child(1),
+                &:nth-last-child(1) {
+                    border: 1px dashed #d9d9d9a6;
+                }
+                &:nth-child(1) {
+                    border-top:0;
+                    border-right: 0;
+                }
+                &:nth-last-child(1) {
+                    border-bottom:0;
+                    border-left: 0;
+                }
+
+            }
+            .detail {
+                color: #42506B;
+                font-size: $font-size-2-mobile;
+            }
+            .count {
+                font-size: 43px;
+                color: #1B212C;
+                margin-bottom: -5px;
+            }
+        }
+    }
+    .our-team-members {
+        margin: 45px 0 65px;
+        overflow: hidden;
+        .bullets {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            gap: 5px;
+            cursor: pointer;
+            .bullet ,
+                .swiper-pagination-bullet {
+                width: 10px;
+                height: 10px;
+                border-radius: 15px;
+                opacity: 1;
+                background-color: rgba(238, 238, 238, 0.801);
+                transition: .3s ease;
+                &:hover {
+                    background-color: rgba(190, 189, 189, 0.801);
+                    
+                }
+                &-active,
+                &.active {
+                    background-color: $active-color;
+                    width: 22px;
+                }
+            }
+        }
+    }
+    .members-container {
+        width: 100%;
+        display: flex;
+        //overflow-x: auto;
+       // gap: 20px;
+        padding: 25px 0px; 
+
+        .member {
+            width: 250px;
+            //min-width: 250px;
+            text-align: center;
+            color: #1B212C;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #EEEEEE;
+            cursor: pointer;
+            transition: .3s ease;
+           
+            .image-container {
+                height: 290px;
+                position: relative;
+                & > img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+            .overlay {
+                position: absolute;
+                inset: 0;
+                background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), #1B212C);
+                z-index: 2;
+                display: flex;
+                align-items: flex-end;
+                justify-content: center;
+                visibility: none;
+                opacity: 0;
+                transition: .3s ease;
+                .social-media {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding-bottom: 10px;
+                    transform: translateY(15px);
+                    transition: .3s ease;
+                }
+                img {
+                    transform: scale(.75) translateY(0);
+                    transition: .3s ease;
+                    &:hover {
+                        transform: scale(.75) translateY(-12px);
+                    }
+                }
+            }
+            .info {
+                padding: 17px 10px;
+                .name {
+                    margin-bottom: 4px;
+                    font-size: 20px;
+                    font-weight: $font-weight-medium;
+                }
+                .job {
+                    font-size: $font-size-3;
+                    font-weight: $font-weight-regular;
+                }
+            }
+            &:hover {
+                box-shadow: 0 5px 15px rgba(44, 43, 43, 0.05);
+
+                .overlay {
+                    opacity: 1;
+                    visibility: visible;
+                }
+                .social-media {
+                   transform: translateY(0);
+                }
+            }
+        }
+    }
+}
+@media screen and (min-width: 1200px) {
+    .about-us {
+        .team-information {
+            .istatistic-table {
+                bottom: -4%;
+                left: 9%;
+            }
+        }
+    }
+}
+@media screen and (max-width: $laptop-responsive) {
+    .about-us {
+        .team-information {
+            h2 {
+                font-size: 50px;
+            }
+            .persian-number {
+                font-size: 48px;
+            }
+            .istatistic-table {
+                left: 5%;
+                bottom: -10%;
+                padding: 15px 20px;
+                width: 60%;
+                .table-cell {
+                    padding: 10px 3vw 10px 5px;
+                    
+    
+                }
+                .detail {
+                    font-size: $font-size-3-mobile;
+                }
+                .count {
+                    font-size: 28px;
+                    margin-bottom: -5px;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: $big-mobile-responsive) {
+    .about-us {
+        .get-know-us {
+            padding-bottom: 23px;
+        }
+        .team-information {
+         .istatistic-table {
+            min-width: 258px;
+            left: 6%;
+            bottom: -10%;
+            padding: 8px 10px;
+            width: 80%;
+         }   
+         h2 {
+            font-size: 50px;
+            text-align: right !important;
+        }
+        h2:nth-last-child(1) {
+            padding-right: 50px;
+            margin-bottom: 20px;
+        }
+        }
+    }
+    
+}
+@media screen and (max-width: $mobile-responsive) {
+    .about-us {
+        .get-know-us {
+            font-size: $font-size-2-mobile;
+            margin-bottom: 18px;
+        }
+        .rb-title {
+            // lb mean right-border
+            font-size: $font-size-3;
+            margin: 12px 0 15px
+        }
+
+        
+        .team-information {
+            h2 {
+                font-size: 33px;
+                text-align: center;
+            }
+            .persian-number {
+                font-size: 38px;
+            }
+            .istatistic-table {
+                min-width: 238px;
+                .table-cell {
+                    padding: 5px;
+                }
+                .detail {
+                    font-size: 10px;
+                }
+                .count {
+                    font-size: 20px;
+                }
+            }
+        }
+        .our-team-members {
+            margin: 40px 0;
+        }
+      .members-container {
+          .member{
+              //min-width: 210px;
+              width: 210px;
+
+              .image-container{
+                  height: 264px;
+              }
+          }
+      }
+    }
+}

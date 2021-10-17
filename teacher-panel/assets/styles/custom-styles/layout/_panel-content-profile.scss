@@ -1,0 +1,16 @@
+.panel-teacher-content-item.complete-profile,
+.panel-teacher-content-item.documents,
+.panel-teacher-content-item.profile-info {
+    background-color: #fff;
+    padding: 25px 35px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+@media screen and (max-width: $mobile-responsive) {
+
+    .panel-teacher-content-item.complete-profile,
+    .panel-teacher-content-item.documents,
+    .panel-teacher-content-item.profile-info {
+        padding: 23px 20px;
+    }
+}

@@ -1,0 +1,121 @@
+.record-voice-box {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+
+    div.pseudo-form-input {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        column-gap: 8px;
+        background: #fff;
+        box-shadow: none;
+        border: 1px solid #ececec;
+        border-radius: 4px;
+    }
+    audio {
+        display: none;
+    }
+    .record-btn {
+        padding: 5px 8px;
+        background-color: $active-color;
+        border-radius: 4px;
+        border: 2px solid transparent;
+        width: 60px;
+        height: 55px;
+        cursor: pointer;
+        transition: all .3s linear;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 24px;
+            height: 28px;
+        }
+        svg path ,
+        svg rect{
+            fill: #fff;
+            transition: fill .3s linear;
+        }
+        &:hover {
+            background-color: transparent;
+            border-color: $active-color;
+            svg path,
+            svg rect {
+                fill: $active-color;
+            }
+        }
+    }
+   
+    .btn-container {
+        display: flex;
+        align-items: center;
+        .delete-btn,
+        .play-btn {
+            border: 0;
+            background-color: transparent;
+            cursor: pointer;
+            display: flex;
+            svg path {
+                transition: fill .3s linear;
+            }
+            
+        }
+        .play-btn  svg {
+            width: 21px;
+            margin-left: 23px;
+            &:hover path {
+                fill: $active-color;
+            }
+        }
+        .delete-btn svg {
+            width: 23px;
+            &:hover path {
+                fill: $active-hover-color;
+            }
+        }
+    }
+    
+    .voice-timer {
+        font-size: $font-size-2;
+        font-weight: $font-weight-medium;
+        color: #131923;
+        margin-top: 2px;
+    }
+}
+
+@media screen and (max-width: $laptop-responsive) {
+    .record-voice-box {
+        .pseudo-form-input {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            column-gap: 8px;
+        }
+        .record-btn {
+            padding: 3px 6px;
+            width: 52px;
+            height: 48px;;
+    
+            svg {
+                width: 22px;
+                height: 26px;
+            }
+        }
+        .btn-container {
+             
+        
+            .play-btn  svg {
+                width: 17px;
+                margin-left: 15px;     
+            }
+            .delete-btn svg {
+                width: 19px;
+            }
+        }
+        .voice-timer {
+            font-size: $font-size-2;
+        }
+    }
+}

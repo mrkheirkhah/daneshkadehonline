@@ -1,0 +1,30 @@
+@import '../../abstracts/variables';
+@import '../../abstracts/_mixins';
+@import '../../components/panel-aside';
+@import '../../components/custom-scroll-style';
+@import '../../components/panel-dropdown';
+@import '../../components/panel-table';
+@import '../../components/hover-box';
+@import '../../components/custom-form-elements';
+@import '../../components/floated-list';
+@import '../../components/modal-send-message';
+@import '../../components/financial-buttons';
+@import '../../components/istatistic-admin-table';
+@import '../../components/circular-progressive-bar';
+@import '../../components/comments';
+@import '../../components/question-answer';
+@import '../../components/record-voice-box';
+@import '../../components/course';
+@import '../../components/news';
+@import '../../layout/panel-admin/panel-admin';
+@import '../../layout/panel-admin/signin-signup-admin';
+@import '../../layout/panel-admin/panel-content-notification';
+@import '../../layout/panel-admin/panel-content-addcourse';
+
+
+// body {
+//     background-color: $admin-teacher-bg-color;
+// }
+.panel-admin {
+    padding: 12px;
+}

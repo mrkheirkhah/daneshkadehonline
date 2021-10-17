@@ -1,0 +1,114 @@
+.dashboard-header {
+    background-color: #fff;
+    width: 100%;
+    padding: $panel-content-item-padding;
+    display: flex;
+    box-shadow: $item-box-shadow;
+    align-items: center;
+    border-radius: 18px;
+    font-weight: 300;
+    font-size: $font-size-2;
+    justify-content: space-between;
+
+    .left-section {
+        @include center-flex(row, nowrap);
+        column-gap: 20px;
+
+        .dashboard-btn {
+            cursor: pointer;
+            font-size: $font-size-4;
+            font-family: iSans, serif;
+            @include center-flex(row, nowrap);
+            border: 0;
+            color: $main-dark-text-color;
+            background-color: transparent;
+            column-gap: 7px;
+            position: relative;
+            transition: all .3s linear;
+
+            .cls-1,
+            .stroke-1,
+            a {
+
+                transition: all .3s linear;
+            }
+
+            a {
+
+                color: $main-dark-text-color
+            }
+
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            &:hover {
+                a {
+                    color: $active-color;
+                }
+
+                .hover-box {
+                    visibility: visible;
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                .cls-1 {
+                    fill: $active-color;
+                }
+
+                .stroke-1 {
+                    stroke: $active-color;
+                }
+            }
+        }
+
+        .dashboard-btn.bell {
+            position: relative;
+
+            .unread-notification-count {
+                border-radius: 50%;
+                background-color: $active-color;
+                color: #fff;
+                position: absolute;
+                top: -8px;
+                right: 5px;
+                font-size: 8px;
+                width: 21px;
+                height: 21px;
+                z-index: 2;
+                text-align: center;
+                padding: 6px 4px;
+            }
+        }
+
+        .vertical-line {
+            width: 2px;
+            height: 25px;
+            background-color: $main-dark-text-color;
+        }
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .dashboard-header {
+        .left-section {
+            .dashboard-btn {
+                a {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .dashboard-header {
+        font-size: $font-size-2-mobile;
+        padding: 15px;
+        .left-section {
+            column-gap: 12px;
+        }
+    }
+}

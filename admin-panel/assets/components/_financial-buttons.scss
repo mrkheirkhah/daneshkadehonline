@@ -1,0 +1,117 @@
+.finanical-btn-container {
+    grid-area: btn;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+
+    .finanical-btn {
+        width: 30%;
+        min-height: 160px;
+        flex-grow: 1;
+        border: 0;
+        cursor: pointer;
+        border-radius: 10px;
+        background-color: #fff;
+        color: $main-dark-text-color;
+        display: inline-flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-flow: row wrap;
+        font-size: $font-size-3;
+        font-weight: $font-weight-medium;
+        padding: 15px 18px;
+        transition: all .3s linear;
+        box-shadow: 3px 3px 18px rgba(0, 0, 0, .08);
+
+
+        .cls-1 {
+            fill: $main-dark-text-color;
+
+        }
+
+        &_title {
+            text-align: right;
+            margin-right: 8px;
+
+            small {
+                font-size: $font-size-4;
+            }
+        }
+
+        p {
+            margin-top: 15px;
+            font-size: 25px;
+            flex-basis: 100%;
+        }
+
+        .cls-1 {
+            transition: all .3s linear;
+        }
+
+        svg {
+
+            width: 40px;
+            height: 40px;
+        }
+
+        .percent-tag-icon {
+            transform: scale(1.5);
+        }
+
+    }
+    .finanical-btn.students {
+        svg .cls-1 {
+            stroke: #fff;
+            stroke-width: .5px;
+        }
+        &:hover svg .cls-1{
+            stroke: $active-color;
+        }
+    }
+
+
+    .finanical-btn:hover {
+        background-color: $active-color;
+        color: $panel-background-color;
+
+        .cls-1 {
+            fill: $panel-background-color;
+        }
+    }
+}
+.finanical-btn-container.main-widget-admin {
+    .finanical-btn {
+        width: 48%;
+    }
+}
+
+@media screen and (max-width: $laptop-responsive) {
+    .finanical-btn-container {
+        .finanical-btn {
+            width: 48%;
+        }
+    }
+
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .finanical-btn-container {
+
+        .finanical-btn {
+
+            font-size: $font-size-3;
+            min-height: 125px;
+
+            svg {
+                width: 35px;
+                height: 35px;
+            }
+
+            p {
+                font-size: 20px;
+            }
+        }
+    }
+
+}

@@ -1,0 +1,104 @@
+.panel-admin-content-item {
+    width: 100%;
+    border-radius: 10px;
+
+    .section-header {
+        text-align: center;
+        width: 100%;
+        font-size: $font-size-1;
+        color: $orange-color;
+        margin-bottom: 10px;
+
+    }
+
+    .section-title {
+        margin: 35px 0 10px;
+
+        svg.dashed-line {
+            width: 100%;
+
+            line {
+                stroke: #AEAEAE70;
+                stroke-width: 1;
+                opacity: .3;
+            }
+        }
+
+        .section-title-text {
+            font-size: $font-size-1;
+            position: relative;
+            top: -34px;
+            background-color: #fff;
+            width: fit-content;
+            padding: 0 5px;
+            font-weight: $font-weight-medium;
+            color: $main-dark-text-color;
+        }
+    }
+
+}
+.download-excel-format {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 8px;
+
+    img {
+        width: 28px;
+    }
+}
+
+.panel-admin-content-item.teacher-profile,
+.panel-admin-content-item.options,
+.panel-admin-content-item.transactions-output,
+.panel-admin-content-item.assortment,
+.panel-admin-content-item.main-content,
+.panel-admin-content-item.notifications,
+.panel-admin-content-item.add-course,
+.panel-admin-content-item.main-page,
+.panel-admin-content-item.about-us,
+.panel-admin-content-item.submit-admin,
+.panel-admin-content-item.footer,
+.panel-admin-content-item.question-answer,
+.panel-admin-content-item.contact-us,
+.panel-admin-content-item.news-management,
+.panel-admin-content-item.complete-profile {
+    background-color: #fff;
+    padding: 25px 35px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .panel-admin-content-item {
+        .section-header {
+            font-size: $font-size-2-mobile;
+
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            .section-title-text {
+                font-size: $font-size-2-mobile;
+                top: -26px
+            }
+        }
+    }
+
+    .panel-admin-content-item.teacher-profile,
+    .panel-admin-content-item.options,
+    .panel-admin-content-item.submit-admin,
+    .panel-admin-content-item.assortment,
+    .panel-admin-content-item.main-page,
+    .panel-admin-content-item.main-content,
+    .panel-admin-content-item.question-answer,
+    .panel-admin-content-item.transactions-output,
+    .panel-admin-content-item.notifications,
+    .panel-admin-content-item.add-course,
+    .panel-admin-content-item.contact-us,
+    .panel-admin-content-item.about-us,
+    .panel-admin-content-item.news-management,
+    .panel-admin-content-item.footer,
+    .panel-admin-content-item.complete-profile {
+        padding: 23px 20px;
+    }
+}

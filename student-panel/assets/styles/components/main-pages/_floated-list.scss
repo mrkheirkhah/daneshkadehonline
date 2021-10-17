@@ -1,0 +1,52 @@
+ul.floated-list-main {
+    //display: flex;
+    display: none;
+    list-style-type: none;
+    flex-direction: column;
+    row-gap: 8px;
+    font-size: 13px;
+    
+    z-index: 4;
+    position: absolute;
+    align-items: flex-start;
+    text-align: right;
+    font-weight: $font-weight-regular;
+    background: #fff;
+    padding: 5px;
+    width: max-content;
+    top: 38px;
+    right: -14px;
+    border: 1px solid #e7e2e2;
+    border-radius: 6px;
+
+    li {
+        width: 100%;
+        padding: 4px 10px;
+        cursor: pointer;
+        color: $main-dark-text-color;
+        border-radius: 4px;
+
+        &:hover {
+            color: #fff;
+            background-color: $green-color;
+
+        }
+    }
+}
+.floated-list-container-main {
+    position: relative;
+}
+.floated-list-container-main.show {
+    ul.floated-list-main {
+        display: flex;
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    
+    ul.floated-list-main {
+        row-gap: 6px;
+        font-size: 11px;
+
+    }
+}

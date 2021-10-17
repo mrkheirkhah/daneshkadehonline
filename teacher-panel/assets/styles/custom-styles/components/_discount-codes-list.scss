@@ -1,0 +1,88 @@
+.discount-codes-list {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    list-style-type: none;
+    justify-content: center;
+
+    .discount-code-item {
+        border: 2px dashed #aeaeae;
+        background-color: $panel-background-color;
+        border-radius: 10px;
+        text-align: center;
+        width: clamp(235px,28%,350px);
+        min-height: 188px;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        justify-content: center;
+
+        
+        padding: 24px 14px 10px;
+
+        .discount-code-title {
+            font-size: 28px;
+            color: #6D7682;
+            font-weight: $font-weight-regular;
+            width: 100%;
+            margin: 0;
+        }
+        
+        .discount-code-amount,
+        .course-name {
+            font-size: $font-size-2;
+            color: #6D7682;
+            width: 100%;
+        }
+        
+        .options {
+            margin-top: 14px;
+            background-color: $green-color;
+            font-size: $font-size-3;
+            font-weight: $font-weight-regular;
+            border-radius: 10px;
+            padding: 7px 13px;
+            width: 100%;
+            align-self: flex-end;
+            p{
+                color: #fff;
+            }
+            a {
+                color: #fff;
+                transition: color .3s linear;
+                &:hover {
+                    color: #6D7682;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: $mobile-responsive) {
+    .discount-codes-list {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        list-style-type: none;
+        justify-content: center;
+    
+        .discount-code-item {
+        
+            width: 100%;
+            padding: 18px 10px 8px;
+    
+            .discount-code-title {
+                font-size: 20px;
+            }
+    
+            .discount-code-amount,
+            .course-name {
+                font-size: $font-size-2-mobile;
+            }
+    
+            .options {
+                margin-top: 10px;
+                font-size: $font-size-3-mobile;
+            }
+        }
+    }
+}

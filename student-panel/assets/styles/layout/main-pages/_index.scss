@@ -1,0 +1,230 @@
+.landing {
+    width: 100%;
+    margin: 45px 0;
+    height: 67vh;
+
+    &-content {
+        padding: 30px 15px 0 20px;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        row-gap: 17px;
+
+        &-title {
+            font-size: 3.64vw;
+            font-weight: $font-weight-medium;
+            color: $main-dark-text-color;
+            white-space: normal;
+        }
+
+        &-detail {
+            color: #707070;
+            font-size: 1.25vw;
+            font-weight: $font-weight-regular;
+        }
+
+        &.center {
+            align-items: center;
+            justify-content: center;
+            padding: 27px;
+
+            .landing-content-title {
+                text-align: center;
+            }
+
+            .landing-content-detail {
+                width: 70%;
+            }
+        }
+    }
+
+    &-image {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            max-width: 100%;
+        }
+    }
+
+    &.center {
+        height: auto;
+        margin: 0;
+
+        .landing-image {
+            justify-content: flex-end
+        }
+    }
+}
+
+.get-signup {
+    font-size: $font-size-2;
+    font-weight: $font-weight-medium;
+    background-color: $active-color;
+    border-radius: 25px;
+    cursor: pointer;
+    color: #fff;
+    padding: 7px 22px;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, .08);
+    transition: .3s linear;
+    border: 2px solid transparent;
+    margin: 10px 0;
+
+    &:hover {
+        background-color: darken($color: $active-color, $amount: 12%);
+    }
+}
+
+.linked-banner {
+    cursor: pointer;
+
+    img {
+        width: 100%;
+        max-width: 1700px;
+        display: block;
+        margin: auto;
+    }
+}
+
+.our-features {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: 25px 0;
+    padding: 10px 3px;
+
+    .feature {
+        display: inline-flex;
+        flex-direction: column;
+        text-align: center;
+
+        img {
+            max-width: 100%;
+            margin: auto;
+            display: block;
+            object-fit: contain;
+            height: 251px;
+        }
+
+        .title {
+            font-weight: $font-weight-medium;
+            font-size: 27px;
+            margin: 17px 0 8px;
+
+            &.blue {
+                color: $blue-lighten-color;
+            }
+
+            &.red {
+                color: $active-color;
+            }
+
+            &.gold {
+                color: $orange-color;
+            }
+        }
+
+        .feature-detail {
+            font-size: $font-size-3;
+            margin: 4px 0;
+            color: $main-dark-text-color;
+            font-weight: $font-weight-regular;
+        }
+    }
+}
+
+.latest-news {
+    background-color: $footer-bg-color;
+
+    .header .title,
+    .options {
+        background-color: $footer-bg-color !important;
+    }
+}
+
+@media screen and (max-width: $laptop-responsive) {
+    .landing {
+        margin: 35px 0 15px;
+
+        &-content {
+
+            &-detail {
+                font-size: $font-size-2-mobile;
+            }
+        }
+
+
+    }
+}
+
+@media screen and (max-width: $big-mobile-responsive) {
+    .landing {
+        height: auto;
+
+        &-content {
+            align-items: flex-start;
+            padding: 20px 15px 0;
+
+            &-title {
+                font-size: 30px;
+            }
+        }
+
+
+    }
+
+    .get-signup {
+        font-size: $font-size-2-mobile;
+        padding: 7px 16px;
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .landing {
+        &-content {
+            padding: 10px;
+
+            &-title {
+                font-size: 24px;
+            }
+
+            &-detail {
+                font-size: $font-size-3-mobile;
+            }
+        }
+
+        .get-signup {
+            font-size: $font-size-3-mobile;
+            padding: 7px 14px;
+        }
+    }
+
+    .landing.center {
+        .landing-content-detail {
+            width: 82%;
+        }
+
+    }
+
+    .our-features {
+        margin: 10px 0;
+
+        .feature {
+
+            img {
+                height: 180px;
+            }
+
+            .title {
+                font-size: $font-size-1;
+                margin: 14px 0 8px;
+            }
+
+            .feature-detail {
+                font-size: $font-size-3-mobile;
+            }
+        }
+    }
+}

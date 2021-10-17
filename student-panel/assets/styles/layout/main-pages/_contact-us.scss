@@ -1,0 +1,280 @@
+.contact-us {
+    .banner {
+        .bg-image {
+            background-image: url("@/static/images/main-page-images/contact-us-bg.png");
+        }
+    }
+    .contacts {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 10px 15px;
+        margin: 70px 0 30px;
+
+        .item {
+            display: inline-flex;
+            align-items: flex-start;
+            text-align: left;
+            justify-content: center;
+            padding: 15px;
+            column-gap: 8px;
+
+            .title {
+                width: 100%;
+                text-align: right;
+                display: block;
+                color: $active-color;
+                font-size: $font-size-1;
+                font-weight: $font-weight-medium;
+                margin-bottom: 12px;
+            }
+
+            .column {
+                display: inline-flex;
+                flex-direction: column;
+                align-items: flex-end;
+                row-gap: 5px;
+                font-size: $font-size-2;
+                color: $main-dark-text-color;
+                font-style: normal;
+
+                .persian-number {
+                    letter-spacing: 1px;
+                }
+
+                &.has-address {
+                    align-items: flex-start;
+                    text-align: right;
+                }
+            }
+
+            img.map {
+                width: 33px;
+            }
+
+            img.phone {
+                width: 35.4px;
+            }
+
+            img.mail {
+                width: 43.6px;
+            }
+
+            img {
+                margin: 5px 0 0 5px !important;
+            }
+        }
+    }
+
+    .contacts-form {
+        padding: 20px;
+        margin-bottom: 40px;
+
+        form {
+            display: flex;
+            flex-flow: column nowrap;
+            row-gap: 54px;
+
+            .form-row {
+                flex-grow: 1;
+                position: relative;
+
+                .placeholder,
+                img {
+                    position: absolute;
+                    top: 17px;
+                }
+
+                .placeholder {
+                    right: 5px;
+                    font-size: $font-size-2-mobile;
+                    color: #c7c7c7cc;
+                    top: 18px;
+                    transition: .3s ease;
+                    font-weight: $font-weight-medium;
+                }
+
+                img {
+                    left: 5px;
+                }
+
+                input,
+                textarea {
+                    width: 100%;
+                    border: 0;
+                    background-color: transparent;
+                    padding: 25px 5px 7px 46px;
+                    border-bottom: 2px solid #eeeeee;
+                    transition: .3s ease;
+
+                    &:focus {
+                        outline: 0;
+                        border-bottom-color: $active-color;
+
+                        &+.placeholder {
+                            top: 1px;
+                            font-size: $font-size-3-mobile;
+                            color: $active-color;
+                        }
+                    }
+
+                    &:not(:placeholder-shown) {
+                        &+.placeholder {
+                            top: 1px;
+                            font-size: $font-size-3-mobile;
+                        }
+
+                    }
+                }
+
+                textarea {
+                    height: 174px;
+                    resize: none;
+                }
+
+                input[type=email] {
+                    direction: ltr;
+                }
+
+
+                img.user {
+                    width: 24px;
+                    left: 8px;
+                }
+
+                img.email {
+                    width: 31px;
+                }
+
+                img.file {
+                    width: 28px;
+                }
+            }
+
+            .form-btn {
+                border-radius: 3px;
+                font-size: $font-size-2;
+                font-weight: $font-weight-medium;
+                color: #fff;
+                background-color: $active-color;
+                padding: 4px 15px;
+                transition: .4s ease;
+                cursor: pointer;
+                align-self: flex-end;
+                margin-bottom: 20px;
+                border: 0;
+                &:hover {
+                   background-color: darken($color:$active-color,$amount: 12%);
+                } 
+            }
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 245px;
+        }
+    }
+
+    .rb-title {
+        // lb mean right-border
+        font-size: 20px;
+        color: $main-dark-text-color;
+        font-weight: 500;
+        margin: 12px 0 18px;
+        padding-right: 8px;
+        border-right: 2.3px solid $active-color;
+    }
+}
+
+@media screen and (max-width: $big-mobile-responsive) {
+    .contact-us {
+        .contacts {
+            padding: 10px;
+            margin: 40px 0 20px;
+
+            .item {
+                padding: 1px;
+
+                .title {
+                    font-size: $font-size-2;
+                    margin-bottom: 9px;
+                }
+
+                .column {
+                    font-size: $font-size-2-mobile;
+                }
+
+
+                img.map {
+                    width: 27px;
+                }
+
+                img.phone {
+                    width: 30px;
+                }
+
+                img.mail {
+                    width: 32.8px;
+                }
+
+                img {
+                    margin: 2px 0 0 8px;
+                }
+            }
+        }
+
+        .contacts-form {
+
+            gap: 20px;
+
+            .has-form {
+                order: 1;
+                margin-top: 20px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .about-us {
+        .contacts {
+            .item {
+                .info {
+                    flex-grow: 1;
+                    padding-left: 14px;
+                }
+
+                img {
+                    transform: scale(.94) translateY(-2px) !important;
+                }
+            }
+        }
+
+        .contacts-form {
+            margin-bottom: 10px;
+
+            form {
+                button.form-btn {
+                    border-radius: 3px;
+                    font-size: $font-size-3;
+                    margin-bottom: 15px;
+                    margin-top: -20px;
+                }
+
+                .form-row {
+                    img {
+                        transform: scale(.85);
+                    }
+                }
+            }
+        }
+    }
+
+    .rb-title {
+        // lb mean right-border
+        font-size: $font-size-3;
+        margin: 12px 0 15px
+    }
+
+}

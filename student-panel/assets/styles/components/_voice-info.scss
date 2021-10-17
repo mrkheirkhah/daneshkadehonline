@@ -1,0 +1,46 @@
+.voice-info {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+
+    .play-box,
+    .size-box {
+        display: inline-flex;
+        gap: 7px;
+        align-items: center;
+
+        svg {
+            width: 16px;
+
+            path {
+                fill: $main-dark-text-color;
+            }
+        }
+
+        .duration,
+        .size {
+            font-size: $font-size-3;
+            margin-top: 3px;
+            user-select: none;
+        }
+    }
+
+    .play-btn {
+        background-color: transparent;
+        border: 0;
+        cursor: pointer;
+
+        &:hover {
+            svg path {
+                fill: $active-color;
+            }
+        }
+    }
+
+    .size-box {
+        svg {
+            height: 17px;
+        }
+    }
+}

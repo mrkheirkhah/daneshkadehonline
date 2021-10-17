@@ -1,0 +1,55 @@
+@import '../../components/dashboard-header';
+@import 'panel-admin-content';
+@import 'panel-content-notifications';
+@import 'panel-content-options';
+@import './panel-content_profile';
+@import '../../components/basic-modal';
+
+.panel-admin {
+    gap: 20px;
+    display: flex;
+    min-height: 100vh;
+}
+
+.panel-admin-content {
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 20px;
+    flex-grow: 1;
+    width: 72%;
+}
+.coming-soon-box {
+    width: 100%;
+    height: calc(100vh - 100px);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px rgba(0,0,0,.08);
+    color: $green-color;
+}
+.coming-soon-box.not-found , .coming-soon-box.ban{
+    height: 95vh;
+    color: $active-color;
+    flex-direction: column;
+    .green{
+        color: $green-color;
+    }
+}
+
+@media screen and (max-width: $laptop-responsive) {
+    .panel-admin-content {
+        flex-grow: unset;
+        width: 100%;
+        
+        .dashboard-header {
+            
+            margin-right: auto;
+            width: calc(100% - 60px);
+        }
+    }
+
+
+}

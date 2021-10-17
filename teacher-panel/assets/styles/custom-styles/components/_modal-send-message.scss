@@ -1,0 +1,109 @@
+@import '@/assets/styles/custom-styles/components/record-voice-box';
+.modal-send-message {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000085;
+    display: none;
+     //display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    inset: 0;
+
+    .content-box {
+        display: flex;
+        flex-flow: column nowrap;
+        padding: 3vw 4vw;
+        border-radius: 25px;
+        background-color: #fff;
+        color: #131923;
+        width: 85vw;
+        max-height: 98vh;
+        max-width: 1200px;
+
+        .person-name,
+        .your-message-heading {
+            font-size: $font-size-1;
+            font-weight: $font-weight-medium;
+        }
+
+        .your-message-heading {
+            margin-bottom: 10px;
+        }
+
+        .person-message {
+            font-size: $font-size-3;
+            font-weight: $font-weight-light;
+            line-height: 1.8;
+            margin: 10px 0 25px;
+            max-height: 185px;
+            overflow: auto;
+        }
+
+        form {
+            .message-textarea {
+                width: 100%;
+                min-height: 20vh;
+                padding: 10px;
+            }
+
+            .message-textarea:focus {
+                outline-color: $green-color;
+            }
+
+            .footer-buttons-container {
+                display: flex;
+                justify-content: flex-end;
+                gap: 5px;
+
+                .form-btn {
+                    margin: 5px 0;
+                    padding: 5px 30px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $laptop-responsive) {
+    .modal-send-message {
+        .content-box {
+            width: 90vw;
+            border-radius: 15px;
+        
+        
+        .person-name,
+        .your-message-heading {
+            font-size: $font-size-2-mobile;
+        }
+
+        .your-message-heading {
+            margin-bottom: 7px;
+        }
+
+        .person-message {
+            font-size: $font-size-3-mobile;
+            line-height: 1.7;
+            margin: 7px 0 15px;
+            max-height: 125px;
+        }
+
+        .footer-buttons-container {
+            .form-btn {
+                padding: 0px 10px;
+            }
+        }
+    }
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .modal-send-message {
+        .content-box {
+            width: 95vw;
+            border-radius: 10px;
+
+        }
+    }
+}

@@ -1,0 +1,22 @@
+@import '../../abstracts/variables';
+@import '../../abstracts/_mixins';
+@import '../../core/reset';
+@import '../../core/typography';
+@import '../../font';
+@import '../../components/custom-scroll-style';
+@import '../../components/panel-dropdown';
+@import '../../components/panel-aside';
+@import '../../components/panel-table';
+@import '../../components/hover-box';
+@import '../../components/custom-form-elements';
+@import '../../components/dashboard-header';
+@import '../../components/finanical-buttons';
+@import '../../components/transaction-chart';
+@import '../../layout/panel-visitor/panel-visitor';
+
+body {
+    background-color: $admin-teacher-bg-color;
+}
+.panel-visitor {
+    padding: 12px;
+}

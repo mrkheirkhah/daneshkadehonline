@@ -1,0 +1,159 @@
+.panel-teacher-content-item.sell-host-volume{
+    background-color: #fff;
+    padding: 25px 20px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08);
+
+    .volumes-container {
+        display: flex;
+        flex-flow: row wrap;
+        perspective: 600px;
+        transform-style: preserve-3d;
+        margin-top: 20px;
+        gap: 8px;
+        .volume {
+            display: inline-flex;
+            flex-flow: column nowrap;
+            align-items: center;
+            color: $main-dark-text-color;
+            gap: 10px;
+            width: 31%;
+            flex-grow: 1;
+            border: 0;
+            padding: 28px 18px;
+            border-radius: 22px;
+            background-color: transparent;
+            transition: all .3s linear;
+            box-shadow: 0 15px 25px transparent;
+            cursor: pointer;
+            &-title {
+                font-size: 24px;
+                font-weight: $font-weight-medium;
+                width: max-content;
+            }
+            &-price {
+                font-size: 84px;
+            }
+            .currency {
+                font-size: $font-size-2;
+                color: #8F96A2;
+                font-weight: $font-weight-regular;
+                margin: -32px auto 15px;
+                transition: inherit;
+            }
+            &-btn {
+                width: 100%;
+                padding: 10px 16px;
+                border-radius: 6px;
+                background-color: $active-color;
+                color: #fff;
+                font-size: $font-size-2;
+                font-weight: $font-weight-medium;
+                box-shadow: 0 15px 25px #e1353528;
+                text-align: center;
+                transition: inherit;
+            }
+            &:hover {
+                background-color: $active-color;
+                color: #fff;
+                box-shadow: 0 15px 25px #00000028;
+                transform: translate3d(0px,-3px,5px);
+                .currency {
+                    color: #fff;
+
+                }
+                .volume-btn {
+                    background-color: #fff;
+                    color: $active-color;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .panel-teacher-content-item.sell-host-volume {
+        .volumes-container {
+            .volume {
+                padding: 25px 15px;
+                border-radius: 18px;
+                &-title {
+                    font-size: 20px;
+                }
+                &-price {
+                    font-size: 70px;
+                }
+                .currency {
+                    font-size: $font-size-2;
+                    margin: -32px auto 15px;
+                }
+                &-btn {
+                    width: 100%;
+                    font-size: $font-size-2;
+                }
+              
+            }
+        }
+    }
+}
+@media screen and (max-width: $big-mobile-responsive) {
+    .panel-teacher-content-item.sell-host-volume {
+        .volumes-container {
+            .volume {
+                padding: 20px 13px;
+                border-radius: 15px;
+                gap: 14px;
+                &-title {
+                    font-size: 17px;
+                }
+                &-price {
+                    font-size: 53px;
+                }
+                .currency {
+                    font-size: $font-size-3-mobile;
+                    margin: -28px auto 15px;
+                }
+                &-btn {
+                    padding: 8px 14px;
+                    font-size: $font-size-2-mobile;
+                    border-radius: 4xp;
+                }
+              
+            }
+        }
+    }
+}
+@media screen and (max-width: 600px) {
+    .panel-teacher-content-item.sell-host-volume {
+        .volumes-container {
+            gap: 22px;
+            .volume {
+                width: 80%;
+                padding: 15px 10px;
+                border-radius: 10px;
+                gap: 14px;
+                &-title {
+                    font-size: 17px;
+                }
+                &-price {
+                    font-size: 53px;
+                }
+                .currency {
+                    font-size: $font-size-3-mobile;
+                    margin: -28px auto 15px;
+                }
+                &-btn {
+                    padding: 8px 14px;
+                    font-size: $font-size-2-mobile;
+                    border-radius: 4xp;
+                }
+              
+            }
+        }
+    }
+}
+@media screen and (max-width: $mobile-responsive) {
+    
+    .panel-teacher-content-item.sell-host-volume {
+        padding: 20px 15px;
+    }
+}

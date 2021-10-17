@@ -1,0 +1,30 @@
+.panel-table.my-courses {
+    .box-content {
+        .table-row {
+
+            .btn.view ,
+            .btn.download{
+                color: $lilac-color;
+
+                &:hover {
+                    color: $lilac-hover-color;
+                }
+            }
+        }
+        .table-row.package-type.expired > span:not(span.time-left) {
+            opacity: .45;
+            &:hover {
+                color: $main-dark-text-color;
+            }
+        }
+        .table-row.package-type.expired:hover span {
+            color: $main-dark-text-color;
+        }
+        .table-row.package-type.expired span.time-left {
+            color: $lilac-color;
+            &:hover {
+                color: $lilac-hover-color;
+            }
+        }
+    }
+}

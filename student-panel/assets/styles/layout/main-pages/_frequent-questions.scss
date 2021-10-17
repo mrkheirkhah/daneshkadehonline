@@ -1,0 +1,59 @@
+.frequent-questions {
+    .banner {
+        .bg-image {
+            background-image: url("@/static/images/main-page-images/frequent-questions-banner.png");
+        }
+    }
+
+    .rb-title {
+        // lb mean right-border
+        font-size: 20px;
+        color: $main-dark-text-color;
+        font-weight: 500;
+        margin: 12px 0 18px;
+        padding-right: 8px;
+        border-right: 2.3px solid $active-color;
+    }
+
+    .main-detail {
+        font-size: $font-size-2;
+        font-weight: $font-weight-regular;
+        color: #1b212c;
+        padding: 4px;
+        margin-bottom: 38px;
+    }
+
+    .questions {
+        margin: 25px 0;
+        display: flex;
+        flex-flow: column nowrap;
+        row-gap: 13px;
+
+    }
+
+}
+
+@media screen and (max-width: $big-mobile-responsive) {
+    .frequent-questions {
+        .main-detail {
+            padding-bottom: 23px;
+        }
+    }
+
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .frequent-questions {
+        .main-detail {
+            font-size: $font-size-2-mobile;
+            margin-bottom: 18px;
+        }
+
+        .rb-title {
+            // lb mean right-border
+            font-size: $font-size-3;
+            margin: 12px 0 15px
+        }
+
+    }
+}

@@ -1,0 +1,206 @@
+.panel-table {
+    position: relative;
+
+    .box-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 3px;
+        margin: 7px 0;
+
+        span {
+            color: $green-color;
+        }
+
+        h3 {
+            font-weight: $font-weight-medium;
+            font-size: $font-size-1;
+        }
+        & > span:last-child {
+            text-align: left;
+            min-width: 120px;
+            width: fit-content;
+        }
+    }
+
+    .box-content {
+        background-color:#fff;
+        box-shadow: $item-box-shadow;
+        border-radius: 10px;
+        padding-bottom: 90px;
+        max-height: 615px;
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        .table-row {
+            padding: 0 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 13px;
+            cursor: pointer;
+            margin: 23px 0;
+
+            &:hover span {
+                color: $active-color;
+            }
+
+            span {
+                width: 20%;
+                min-width: 100px;
+            }
+            span.course-owner {
+                min-width: 150px;
+            } 
+            & > span {
+                text-align: center;
+            }
+            & > span:first-child {
+                text-align: right;
+            }
+            & > span:last-child {
+                text-align: left;
+                min-width: 120px;
+                width: fit-content;
+            }
+
+            .btn {
+                border: 0;
+                font-size: $font-size-3;
+                background-color: transparent;
+                transition: color .3s linear;
+                cursor: pointer;
+
+                &.delete {
+                    color: $active-color;
+                }
+
+                &.edit {
+                    color: $orange-color;
+                }
+
+                &:hover {
+                    color: #6D7682;
+                }
+            }
+        }
+
+
+
+        .table-row.table-header {
+            padding: 22px 35px;
+            position: sticky;
+            border: 0 !important;
+            top: 0;
+            right: 0;
+            min-width: max-content;
+            margin: 0;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, .08);
+            background-color: $admin-teacher-bg-color;
+
+            span {
+                color: $table-header-color;
+            }
+        }
+
+        footer {
+            padding: 15px 0;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            background-color: #fff;
+            bottom: 5px;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+
+            a {
+                color: $active-color;
+                font-weight: $font-weight-medium;
+                font-size: $font-size-2;
+            }
+
+            hr {
+                width: 80%;
+                margin: -6px auto 15px;
+                border: 0;
+                height: 1px;
+                background-color: #70707030
+            }
+        }
+    }
+
+    span {
+        font-size: $font-size-2;
+        font-weight: $font-weight-regular;
+        color: $main-dark-text-color;
+        transition: all .3s linear;
+    }
+
+
+
+
+}
+.panel-table.transaction-table {
+    .box-content {
+        .table-row {
+            span.time {
+                min-width: 58px;
+                width: fit-content;
+            }
+            span.date {
+                min-width: 115px;
+                width: fit-content;
+            }
+            span.yellow{
+                color: $orange-color;
+            }
+            span.green{
+                color:$green-hover-color;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .panel-table {
+        .box-header {
+            h3 {
+                font-size: $font-size-2-mobile;
+            }
+        }
+
+        .box-content {
+            .table-row {
+                padding: 0 15px;
+
+                span.course-owner {
+                    min-width: 120px;
+                }
+                .btn {
+                    font-size: $font-size-3-mobile;
+                }
+                & > span:last-child {
+                   
+                    min-width: 88px;
+                }
+
+            }
+
+            .table-row.table-header {
+                padding: 15px 15px;
+            }
+            
+        footer {
+
+            a {
+                font-size: $font-size-4;
+            }
+        }
+        }
+
+        span {
+            font-size: $font-size-3-mobile;
+        }
+
+    }
+
+}

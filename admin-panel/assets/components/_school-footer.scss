@@ -1,0 +1,162 @@
+.school-footer {
+    width: 100%;
+    color: $main-dark-text-color;
+    background-color: $footer-bg-color;
+    padding: 45px 0 0;
+    .header {
+        width: 100%;
+        border-bottom: 1px dashed #AEAEAE;
+        height: 0;
+        margin: 12px 0 22px;
+    }
+    .list-title {
+        position: relative;
+        background-color: $footer-bg-color;
+        padding: 0px 5px;
+        width: fit-content;
+        font-size: $font-size-3;
+        font-weight: $font-weight-regular;
+        top: -13px;
+        right: 23px;
+        user-select: none;
+    }
+
+    ul {
+        list-style-type: none;
+        text-align: right;
+        display: flex;
+        row-gap: 8px;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 20px 0 10px;
+        li {
+            font-size: $font-size-3;
+            font-weight: $font-weight-regular;
+            &:hover {
+                a {
+                    color: $active-color;
+                }
+            }
+        }
+        a {
+            color: inherit;
+            font-weight: $font-weight-medium;
+        }
+    }
+
+    .bottom-box {
+        display: flex;
+        position: relative;
+        flex-flow: row wrap;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px dashed #AEAEAE;
+        padding: 22px 0;
+
+        .address-box,
+        .mobile-box {
+            display: inline-flex;
+            align-items: flex-start;
+            column-gap: 8px;
+            font-size: $font-size-3;
+            
+            img {
+                width: 21px;
+            }
+            address {
+                font-style: normal;
+            }
+        }
+        .address-box img {
+            width: 18px;
+        }
+        svg {
+            transform: scale(.63);
+        }
+        .mobile-box {
+            margin-right: 25px;
+        }
+
+        .social-media {
+            display: flex;
+            align-items: center;
+            column-gap: 5px;
+            a {
+                
+                @include center-flex(row,nowrap);
+                color: $main-dark-text-color;
+            }
+            .youtube {
+                font-family: 'Segoe UI', Tahoma, sans-serif;
+                font-size: 18px;
+            }
+            .youtube,
+            .twitter {
+                margin-top: 3px;
+            }
+
+            a:hover {
+                color: $active-color;
+                svg path {
+                    fill: $active-color;
+                }
+            }
+        }
+        .confirmation {
+            position: absolute;
+            left: 0;
+            top: -4px;
+            padding: 2px 20px 2px 2px;
+            background-color: $footer-bg-color;
+            a {
+                margin: 0 4px ;
+                width: 55px;
+                height: 66.25px;
+                border-radius: 4px;
+                overflow: hidden;
+                display: inline-block;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .school-footer {
+        padding: 15px 4px;
+       
+        ul {
+    
+            li {
+                font-size: $font-size-3-mobile;
+            }
+        }
+
+        .bottom-box {
+            padding: 8px 0;
+            .mobile-box,
+            .address-box,
+            .social-media,
+            .confirmation {
+                margin: 11px 0 !important;
+            }
+        }
+    }
+}
+@media screen and (max-width: $laptop-responsive) {
+    .school-footer {
+        .bottom-box {
+
+            .confirmation {
+                position: static;
+            }
+        }
+
+        
+    }
+}

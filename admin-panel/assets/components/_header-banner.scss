@@ -1,0 +1,70 @@
+.banner {
+    width: 100%;
+    @include center-flex(column, nowrap);
+    height: 255px;
+    position: relative;
+    &.expand {
+        height: 400px;
+    }
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        top: -2px;
+        bottom: 0;
+        width: 170px;
+        z-index: 2;
+        right: 0px;
+        opacity: .7;
+        background-image: url("~@/static/line-pattern.png");
+    }
+
+    &::after {
+        left: 0px;
+        right: auto;
+        transform: rotateY(.5turn);
+    }
+
+    .bg-image {
+        // background-image: url("../../../image/contact-us-bg.png");
+        background-position: center;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0;
+        filter: blur(2px);
+        -moz-filter: blur(2px);
+    }
+
+    .title {
+        color: #fff;
+        font-size: 52px;
+        margin: 5px;
+        text-align: center;
+        font-weight: $font-weight-regular;
+        z-index: 3;
+    }
+
+    &-overlay {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.38);
+    }
+}
+
+@media screen and (max-width: $big-mobile-responsive) {
+
+    .banner {
+       
+        &::before,
+        &::after {
+            width: 80px
+        }
+
+        .title {
+            font-size: 35px;
+        }
+    }
+
+}

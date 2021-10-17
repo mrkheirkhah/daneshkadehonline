@@ -1,0 +1,52 @@
+@import './panel-content-question-answer';
+@import './panel-table-my-questions';
+@import './panel-student-content-item';
+@import '@/assets/styles/components/dashboard-header';
+
+.panel-student {
+    gap: 20px;
+    display: flex;
+    padding: 12px;
+}
+
+.panel-student-content {
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 20px;
+    flex-grow: 1;
+    width: 72%;
+}
+.coming-soon-box {
+    width: 100%;
+    height: calc(100vh - 100px);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px rgba(0,0,0,.08);
+    color: $green-color;
+}
+.coming-soon-box.not-found{
+    height: 95vh;
+    color: $active-color;
+    flex-direction: column;
+    .green{
+        color: $green-color;
+    }
+}
+@media screen and (max-width: $laptop-responsive) {
+    .panel-student-content {
+        flex-grow: unset;
+        width: 100%;
+        
+        .dashboard-header {
+            
+            margin-right: auto;
+            width: calc(100% - 60px);
+        }
+    }
+
+
+}

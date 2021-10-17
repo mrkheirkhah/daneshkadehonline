@@ -1,0 +1,122 @@
+@import '@/assets/styles/abstracts/variables';
+@import '@/assets/styles/core/reset';
+@import '@/assets/styles/font/fonts';
+@import '@/assets/styles/core/typography';
+@import '@/assets/styles/abstracts/mixins';
+.signin-signup-modal {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000075;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    inset: 0;
+
+    .content-box {
+        display: flex;
+        flex-flow: column nowrap;
+        padding: 25px 45px;
+        position: relative;
+        border-radius: 25px;
+        background-color: #fff;
+        color: #131923;
+        width: 40vw;
+        max-height: 95vh;
+        max-width: 700px;
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: $font-weight-regular;
+            color: $main-dark-text-color;
+        }
+
+        .form-btn {
+            text-align: center;
+            width: 100%;
+            margin: 14px 0;
+            font-size: 24px;
+
+        }
+
+        .form-btn:first-of-type {
+            margin-top: 55px;
+        }
+
+        .close-btn {
+            font-size: 50px;
+            color: $active-color;
+            background-color: #fff;
+            border: 0;
+            box-shadow: 0 3px 18px rgba(0, 0, 0, .08);
+            width: 60px;
+            height: 60px;
+            font-weight: $font-weight-regular;
+            position: relative;
+            left: -25px;
+            top: -9px;
+            border-radius: 15px;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            cursor: pointer;
+
+        }
+        .empty {
+            width: 60px;
+        }
+
+    }
+}
+
+@media screen and (max-width: $laptop-responsive) {
+    .signin-signup-modal {
+        .content-box {
+            width: 70vw;
+            border-radius: 15px;
+            padding: 18px 38px;
+
+            .close-btn {
+                left: -20px;
+                top: -7px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .signin-signup-modal {
+        .content-box {
+            width: 95vw;
+            border-radius: 10px;
+            padding: 10px 20px;
+
+            .close-btn {
+                left: -8px;
+                top: 0px;
+                width: 50px;
+                height: 50px;
+                font-size: 45px;
+            }
+            .empty {
+                width: 50px;
+            }
+
+            .title ,
+            .form-btn {
+                font-size: $font-size-2;
+            }
+            .form-btn {
+                margin: 10px 0;
+            }
+        }
+    }
+}

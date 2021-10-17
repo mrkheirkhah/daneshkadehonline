@@ -1,0 +1,249 @@
+.panel-teacher-content-item.finanical {
+    display: flex;
+    gap: 20px;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+
+    .two-part-section {
+        gap: 20px;
+        display: flex;
+        width: 100%;
+    }
+
+    .fullwidth-section {
+        width: 100%;
+    }
+
+    .box-item {
+        box-shadow: $item-box-shadow;
+        padding: $panel-content-item-padding;
+        border-radius: 10px;
+    }
+
+
+    .main-section,
+    .aside-section {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 20px;
+    }
+
+    .aside-section {
+        width: 293px;
+        .courses-aside {
+            min-width: 290px;
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        .social-media {
+
+            background-color: #fff;
+
+            .social-row {
+                display: flex;
+                align-items: center;
+                flex-flow: row wrap;
+                justify-content: space-between;
+                font-size: $font-size-3;
+                font-weight: $font-weight-regular;
+                gap: 7px;
+                color: $main-dark-text-color;
+            }
+
+            .social-row+.social-row {
+                margin-top: 8px;
+            }
+
+            .icon-group img+img {
+                margin: 0 4px;
+                width: 24px;
+                height: 24px;
+                object-fit: contain;
+            }
+        }
+    }
+
+    .main-section {
+        flex-grow: 1;
+        width: 45%;
+        .finanical-btn-container {
+            grid-area: btn;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+
+
+            .finanical-btn {
+                width: calc(25% - 16px);
+                min-height: 160px;
+                flex-grow: 1;
+                border: 0;
+                cursor: pointer;
+                border-radius: 10px;
+                background-color: #fff;
+                color: $main-dark-text-color;
+                display: inline-flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-flow: row wrap;
+                font-size: $font-size-3;
+                font-weight: $font-weight-medium;
+                padding: 15px 18px;
+                transition: all .3s linear;
+
+
+                .cls-1 {
+                    fill: $main-dark-text-color;
+
+                }
+
+                &_title {
+                    text-align: right;
+                    margin-right: 8px;
+
+                    small {
+                        font-size: $font-size-4;
+                    }
+                }
+
+                p {
+                    margin-top: 15px;
+                    font-size: 25px;
+                    flex-basis: 100%;
+                }
+
+                .cls-1 {
+                    transition: all .3s linear;
+                }
+
+                svg {
+
+                    width: 40px;
+                    height: 40px;
+                }
+
+                .percent-tag-icon {
+                    transform: scale(1.5);
+                }
+
+            }
+
+
+            .finanical-btn:hover {
+                background-color: $active-color;
+                color: $panel-background-color;
+
+                .cls-1 {
+                    fill: $panel-background-color;
+                }
+            }
+        }
+
+        .transaction-chart {
+            background-color: #fff;
+            flex-grow: 1;
+        }
+    }
+}
+
+@media screen and (max-width: $laptop-responsive) {
+
+    .panel-teacher-content-item.finanical {
+        .main-section,
+        .aside-section {
+            width: 100%;
+        }
+
+        .two-part-section {
+            flex-direction: column;
+        }
+
+        .finanical-btn-container {
+            .finanical-btn {
+
+                width: calc(50% - 9px);
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .panel-teacher-content-item.finanical {
+
+        .main-section {
+
+            .finanical-btn-container {
+
+                .finanical-btn {
+                    justify-content: center;
+                    font-size: $font-size-4;
+                    min-height: 125px;
+
+                    svg {
+                        width: 35px;
+                        height: 35px;
+                    }
+
+                    p {
+                        font-size: $font-size-3;
+                    }
+                }
+            }
+
+        }
+
+        .aside-section {
+            .social-media {
+                padding: 10px 20px;
+
+                .social-row {
+                    font-size: $font-size-3-mobile;
+
+                }
+            }
+        }
+
+    }
+}
+
+@media screen and (min-width: 1650px) {
+    .panel-teacher-content-item.finanical {
+
+       .aside-section {
+           width: 415px;
+       }
+
+    }
+}
+@media screen and (max-width: 1495px) {
+    .panel-teacher-content-item.finanical {
+
+        .main-section {
+
+            .finanical-btn-container {
+
+                .finanical-btn {
+                    width: calc(50% - 11px);
+                }
+            }
+
+        }
+
+    }
+}
+@media screen and (max-width: 400px) {
+    .panel-teacher-content-item.finanical {
+        .main-section {
+            .finanical-btn-container {
+
+                .finanical-btn {
+                    width: 100%;
+                    min-height: 115px;
+                }
+            }
+
+        }
+    }
+}

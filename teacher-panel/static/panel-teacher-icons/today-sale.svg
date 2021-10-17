@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="43.334" height="52" viewBox="0 0 43.334 52">
+    <g id="low-price_1_" data-name="low-price (1)" transform="translate(-39.999)">
+        <g id="Group_223" data-name="Group 223" transform="translate(39.999)">
+            <g id="Group_222" data-name="Group 222">
+            <path id="Path_112" class="cls-1" data-name="Path 112"
+                d="M82.466,30.333H76.4V.867A.867.867,0,0,0,75.532,0H47.8a.867.867,0,0,0-.867.867V30.333H40.866a.867.867,0,0,0-.6,1.492l20.8,19.933a.867.867,0,0,0,1.2,0l20.8-19.933a.867.867,0,0,0-.6-1.492Zm-20.8,19.6L43.022,32.067H47.8a.867.867,0,0,0,.867-.867V1.733h26V31.2a.867.867,0,0,0,.867.867H80.31Z"
+                transform="translate(-39.999)" />
+            <path id="Path_113" class="cls-1" data-name="Path 113"
+                d="M197.2,91.467a3.467,3.467,0,0,1,3.467,3.467H202.4a5.205,5.205,0,0,0-4.333-5.122V88h-1.733v1.811a5.2,5.2,0,0,0,.867,10.322,3.467,3.467,0,1,1-3.467,3.467H192a5.205,5.205,0,0,0,4.333,5.122v1.811h1.733v-1.811A5.2,5.2,0,0,0,197.2,98.4a3.467,3.467,0,1,1,0-6.933Z"
+                transform="translate(-175.533 -78.467)" />
+            <rect id="Rectangle_56" class="cls-1" data-name="Rectangle 56" width="1" height="1"
+                transform="translate(10.834 4)" />
+            <rect id="Rectangle_57" class="cls-1" data-name="Rectangle 57" width="2" height="1"
+                transform="translate(13.834 4)" />
+            <rect id="Rectangle_58" class="cls-1" data-name="Rectangle 58" width="2" height="1"
+                transform="translate(16.834 4)" />
+            <rect id="Rectangle_59" class="cls-1" data-name="Rectangle 59" width="2" height="1"
+                transform="translate(20.834 4)" />
+            <rect id="Rectangle_60" class="cls-1" data-name="Rectangle 60" width="2" height="1"
+                transform="translate(23.834 4)" />
+            <rect id="Rectangle_61" class="cls-1" data-name="Rectangle 61" width="2" height="1"
+                transform="translate(27.834 4)" />
+            <rect id="Rectangle_62" class="cls-1" data-name="Rectangle 62" width="2" height="1"
+                transform="translate(30.834 4)" />
+            </g>
+        </g>
+    </g>
+</svg>

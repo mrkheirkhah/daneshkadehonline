@@ -1,0 +1,91 @@
+// this floated list customized for panel inputs
+// width,top,right is changed
+ul.floated-list {
+    //display: flex;
+    display: none;
+    list-style-type: none;
+    flex-direction: column;
+    row-gap: 8px;
+    font-size: 13px;
+    width: 100%;
+    z-index: 4;
+    position: absolute;
+    align-items: flex-start;
+    text-align: right;
+    font-weight: $font-weight-regular;
+    background: #fff;
+    padding: 5px;
+   max-height: 229px;
+   overflow-y: auto;
+    top: 73px;
+    right: 0px;
+    border: 1px solid #e7e2e2;
+    border-radius: 6px;
+
+    li {
+        width: 100%;
+        padding: 8px 12px;
+        cursor: pointer;
+        color: $main-dark-text-color;
+        border-radius: 4px;
+
+        &:hover {
+            color: #fff;
+            background-color: $green-color;
+
+        }
+    }
+}
+.floated-list-container.select-multiple {
+    ul.floated-list {
+        li.selected {
+            color: #fff;
+            background-color: $green-color;
+        }
+    }
+}
+.floated-list-container {
+    position: relative;
+}
+.floated-list-container.show {
+    ul.floated-list {
+        display: flex;
+    }
+}
+.floated-list-container{
+    position: relative;
+    cursor: pointer;
+    & > input {
+        cursor: pointer;
+    }
+    &::after {
+        content: '';
+        width: 12px;
+        height: 10px;
+        background-color: #898080;
+        position: absolute;
+        left: 20px;
+        top: 36px;
+        clip-path: polygon(0 0 , 100% 0, 50% 100%);
+    }
+  
+}
+@media screen and (max-width: $laptop-responsive) {
+    .floated-list-container{
+      
+        &::after {
+            left: 18px;
+            top: 33px;
+        }
+      
+    }
+    
+}
+@media screen and (max-width: $mobile-responsive) {
+    
+    ul.floated-list {
+        row-gap: 6px;
+        font-size: 11px;
+
+    }
+}

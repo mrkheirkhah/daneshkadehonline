@@ -1,0 +1,244 @@
+.panel-aside {
+    width: 28%;
+    min-width: 250px;
+    max-width: 300px;
+    display: flex;
+    position: sticky;
+    top: 12px;
+    right: 0;
+    flex-flow: column nowrap;
+    justify-content: stretch;
+    row-gap: 10px;
+    z-index: 5;
+    height: 100vh;
+    flex-grow: 1;
+
+    transition: transform .3s linear;
+
+    .panel {
+        text-align: center;
+        padding: $teacher-panel-padding;
+        box-shadow: $item-box-shadow;
+        border-radius: 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: $panel-background-color;
+
+        svg.dashed-line {
+            margin: 10px 0;
+            width: 80%;
+
+            line {
+                stroke: #707070;
+                stroke-width: 1;
+                opacity: .3;
+            }
+        }
+
+        a {
+            color: $main-dark-text-color;
+
+        }
+
+        .cls-1 {
+            fill: #212121;
+        }
+
+        &-item-container {
+            padding: 0 30px;
+            display: flex;
+            width: 100%;
+            flex-flow: column nowrap;
+            align-items: flex-start;
+            row-gap: 8px;
+            overflow: auto;
+
+            .panel-item {
+                cursor: pointer;
+                width: 100%;
+                color: white;
+                border-radius: 7px;
+                @include center-flex(row, wrap);
+                justify-content: flex-start;
+                column-gap: 15px;
+                transition: all .3s linear;
+                padding: 9px 18px;
+                font-size: $font-size-2;
+                font-weight: $font-weight-regular;
+                color: $main-dark-text-color;
+
+                .sidebar-links{
+                    display: flex;
+                    align-items: center;
+                    column-gap: 15px;
+                }
+                
+                .cls-1 {
+                    transition: all .3s linear;
+
+                }
+
+                a {
+                    @include center-flex(row, nowrap);
+                    column-gap: 15px;
+                    justify-content: flex-start;
+                    transition: all .3s linear;
+                }
+
+                &:hover,&.nuxt-link-exact-active {
+                    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08);
+                    color: $panel-background-color;
+                    background-color: $active-color;
+
+                    &>a {
+                        color: $panel-background-color;
+                    }
+
+                    .cls-1 {
+                        fill: $panel-background-color;
+                    }
+                }
+            }
+        }
+
+        .panel-item-container.top {
+            min-height: 100px;
+        }
+    }
+
+    .panel.panel-top {
+        height: 65vh;
+        overflow: hidden;
+    }
+
+    .panel.panel-bottom {
+        height: 29vh;
+    }
+
+
+    .teacher-profile {
+        &-image {
+            width: 102px;
+            height: 102px;
+            object-fit: cover;
+            padding: 3px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-top: 6px;
+            font-size: $font-size-1;
+            font-weight: $font-weight-medium;
+        }
+    }
+
+    .hamburger-button {
+        display: none;
+        direction: ltr;
+        border: 0;
+        border-radius: 12px;
+        background-color: #fbfbfb;
+        box-shadow: $item-box-shadow;
+        padding: 20px 12px;
+        cursor: pointer;
+        top: 0;
+        left: -63px;
+        position: absolute;
+
+        .hamburger-line {
+            transition: all .3s linear;
+            display: block;
+            width: 28px;
+            height: 2px;
+            background-color: $active-color;
+
+        }
+
+        .hamburger-line+.hamburger-line {
+            margin-top: 6px;
+        }
+
+        .hamburger-line:nth-child(2) {
+            width: 25px;
+        }
+
+        .hamburger-line:nth-child(3) {
+            width: 22px;
+        }
+    }
+}
+
+.panel-aside.show {
+    transform: translateX(0);
+}
+
+@media screen and (max-width: $laptop-responsive) {
+    .panel-aside {
+        width: 250px;
+        position: fixed;
+        transform: translateX(100%);
+
+        .hamburger-button {
+            display: block;
+
+        }
+
+        .panel-item-container {
+            padding: 0 15px;
+        }
+    }
+
+    .panel-aside.show {
+        .hamburger-button {
+
+            .hamburger-line:nth-child(1) {
+                transform: rotate(-130deg) translate(-5px, -6px);
+            }
+
+            .hamburger-line:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger-line:nth-child(3) {
+                width: 28px;
+                transform: rotate(130deg) translate(-6px, 6px);
+            }
+        }
+
+    }
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .panel-aside {
+
+        .teacher-profile h2 {
+            margin-top: 5px;
+            font-size: $font-size-1-mobile;
+        }
+        .teacher-profile-image {
+            width: 85px;
+            height: 85px;
+        }
+
+        .panel {
+            &-item-container {
+
+                .panel-item {
+                    font-size: $font-size-2-mobile;
+                    svg {
+                        width: 20px;
+                    }
+                }
+            }
+        }
+        .hamburger-button {
+            height: 55px;
+        }
+    }
+
+
+
+}

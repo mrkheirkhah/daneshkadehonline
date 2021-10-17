@@ -1,0 +1,14 @@
+@import '../abstracts/main-pages/mixins';
+@import '../abstracts/main-pages/variables';
+@import '@/assets/styles/core/reset';
+@import '@/assets/styles/font/fonts';
+@import '@/assets/styles/core/main-pages/typography';
+@import './about-us';
+@import './cart';
+@import './contact-us';
+@import './course';
+@import './courses-list';
+@import './frequent-questions';
+@import './index';
+@import './work-with-us';
+@import '../components/main-pages/category-list';

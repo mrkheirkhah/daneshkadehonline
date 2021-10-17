@@ -1,0 +1,13 @@
+@mixin center-flex($direction, $wrap) {    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: $direction $wrap;
+}
+@mixin custom-line-clamp($line-number: 2) {
+    -webkit-line-clamp: $line-number;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+}

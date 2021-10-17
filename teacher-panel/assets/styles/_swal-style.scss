@@ -1,0 +1,102 @@
+@import '@/assets/styles/custom-styles/abstracts/variables';
+
+.swal2-container.swal2-center > .swal2-popup {
+  display: flex;
+  align-items: flex-end;
+  flex-flow: column nowrap;
+  padding: 25px 45px;
+  position: relative;
+  border-radius: 25px;
+  background-color: #fff;
+  color: #131923;
+  width: 50vw;
+  max-height: 95vh;
+  max-width: 700px;
+}
+.swal2-close {
+  font-size: 48px;
+  color: $active-color;
+  background-color: #fff;
+  border: 0;
+  box-shadow: 0 3px 18px rgba(0, 0, 0, 0.08);
+  width: 50px;
+  height: 50px;
+  transition: all 0.3s linear;
+  font-weight: $font-weight-regular;
+  position: relative;
+  left: -25px;
+  top: -9px;
+  border-radius: 15px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+  &:hover {
+    color: $active-color;
+    box-shadow: none;
+    box-shadow: 0 3px 18px rgba($active-color, 0.28);
+  }
+}
+.swal2-styled {
+    &.swal2-confirm{
+
+        padding: 16px 22px;
+        background-color: $green-color;
+        box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08);
+        border-radius: 7px;
+        border: 0;
+        color: #fff;
+        font-weight: $font-weight-regular;
+        font-size: $font-size-3;
+        transition: background-color 0.3s linear;
+        cursor: pointer;
+        margin: 10px 0;
+      
+        &:hover {
+          background-color: $green-hover-color;
+        }
+        &.active {
+          background-color: $green-color;
+        }
+        &:focus {
+          box-shadow: none;
+        }
+    }
+    &.swal2-cancel{
+        padding: 16px 22px;
+        background-color: $active-color;
+        box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08);
+        border-radius: 7px;
+        border: 0;
+        color: #fff;
+        font-weight: $font-weight-regular;
+        font-size: $font-size-3;
+        transition: background-color 0.3s linear;
+        cursor: pointer;
+        margin: 10px;
+      
+        &:hover {
+          background-color: $active-hover-color;
+        }
+        &.active {
+          background-color: $active-color;
+        }
+        &:focus {
+          box-shadow: none;
+        }
+
+    }
+}
+.swal2-icon.swal2-warning {
+  color: $orange-color;
+  border-color: $orange-color;
+}
+.swal2-icon .swal2-icon-content {
+  margin-top: 5px;
+}
+@media screen and (max-width: $mobile-responsive) {
+    .swal2-container.swal2-center > .swal2-popup{
+        width: 80vw;
+        padding: 25px 35px;
+    }
+}

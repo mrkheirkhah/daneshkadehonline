@@ -1,0 +1,44 @@
+.panel-table.transactions {
+    .box-content {
+        row-gap: 17px;
+        .table-row {
+            padding-top: 11px;
+            padding-bottom: 24px;
+            &:not(.table-row:last-of-type) {
+                border-bottom: 1px solid #70707030;
+            }
+
+           
+            .transaction-type {
+                color: $lilac-color;
+                min-width: 60px;
+                width: 20%;
+            }
+            .transaction-state.successfull {
+                color: $green-color;
+            }
+            .transaction-state.failed {
+                color: $active-color;
+            }
+            .transaction-detail {
+                font-size: $font-size-3;
+                font-weight: $font-weight-light
+            }
+        }
+    }
+}
+@media screen and (max-width: $mobile-responsive) {
+    .panel-table.transactions {
+        .box-content {
+            row-gap: 15px;
+            .table-row {
+                padding-top: 7px;
+                padding-bottom: 20px;
+             
+    
+                .transaction-detail {
+                    font-size: $font-size-3-mobile;
+                }
+            }
+        }
+}}

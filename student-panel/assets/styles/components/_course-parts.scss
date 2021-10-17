@@ -1,0 +1,171 @@
+.course-parts {
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 13px;
+    background-color: #fff;
+    margin: 5px 0 25px;
+    cursor: pointer;
+
+    .course-part {
+        background-color: #f8f8f8;
+        border: 1px solid #ececec;
+        padding: 7px 13px;
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: .3s ease;
+
+        &:hover {
+            background-color: #ebebeb;
+        }
+
+        .name-order {
+            display: inline-flex;
+            align-items: center;
+            column-gap: 7px;
+
+            .part-order {
+                width: 47px;
+                height: 47px;
+                background-color: #8F96A2;
+                border: 3px solid #dfdfdf;
+                @include center-flex(row, nowrap);
+                padding-top: 4px;
+                color: #fff;
+                font-weight: $font-weight-bold;
+                font-size: 18px;
+                border-radius: 50%;
+            }
+
+            .name {
+                font-size: $font-size-2;
+                font-weight: $font-weight-medium;
+                color: #131923;
+            }
+        }
+
+        .info {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            font-size: $font-size-3;
+            column-gap: 7px;
+
+            svg {
+                transform: scale(.75);
+                cursor: pointer;
+
+                &:last-child:hover {
+                    path {
+                        fill: $green-hover-color;
+                    }
+                }
+            }
+
+            .isFree {
+                border-left: 1px solid #131923;
+                padding-left: 7px;
+                color: $green-color;
+            }
+        }
+    }
+
+    .course-part.notFree {
+        .isFree {
+            display: none;
+        }
+
+        svg:last-child {
+            path {
+                fill: $active-color !important;
+            }
+
+            &:hover {
+                path {
+                    fill: $active-color !important;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 570px) {
+    .course-parts {
+        display: flex;
+        flex-flow: column nowrap;
+        row-gap: 13px;
+        background-color: #fff;
+        margin: 5px 0 25px;
+        cursor: pointer;
+
+        .course-part {
+            padding: 5px 11px;
+            border-radius: 8px;
+
+
+            .name-order {
+                .part-order {
+                    width: 40px;
+                    min-width: 40px;
+                    height: 40px;
+                    min-height: 40px;
+                    font-size: 14px;
+                }
+
+                .name {
+                    font-size: $font-size-3;
+                }
+            }
+
+            .info {
+                font-size: $font-size-3-mobile;
+
+                svg {
+                    transform: scale(.65);
+                }
+            }
+        }
+
+    }
+}
+@media screen and (max-width: $mobile-responsive) {
+    
+    .course-parts {
+
+
+        .course-part {
+            padding: 5px 8px;
+
+
+            .name-order {
+                .part-order {
+                    font-size: 14px;
+                }
+
+                .name {
+                    font-size: 12px;
+                }
+            }
+
+            .info {
+
+                .duration,
+                svg:first-of-type,
+                .isFree {
+                    display: none;
+                }
+
+                svg {
+                    transform: scale(.6);
+                }
+
+                svg:last-of-type {
+                    path {
+                        fill: $green-color;
+                    }
+                }
+            }
+        }
+
+    }
+}

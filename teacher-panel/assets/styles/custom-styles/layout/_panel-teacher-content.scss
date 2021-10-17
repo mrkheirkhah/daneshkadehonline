@@ -1,0 +1,68 @@
+.panel-teacher-content-item {
+    width: 100%;
+    border-radius: 10px;
+
+    .section-header {
+        text-align: center;
+        width: 100%;
+        font-size: $font-size-1;
+        color: $green-color;
+        margin-bottom: 10px;
+        &.red {
+            color: $active-color;
+        }
+    }
+
+    .section-title {
+        margin: 27px 0 17px;
+        display: flex;
+        flex-wrap: wrap;
+        svg.dashed-line {
+            width: 100%;
+
+            line {
+                stroke: #AEAEAE70;
+                stroke-width: 1;
+                opacity: .3;
+            }
+        }
+
+        .section-title-text {
+            font-size: $font-size-1;
+            position: relative;
+            top: -24px;
+            background-color: #fff;
+            width: fit-content;
+            padding: 0 5px;
+            font-weight: $font-weight-medium;
+            color: $main-dark-text-color;
+        }
+    }
+
+
+}
+.panel-teacher-content-item.new-password {
+    background-color: #fff;
+    padding: 25px 35px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+@media screen and (max-width: $mobile-responsive) {
+    .panel-teacher-content-item {
+        .section-header {
+            font-size: $font-size-2-mobile;
+            color: $green-color;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            .section-title-text {
+                font-size: $font-size-2-mobile;
+                top: -19px
+            }
+        }
+    }
+    .panel-teacher-content-item.new-password {
+        padding: 23px 20px;
+    }
+}

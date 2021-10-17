@@ -1,0 +1,17 @@
+body {
+    direction: rtl;
+    font-family: iSans, sans-serif, serif;
+    background-color: $admin-teacher-bg-color;
+
+
+    button {
+        font-family: iSans, sans-serif, serif;
+    }
+
+    input,
+    textarea,
+    .persian-number {
+        font-family: IranSansX, iSans, sans-serif, serif !important;
+    }
+
+}

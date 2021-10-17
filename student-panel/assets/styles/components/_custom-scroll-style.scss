@@ -1,0 +1,15 @@
+.custom-scrollbar {
+
+    &::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+        border-radius: 20px;
+        background-color: #70707030;
+        padding: 0 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $active-color;
+        border-radius: 20px;
+    }
+}
