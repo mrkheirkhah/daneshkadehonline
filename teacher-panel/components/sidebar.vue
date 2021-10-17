@@ -67,7 +67,7 @@
         </div>
       </div>
       <div v-else class="panel-item-container top custom-scrollbar">
-        <nuxt-link class="panel-item" to="/">
+        <nuxt-link class="panel-item" to="/" v-intro="'The content of tooltip'">
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"
@@ -293,6 +293,8 @@ export default {
     if (this.$store.state.login.name != "") {
       this.name = this.$store.state.login.name;
       this.loading = false;
+
+      this.$intro().start();
     } else {
       const getData = await this.$axios
         .post(
@@ -316,6 +318,7 @@ export default {
       }
     }
   },
+  mounted() {},
   methods: {
     toggle_teacher_panel() {
       const panel_teacher_aside = document.querySelector(".panel-teacher-aside");

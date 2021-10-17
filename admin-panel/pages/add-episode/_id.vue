@@ -159,13 +159,11 @@ export default {
         });
       } else {
         formData.append("CourseId", this.$route.params.id);
-        formData.append("EpisodeTitle  ", this.videoTitle);
-        formData.append("EpisodeTime  ", this.videoTime);
-        formData.append("EpisodeVideo ", imagefile.files[0]);
-        formData.append("IsFree ", this.isFree);
-        for (var value of formData.values()) {
-          console.log(value);
-        }
+        formData.append("EpisodeTitle", this.videoTitle);
+        formData.append("EpisodeTime", this.videoTime);
+        formData.append("EpisodeVideo", imagefile.files[0]);
+        formData.append("IsFree", this.isFree);
+
         const uploadResponse = await this.$axios.post(
           "/api/Admin/AdminCourse/AddCourseEpisode",
           formData,
@@ -181,12 +179,18 @@ export default {
             }.bind(this),
           }
         );
-        console.log(uploadResponse);
         if (
           uploadResponse.data.statusCode == 200 &&
           uploadResponse.data.message == "Success"
         ) {
+          this.$swal({
+            text: "آپلود شد!",
+            icon: "success",
+            showCloseButton: true,
+            confirmButtonText: "ادامه",
+          });
           this.getVideos();
+          this.videoPartName = "";
           this.episodId = "";
           this.videoTitle = "";
           this.videoTime = "";
@@ -234,16 +238,17 @@ export default {
           confirmButtonText: "ادامه",
         });
       } else {
-        formData.append("EpisodeId ", this.episodId);
-        formData.append("EpisodeTitle  ", this.videoTitle);
-        formData.append("EpisodeTime  ", this.videoTime);
-        formData.append("EpisodeVideo ", imagefile.files[0]);
-        formData.append("IsFree ", this.isFree);
+        formData.append("EpisodeId", this.episodId);
+        formData.append("EpisodeTitle", this.videoTitle);
+        formData.append("EpisodeTime", this.videoTime);
+        formData.append("EpisodeVideo", imagefile.files[0]);
+        formData.append("IsFree", this.isFree);
         const editEpisodeResponse = await this.$axios.post(
-          `/api/Admin/AdminCourse/EditCourseEpisode/${this.episodId}`,
+          `/api/Admin/AdminCourse/EditCourseEpisode`,
           formData,
           {
             headers: {
+              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${this.$cookies.get("key")}`,
             },
             onUploadProgress: function (progressEvent) {
@@ -254,18 +259,25 @@ export default {
             },
           }
         );
-        console.log(editEpisodeResponse);
         if (
           editEpisodeResponse.data.statusCode == 200 &&
           editEpisodeResponse.data.message == "Success"
         ) {
+          this.$swal({
+            text: "آپلود شد!",
+            icon: "success",
+            showCloseButton: true,
+            confirmButtonText: "ادامه",
+          });
           this.getVideos();
           this.episodId = "";
+          this.videoPartName = "";
           this.videoTitle = "";
           this.videoTime = "";
           this.uploadedPart = "";
           this.uploadPersentage = 0;
           this.isFree = false;
+          this.edit = false;
         } else {
           this.$swal({
             text: "مشکلی رخ داده است!لطفا بعدا دوباره تلاش کنید",

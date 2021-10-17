@@ -144,7 +144,6 @@ export default {
     async uploadVideo() {
       var formData = new FormData();
       var imagefile = document.querySelector("#upload-course-parts");
-      formData.append("file", imagefile.files[0]);
       if (this.videoTitle == "" || this.videoTime == "" || this.episodeName == "") {
         this.$swal({
           text: "اطلاعات ناقص است",
@@ -153,15 +152,14 @@ export default {
           confirmButtonText: "ادامه",
         });
       } else {
+        formData.append("courseId", this.$route.params.id);
+        formData.append("EpisodeTitle", this.videoTitle);
+        formData.append("EpisodeTime", this.videoTime);
+        formData.append("EpisodeVideo", imagefile.files[0]);
+        formData.append("IsFree", this.isFree);
         const uploadResponse = await this.$axios.post(
           "/api/Teacher/TeacherCourse/AddCourseEpisode",
-          {
-            courseId: Number(this.$route.params.id),
-            episodeTitle: this.videoTitle,
-            episodeTime: this.videoTime,
-            episodeVideo: formData,
-            isFree: this.isFree,
-          },
+          formData,
           {
             headers: {
               Authorization: `Bearer ${this.$cookies.get("key")}`,
@@ -178,6 +176,12 @@ export default {
           uploadResponse.data.statusCode == 200 &&
           uploadResponse.data.message == "Success"
         ) {
+          this.$swal({
+            text: "آپلود شد!",
+            icon: "success",
+            showCloseButton: true,
+            confirmButtonText: "ادامه",
+          });
           this.episodId = "";
           this.videoTitle = "";
           this.videoTime = "";
@@ -220,7 +224,6 @@ export default {
     async submitEditEpisode() {
       var formData = new FormData();
       var imagefile = document.querySelector("#upload-course-parts");
-      formData.append("file", imagefile.files[0]);
       if (this.videoTitle == "" || this.videoTime == "") {
         this.$swal({
           text: "اطلاعات ناقص است",
@@ -229,15 +232,14 @@ export default {
           confirmButtonText: "ادامه",
         });
       } else {
+        formData.append("episodeId", this.episodId);
+        formData.append("EpisodeTitle", this.videoTitle);
+        formData.append("EpisodeTime", this.videoTime);
+        formData.append("EpisodeVideo", imagefile.files[0]);
+        formData.append("IsFree", this.isFree);
         const editEpisodeResponse = await this.$axios.post(
-          `/api/Teacher/TeacherCourse/EditCourseEpisode/${this.episodId}`,
-          {
-            episodeId: this.episodId,
-            episodeTitle: this.videoTitle,
-            episodeTime: this.videoTime,
-            episodeVideo: formData,
-            isFree: this.isFree,
-          },
+          `/api/Teacher/TeacherCourse/EditCourseEpisode`,
+          formData,
           {
             headers: {
               Authorization: `Bearer ${this.$cookies.get("key")}`,
@@ -254,12 +256,19 @@ export default {
           editEpisodeResponse.data.statusCode == 200 &&
           editEpisodeResponse.data.message == "Success"
         ) {
+          this.$swal({
+            text: "آپلود شد!",
+            icon: "success",
+            showCloseButton: true,
+            confirmButtonText: "ادامه",
+          });
           this.getVideos();
           this.episodId = "";
           this.videoTitle = "";
           this.videoTime = "";
           this.uploadedPart = "";
           this.uploadPersentage = 0;
+          this.edit = false;
           this.isFree = false;
         } else {
           this.$swal({

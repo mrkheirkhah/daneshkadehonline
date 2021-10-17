@@ -2064,6 +2064,44 @@ form .form-footer-hint {
   color: #FFB703;
 }
 
+.coming-soon-box {
+  width: 100%;
+  height: calc(100vh - 100px);
+  background: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 30px;
+  border-radius: 10px;
+  -webkit-box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08);
+          box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08);
+  color: #06D6A0;
+}
+
+.coming-soon-box.ban {
+  color: #e13535;
+  height: 95vh;
+}
+
+.coming-soon-box.not-found {
+  height: 95vh;
+  color: #e13535;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.coming-soon-box.not-found .green {
+  color: #06D6A0;
+}
+
 @media screen and (max-width: 992px) {
   .panel-visitor-content {
     -webkit-box-flex: unset;

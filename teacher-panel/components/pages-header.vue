@@ -160,7 +160,7 @@
               </div>
             </div>
             <div class="hover-box__footer">
-              <a href="#">مشاهده همه</a>
+              <a href="https://daneshkadeonline.ir/articles-list">مشاهده همه</a>
             </div>
           </div>
         </button>
@@ -434,9 +434,9 @@ export default {
       }
     },
     async getNews() {
-      const alerts = await this.$axios.get("/api/News/Index");
-      if (alerts.data.statusCode == "200" && alerts.data.message == "Success") {
-        this.news = alerts.data.data.newsItems;
+      const news = await this.$axios.get("/api/News/Index");
+      if (news.data.statusCode == "200" && news.data.message == "Success") {
+        this.news = news.data.data.newsItems;
       }
     },
     async logout() {

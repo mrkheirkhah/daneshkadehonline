@@ -2122,6 +2122,11 @@ ul.floated-list.in-panel li:hover {
   background-color: #FFB703;
 }
 
+.floated-list-container.select-multiple ul.floated-list li.selected {
+  color: #fff;
+  background-color: #FFB703;
+}
+
 .floated-list-container.in-panel.show ul.floated-list {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -5081,6 +5086,39 @@ ul.floated-list.in-panel li:hover {
       -ms-flex-positive: 1;
           flex-grow: 1;
   width: 72%;
+}
+
+.coming-soon-box {
+  width: 100%;
+  height: calc(100vh - 100px);
+  background: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 30px;
+  border-radius: 10px;
+  -webkit-box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08);
+          box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.08);
+  color: #06D6A0;
+}
+
+.coming-soon-box.not-found, .coming-soon-box.ban {
+  height: 95vh;
+  color: #e13535;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.coming-soon-box.not-found .green, .coming-soon-box.ban .green {
+  color: #06D6A0;
 }
 
 @media screen and (max-width: 992px) {

@@ -609,7 +609,7 @@ export default {
           },
         }),
       ]);
-      console.log(getCourseData);
+      // console.log(getCourseData);
       if (
         getCourseGroups.data.statusCode == 200 &&
         getCourseGroups.data.message == "Success" &&
@@ -850,7 +850,7 @@ export default {
         }
       );
       const getData = editableData.data.data;
-      console.log(getData);
+      // console.log(getData);
       if (editableData.data.statusCode == 200 && editableData.data.message == "Success") {
         this.showAddCourse = true;
         for (const n of this.courseGroups) {

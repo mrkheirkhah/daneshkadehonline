@@ -193,6 +193,11 @@
                 />
                 <ul class="floated-list custom-scrollbar">
                   <li
+                    :class="
+                      needImage.includes(option.id) || dontNeedImage.includes(option.id)
+                        ? 'selected'
+                        : ''
+                    "
                     v-for="option in degree"
                     @click="chooseDegre($event, option.id, option.imageNeed)"
                     :key="option.index"
@@ -443,7 +448,7 @@ export default {
         },
       }),
     ]);
-    console.log(getProfData);
+    // console.log(getProfData);
     if (
       getdegre.data.statusCode == 200 &&
       getDocData.data.statusCode == 200 &&
@@ -472,9 +477,14 @@ export default {
         ? (this.email = getProfData.data.data.email)
         : {};
       for (const n of this.degree) {
-        if (getProfData.data.data.degreeEducationId === n.id) {
-          this.drop = n.title;
-          this.selectedDegree = n.id;
+        for (const j of getProfData.data.data.selectedEducations) {
+          if (j == n.id) {
+            if (n.imageNeed == true) {
+              this.needImage.push(j);
+            } else {
+              this.dontNeedImage.push(j);
+            }
+          }
         }
       }
       this.loading = false;
@@ -486,6 +496,7 @@ export default {
         confirmButtonText: "تلاش مجدد!",
       });
     }
+    // this.$intro().start();
   },
   data() {
     return {

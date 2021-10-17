@@ -1,6 +1,6 @@
 <template>
   <div class="panel-student">
-    <div class="panel-student-content">
+    <div class="panel-student-content" v-if="error.statusCode === 404">
       <div class="coming-soon-box not-found">
         <h1>این صفحه پیدا نشد</h1>
         <br />

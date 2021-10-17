@@ -1,4 +1,4 @@
-var webpack = require('webpack')
+import webpack from 'webpack'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -30,7 +30,8 @@ export default {
 
     // croppie
     { src: '~/plugins/croppie.js', ssr: false },
-    '@/plugins/axios'
+    '@/plugins/axios',
+    { src: '~plugins/vue-introjs.js', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -65,6 +66,11 @@ export default {
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    plugins: [
+      new webpack.ProvidePlugin({
+          introJs: ['intro.js'],
+      }),
+    ]
   },
   // env:{
   //   baseUrl:process.env.BASE_URL || 'https://api.daneshkadeonline.ir/'
