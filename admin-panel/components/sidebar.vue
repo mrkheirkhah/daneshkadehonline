@@ -10,9 +10,10 @@
       <div class="panel-top panel">
         <div class="profile">
           <img
+            v-if="loading == false"
             :src="'https://api.daneshkadeonline.ir/Images/Public/Admin/' + profImage"
             class="profile-image"
-            alt="تصویر پروفایل مدرس"
+            alt="تصویر پروفایل ادمین"
           />
           <h2>{{ name }}</h2>
         </div>
@@ -804,34 +805,38 @@ export default {
     return {
       name: "",
       profImage: "",
+      loading: true,
     };
   },
   async mounted() {
+    this.loading = true;
     const token = this.$cookies.get("key");
-    if (this.$store.state.login.name != "") {
-      this.name = this.$store.state.login.name;
+    // if (this.$store.state.login.name != "") {
+    //   this.name = this.$store.state.login.name;
+    //   this.profImage = this.$store.state.login.profileImageName;
+    //   this.loading = false;
+    // } else {
+    const getData = await this.$axios
+      .post(
+        "/api/Admin/AdminAccount/check-admin-auth",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("key")}`,
+          },
+        }
+      )
+      .catch((e) => {
+        console.log(e);
+      });
+    if (getData.data.statusCode == "200") {
+      const name = getData.data.data.adminName;
+      const phone = getData.data.data.phoneNumber;
+      this.name = name;
+      this.profImage = getData.data.data.profileImageName;
       this.loading = false;
-    } else {
-      const getData = await this.$axios
-        .post(
-          "/api/Admin/AdminAccount/check-admin-auth",
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
-          }
-        )
-        .catch((e) => {
-          console.log(e);
-        });
-      if (getData.data.statusCode == "200") {
-        const name = getData.data.data.adminName;
-        const phone = getData.data.data.phoneNumber;
-        this.name = name;
-        this.profImage = getData.data.data.profileImageName;
-      }
     }
+    // }
   },
   methods: {
     toggle_teacher_panel() {

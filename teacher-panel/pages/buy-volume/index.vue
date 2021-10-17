@@ -53,10 +53,21 @@
       </template>
       <template v-else>
         <div class="volume" v-for="volume in volumes" :key="volume.id">
-          <h3 class="volume-title">{{ volume.title }}</h3>
+          <h3 class="volume-title persian-number">{{ volume.title }}</h3>
           <span class="volume-price persian-number">{{ volume.price }}</span>
           <small class="currency">هزار تومان</small>
-          <a href="#" class="volume-btn" @click.prevent="buyVolume(volume)">خرید حجم</a>
+          <form
+            style="display: none"
+            action="https://sep.shaparak.ir/OnlinePG/OnlinePG"
+            method="post"
+            :id="'volume-form-' + volume.id"
+          >
+            <input type="hidden" name="Token" :id="'volume-' + volume.id" />
+            <input name="GetMethod" type="text" value="true" style="visibility: hidden" />
+          </form>
+          <a href="#" class="volume-btn" @click.prevent="buyVolume(volume.id)"
+            >خرید حجم</a
+          >
         </div>
       </template>
     </div>
@@ -76,8 +87,27 @@ export default {
       loading: true,
     };
   },
-  mounted() {
-    // this.$router.push("/coming-soon");
+  async mounted() {
+    if (Object.keys(this.$route.query).length!= 0) {
+      const datac = await this.$axios.get(
+        `/api/Payment/VerifyPaymentVolume?MID=${this.$route.query["MID"]}&RefNum=${this.$route.query["RefNum"]}&ResNum=${this.$route.query["ResNum"]}&State=${this.$route.query["State"]}&TraceNo=${this.$route.query["TraceNo"]}&Amount=${this.$route.query["Amount"]}&Rrn=${this.$route.query["Rrn"]}&SecurePan=${this.$route.query["SecurePan"]}&Status=${this.$route.query["Status"]}&Token=${this.$route.query["Token"]}&HashedCardNumber=${this.$route.query["HashedCardNumber"]}`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("key")}`,
+          },
+        }
+      );
+      if (datac.data.statusCode == 200 && datac.data.message == "Success") {
+        this.$swal({
+          text: "پرداخت انجام شد",
+          icon: "success",
+          showCloseButton: true,
+          confirmButtonText: "تایید",
+        }).then(() => {
+          this.$router.replace({ query: null });
+        });
+      }
+    }
   },
   async beforeMount() {
     const getVolumes = await this.$axios.get("/api/Teacher/TeacherBuyVolume/GetVolumes", {
@@ -105,8 +135,18 @@ export default {
     }
   },
   methods: {
-    buyVolume(volume) {
-      console.log(volume);
+    async buyVolume(id) {
+      const token = await this.$axios.get(`/api/Payment/GenerateTokenVolume/${id}`, {
+        headers: {
+          Authorization: `Bearer ${this.$cookies.get("key")}`,
+        },
+      });
+      if (token.data.statusCode == 200 && token.data.message == "Success") {
+        const volumeId = "volume-" + id;
+        const formTag = document.getElementById(volumeId);
+        formTag.setAttribute("value", token.data.data);
+        document.getElementById("volume-form-" + id).submit();
+      }
     },
   },
 };

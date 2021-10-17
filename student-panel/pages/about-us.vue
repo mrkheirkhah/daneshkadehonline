@@ -9,35 +9,24 @@
       <main class="container mt-5">
         <div class="get-know-us">
           <h3 class="rb-title">آشنایی با ما</h3>
-          <div class="detail">
-            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و استفاده از طراحان
-            گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-            و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-            کاربردی می باشدلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
-            استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و
-            سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع
-            با هدف بهبود ابزارهای کاربردی می باشدلورم ایپسوم متن ساختگی با تولید سادگی
-            نامفهوم از صنعت چاپ و استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه
-            و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و
-            کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
-          </div>
+          <div class="detail">{{ aboutData.description }}</div>
 
           <div class="team-information row">
             <div class="istatistic-table">
               <div class="table-cell">
-                <h3 class="count persian-number">500</h3>
+                <h3 class="count persian-number">{{ aboutData.coursesOrganized }}</h3>
                 <span class="detail">دوره های برگزار شده</span>
               </div>
               <div class="table-cell">
-                <h3 class="count persian-number">104</h3>
+                <h3 class="count persian-number">{{ aboutData.ongoingCourses }}</h3>
                 <span class="detail">دوره های در حال برگزاری</span>
               </div>
               <div class="table-cell">
-                <h3 class="count persian-number">742</h3>
+                <h3 class="count persian-number">{{ aboutData.regularCustomers }}</h3>
                 <span class="detail">تعداد مشتریان ثابت ما</span>
               </div>
               <div class="table-cell">
-                <h3 class="count persian-number">25</h3>
+                <h3 class="count persian-number">{{ aboutData.teamMembers }}</h3>
                 <span class="detail">اعضای تیم ما</span>
               </div>
             </div>
@@ -67,7 +56,7 @@
             <div class="members-container swiper-wrapper">
               <div
                 class="member swiper-slide"
-                v-for="member in aboutData"
+                v-for="member in teamMembers"
                 :key="member.id"
               >
                 <div class="image-container">
@@ -387,7 +376,7 @@ export default {
     },
     async getAboutData() {
       const aboutData = await this.$axios.get("/api/Home/About");
-      console.log(aboutData);
+      // console.log(aboutData);
       this.aboutData = aboutData.data.data;
     },
   },
