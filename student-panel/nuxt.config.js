@@ -30,10 +30,7 @@ export default {
   plugins: [
     '@/plugins/axios.js',
     { src: '@/plugins/vue-awesome-swiper', mode: 'client' },
-    // {
-    //   src: '@/plugins/our-videoplayer', mode: 'client'
-    // }
-
+    { src: '~/plugins/vue-plyr', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

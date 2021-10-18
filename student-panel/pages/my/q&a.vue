@@ -44,6 +44,7 @@
             class="record-btn endR"
             v-if="recordedVoice == ''"
             @mousedown="startRecord"
+            @touchstart="startRecord"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -360,6 +361,13 @@ export default {
           audioChunks.push(event.data);
         });
         document.addEventListener("mouseup", () => {
+          clearInterval(this.timerInterval);
+          mediaRecorder.stop();
+          stream
+            .getTracks() // get all tracks from the MediaStream
+            .forEach((track) => track.stop());
+        });
+        document.addEventListener("touchend", () => {
           clearInterval(this.timerInterval);
           mediaRecorder.stop();
           stream

@@ -691,7 +691,7 @@
                 </a>
               </header>
               <client-only>
-                <div class="custom-video-player">
+                <!-- <div class="custom-video-player">
                   <div class="video-container" tabindex="0" id="video-container">
                     <div class="playback-animation">
                       <svg class="playback-icons">
@@ -794,7 +794,20 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
+                <vue-plyr>
+                  <video
+                    controls
+                    crossorigin
+                    playsinline
+                    data-poster="
+                        'https://api.daneshkadeonline.ir/Images/Public/Course/' +
+                        courseDetail.imageName
+                      "
+                  >
+                    <source id="videoSrc" src="" type="video/mp4" />
+                  </video>
+                </vue-plyr>
               </client-only>
               <div class="course-parts">
                 <div
