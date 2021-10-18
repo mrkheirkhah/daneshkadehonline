@@ -30,8 +30,8 @@
                 <label for="upload-course-parts" class="cover-btn">انتخاب</label>
               </span>
             </div>
-            <span class="hint-text" v-if="uploadPersentage != ''">
-              در حال آپلود : {{ uploadPersentage }}درصد
+            <span class="hint-text" v-if="uploadPercentage > 0">
+              در حال آپلود : {{ uploadPercentage }} درصد (لطفا منتظر بمانید)
             </span>
           </div>
           <label for="" class="form-row-col">
@@ -127,7 +127,7 @@ export default {
       edit: false,
       episodId: "",
       episodeName: "",
-      uploadPersentage: "",
+      uploadPercentage: "",
     };
   },
   methods: {
@@ -165,11 +165,10 @@ export default {
               Authorization: `Bearer ${this.$cookies.get("key")}`,
             },
             onUploadProgress: function (progressEvent) {
-              let uploadPercentage = parseInt(
+              this.uploadPercentage = parseInt(
                 Math.round((progressEvent.loaded / progressEvent.total) * 100)
               );
-              this.uploadPersentage = uploadPercentage;
-            },
+            }.bind(this),
           }
         );
         if (
@@ -181,15 +180,16 @@ export default {
             icon: "success",
             showCloseButton: true,
             confirmButtonText: "ادامه",
+          }).then(() => {
+            this.episodId = "";
+            this.videoTitle = "";
+            this.videoTime = "";
+            this.uploadedPart = "";
+            this.episodeName = "";
+            this.isFree = false;
+            this.uploadPercentage = "";
+            this.getVideos();
           });
-          this.episodId = "";
-          this.videoTitle = "";
-          this.videoTime = "";
-          this.uploadedPart = "";
-          this.episodeName = "";
-          this.isFree = false;
-          this.uploadPersentage = 0;
-          this.getVideos();
         }
       }
     },
@@ -245,11 +245,10 @@ export default {
               Authorization: `Bearer ${this.$cookies.get("key")}`,
             },
             onUploadProgress: function (progressEvent) {
-              let uploadPercentage = parseInt(
+              this.uploadPercentage = parseInt(
                 Math.round((progressEvent.loaded / progressEvent.total) * 100)
               );
-              this.uploadPersentage = uploadPercentage;
-            },
+            }.bind(this),
           }
         );
         if (
@@ -261,15 +260,16 @@ export default {
             icon: "success",
             showCloseButton: true,
             confirmButtonText: "ادامه",
+          }).then(() => {
+            this.getVideos();
+            this.episodId = "";
+            this.videoTitle = "";
+            this.videoTime = "";
+            this.uploadedPart = "";
+            this.uploadPercentage = "";
+            this.edit = false;
+            this.isFree = false;
           });
-          this.getVideos();
-          this.episodId = "";
-          this.videoTitle = "";
-          this.videoTime = "";
-          this.uploadedPart = "";
-          this.uploadPersentage = 0;
-          this.edit = false;
-          this.isFree = false;
         } else {
           this.$swal({
             text: "مشکلی رخ داده است!لطفا بعدا دوباره تلاش کنید",
