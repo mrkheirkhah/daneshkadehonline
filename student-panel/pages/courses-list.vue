@@ -47,7 +47,7 @@
                     <template v-else>
                       <li
                         :class="group.courseGroups == null ? '' : 'has-list'"
-                        @click="filterThisPage(group.id)"
+                        @click="filterThisPage(group.id,$event)"
                         v-for="group in groups"
                         :key="group.id"
                         v-if="group.parentId == null"
@@ -66,7 +66,7 @@
                           <template v-for="subGroup in group.courseGroups">
                             <li
                               :class="subGroup.courseGroups == null ? '' : 'has-list'"
-                              @click="filterThisPage(subGroup.id)"
+                              @click="filterThisPage(subGroup.id,$event)"
                               :key="subGroup.id"
                             >
                               <div
@@ -84,7 +84,7 @@
                                 <template v-for="subTwoGroup in subGroup.courseGroups">
                                   <li
                                     :key="subTwoGroup.id"
-                                    @click="filterThisPage(subTwoGroup.id)"
+                                    @click="filterThisPage(subTwoGroup.id,$event)"
                                   >
                                     {{ subTwoGroup.groupTitle }}
                                   </li>
@@ -358,7 +358,8 @@ export default {
       event.target.parentNode.classList.toggle("open");
       event.stopPropagation();
     },
-    filterThisPage(id) {
+    filterThisPage(id,event) {
+      event.stopPropagation() 
       this.$router.push("/courses-list?filter=" + id);
     },
     async orderBy(event, id) {
