@@ -322,7 +322,7 @@ export default {
         this.headerGroups = groups.data.data;
       }
     }
-    if (this.$route.query != undefined) {
+    if (Object.keys(this.$route.query).length != 0) {
       const courses = await this.$axios.get(
         this.$route.query.filter != undefined && this.$route.query.isPackage != undefined
           ? `/api/Course/Index?courseGroupId=${this.$route.query.filter}&isPackage=${this.$route.query.isPackage}`

@@ -1584,13 +1584,13 @@ export default {
     if (this.$route.params.id == undefined || isNaN(this.$route.params.id)) {
       this.$router.push("/courses-list");
     }
-    let myIp = "";
+    var myIp = "";
     await fetch("https://api.ipify.org?format=json")
       .then((x) => x.json())
       .then(({ ip }) => {
         myIp = ip;
       });
-    const [course, comments, questions] = await Promise.all([
+    var [course, comments, questions] = await Promise.all([
       this.$axios.get(`/api/Course/Show/${this.$route.params.id}?ip=${myIp}`),
       this.getComments(),
       this.getQuestions(),
@@ -1611,7 +1611,7 @@ export default {
   },
   async mounted() {
     if (this.$cookies.get("key")) {
-      const getData = await this.$axios.post(
+      var getData = await this.$axios.post(
         "/api/Student/StudentAccount/check-student-auth",
         {},
         {
@@ -1629,8 +1629,8 @@ export default {
         this.studentIsLogin = false;
       }
     } else if (this.$cookies.get("refreshToken")) {
-      const token = this.$cookies.get("refreshToken");
-      const getToken = await this.$axios.post("/api/Student/StudentAccount/refresh", {
+      var token = this.$cookies.get("refreshToken");
+      var getToken = await this.$axios.post("/api/Student/StudentAccount/refresh", {
         refreshToken: token,
       });
       if (getToken.data.statusCode == 200 && getToken.data.message == "Success") {
@@ -1645,7 +1645,7 @@ export default {
     await this.commentLiked(this.$route.params.id);
 
     // if (!process.server && !window.videoPlayer) {
-    const script = document.createElement("script");
+    var script = document.createElement("script");
     script.onload = this.onScriptLoaded;
     script.type = "text/javascript";
     script.src = "/our-videoplayer/index.js";
@@ -1667,7 +1667,7 @@ export default {
 
     async display(videoStream) {
       var video = document.getElementById("videoSrc");
-      let r = await this.$axios.get("/api2/2010/05/sintel/trailer.mp4", {
+      var r = await this.$axios.get("/api2/2010/05/sintel/trailer.mp4", {
         headers: {
           Authorization: `Bearer ${this.$cookies.get("key")}`,
         },
@@ -1676,17 +1676,17 @@ export default {
 
     async getQuestions() {
       this.messageGroups = [];
-      const questions = await this.$axios.get(
+      var questions = await this.$axios.get(
         `/api/Course/GetQuestions?courseId=${this.$route.params.id}`
       );
-      for (const eachMessage of questions.data.data.questionItems) {
+      for (var eachMessage of questions.data.data.questionItems) {
         if (eachMessage.parentId == null) {
-          let group = [];
+          var group = [];
           group.push(eachMessage);
           this.messageGroups.push(group);
         } else {
-          for (const i of this.messageGroups) {
-            for (const j of i) {
+          for (var i of this.messageGroups) {
+            for (var j of i) {
               if (eachMessage.parentId == j.questionId) {
                 i.push(eachMessage);
               }
@@ -1696,7 +1696,7 @@ export default {
       }
     },
     async IsUserInCourse() {
-      const userInCourseResp = await this.$axios.get(
+      var userInCourseResp = await this.$axios.get(
         `/api/Course/IsUserInCourse/${this.$route.params.id}`,
         {
           headers: {
@@ -1709,21 +1709,21 @@ export default {
     },
     async getComments() {
       this.commentGroups = [];
-      const comments = await this.$axios.get(
+      var comments = await this.$axios.get(
         `/api/Course/GetComments/${this.$route.params.id}`
       );
       if (comments.data.statusCode == 200 && comments.data.message == "Success") {
-        for (const comment of comments.data.data) {
+        for (var comment of comments.data.data) {
           if (comment.parentId == null) {
-            let group = [];
+            var group = [];
             group.push(comment);
             this.commentGroups.push(group);
           }
         }
-        for (const comment of comments.data.data) {
+        for (var comment of comments.data.data) {
           if (comment.parentId != null) {
-            for (const i of this.commentGroups) {
-              for (const j of i) {
+            for (var i of this.commentGroups) {
+              for (var j of i) {
                 if (comment.parentId == j.commentId) {
                   i.push(comment);
                 }
@@ -1747,7 +1747,7 @@ export default {
     },
     async addComment() {
       if (!this.$cookies.get("key") && !this.$cookies.get("refreshToken")) {
-        const commentResp = await this.$axios.post("/api/Course/AddComment", {
+        var commentResp = await this.$axios.post("/api/Course/AddComment", {
           id: this.$route.params.id,
           parentId: this.replayToCommentId == "" ? null : this.replayToCommentId,
           userName: this.commentName,
@@ -1771,7 +1771,7 @@ export default {
       }
     },
     async commentLogin() {
-      const commentResp = await this.$axios.post(
+      var commentResp = await this.$axios.post(
         "/api/Course/AddComment",
         {
           id: this.$route.params.id,
@@ -1807,7 +1807,7 @@ export default {
       }
     },
     async buyLogin() {
-      const buyResp = await this.$axios.get(
+      var buyResp = await this.$axios.get(
         `/api/Student/StudentOrder/BuyCourse/${this.$route.params.id}`,
         {
           headers: {
@@ -1832,8 +1832,8 @@ export default {
       }
     },
     async refreshToken() {
-      const token = this.$cookies.get("refreshToken");
-      const getToken = await this.$axios.post("/api/Student/StudentAccount/refresh", {
+      var token = this.$cookies.get("refreshToken");
+      var getToken = await this.$axios.post("/api/Student/StudentAccount/refresh", {
         refreshToken: token,
       });
       if (getToken.data.statusCode == 200 && getToken.data.message == "Success") {
@@ -1850,12 +1850,11 @@ export default {
       document
         .querySelector("#videoSrc")
         .setAttribute("src", "https://api.daneshkadeonline.ir/Course/Video/" + id);
-      const videoPlayer = document.querySelector("video");
+      var videoPlayer = document.querySelector("video");
       videoPlayer.load();
-      // videoPlayer.play();
     },
     async downloadAttachAudio(id) {
-      const audioresp = await this.$axios.get(
+      var audioresp = await this.$axios.get(
         "/api/Student/StudentQuestion/GetQuestionAudioBase64/" + id,
         {
           headers: {
@@ -1865,19 +1864,19 @@ export default {
       );
 
       if (audioresp.data.statusCode == 200 && audioresp.data.message == "Success") {
-        const audioPlayerModal = document.querySelector(".audioPlayerModal");
+        var audioPlayerModal = document.querySelector(".audioPlayerModal");
         this.audioBase64Data = audioresp.data.data.audioBase64;
         audioPlayerModal.style.display = "flex";
         // audioPlayerModal.style.visibility = "visible";
       }
     },
     closePlayer() {
-      const audioPlayerModal = document.querySelector(".audioPlayerModal");
+      var audioPlayerModal = document.querySelector(".audioPlayerModal");
       this.audioBase64Data = "";
       audioPlayerModal.style.display = "none";
     },
     async downloadAttachFile(id) {
-      const download = await this.$axios.get(
+      var download = await this.$axios.get(
         "/api/Student/StudentQuestion/GetQuestionAttachImageBase64/" + id,
         {
           headers: {
@@ -1902,14 +1901,14 @@ export default {
       }
     },
     async seeResponses(id) {
-      const msgResp = await this.$axios.get(`/api/Course/GetQuestionResponses/${id}`, {
+      var msgResp = await this.$axios.get(`/api/Course/GetQuestionResponses/${id}`, {
         headers: {
           Authorization: `Bearer ${this.$cookies.get("key")}`,
         },
       });
-      for (const i of this.messageGroups) {
+      for (var i of this.messageGroups) {
         if (i[0].questionId == Number(id)) {
-          for (const j of msgResp.data.data) {
+          for (var j of msgResp.data.data) {
             i.push(j);
           }
         }
@@ -1918,7 +1917,7 @@ export default {
     async likeComment(event, id) {
       console.log(event);
       event.target.closest(".like").classList.toggle("liked");
-      let myIp = "";
+      var myIp = "";
       await fetch("https://api.ipify.org?format=json")
         .then((x) => x.json())
         .then(({ ip }) => {
@@ -1928,7 +1927,7 @@ export default {
         if (!this.$cookies.get("key") && this.$cookies.get("refreshToken")) {
           this.refreshToken().then(async (res) => {
             if (res == true) {
-              const likeResp = await this.$axios.get(`/api/Course/CommentLike/${id}`, {
+              var likeResp = await this.$axios.get(`/api/Course/CommentLike/${id}`, {
                 headers: {
                   Authorization: `Bearer ${this.$cookies.get("key")}`,
                 },
@@ -1936,20 +1935,20 @@ export default {
             }
           });
         } else if (this.$cookies.get("key")) {
-          const likeResp = await this.$axios.get(`/api/Course/CommentLike/${id}`, {
+          var likeResp = await this.$axios.get(`/api/Course/CommentLike/${id}`, {
             headers: {
               Authorization: `Bearer ${this.$cookies.get("key")}`,
             },
           });
         }
       } else {
-        const likeResp = await this.$axios.get(
+        var likeResp = await this.$axios.get(
           `/api/Course/CommentLike/${id}?ip=${myIp}`
         );
       }
     },
     async commentLiked(id) {
-      let myIp = "";
+      var myIp = "";
       await fetch("https://api.ipify.org?format=json")
         .then((x) => x.json())
         .then(({ ip }) => {
@@ -1959,7 +1958,7 @@ export default {
         if (!this.$cookies.get("key") && this.$cookies.get("refreshToken")) {
           this.refreshToken().then(async (res) => {
             if (res == true) {
-              const checkLike = await this.$axios.get(
+              var checkLike = await this.$axios.get(
                 `/api/Course/GetCourseLikeList/${id}`,
                 {
                   headers: {
@@ -1976,7 +1975,7 @@ export default {
             }
           });
         } else if (this.$cookies.get("key")) {
-          const checkLike = await this.$axios.get(`/api/Course/GetCourseLikeList/${id}`, {
+          var checkLike = await this.$axios.get(`/api/Course/GetCourseLikeList/${id}`, {
             headers: {
               Authorization: `Bearer ${this.$cookies.get("key")}`,
             },
@@ -1986,7 +1985,7 @@ export default {
           }
         }
       } else {
-        const checkLike = await this.$axios.get(
+        var checkLike = await this.$axios.get(
           `/api/Course/GetCourseLikeList/${id}?ip=${myIp}`
         );
         if (checkLike.data.statusCode == 200 && checkLike.data.message == "Success") {
