@@ -1841,7 +1841,7 @@ export default {
       }
     },
     seeVideo(id) {
-      document.querySelector("#videoSrc").setAttribute("src", "/api/Course/Video/" + id);
+      document.querySelector("#videoSrc").setAttribute("src", "https://api.daneshkadeonline.ir/Course/Video/" + id);
       const videoPlayer = document.querySelector("video");
       videoPlayer.load();
       // videoPlayer.play();
