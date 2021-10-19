@@ -343,11 +343,9 @@ export default {
     },
     hoverCategory() {
       document.querySelector(".mega-menu-shadow").style.display = "block";
-      document.querySelector(".search-box").style.zIndex = "-2";
     },
     hoverCategoryoff() {
       document.querySelector(".mega-menu-shadow").style.display = "none";
-      document.querySelector(".search-box").style.zIndex = "unset";
     },
   },
 };
@@ -366,7 +364,7 @@ export default {
   height: 100%;
   background: #3d3d3d;
   opacity: 0.8;
-  top: 0;
+  top: 75px;
   left: 0;
   z-index: -1;
 }

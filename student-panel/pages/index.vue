@@ -942,6 +942,7 @@ export default {
   mounted() {},
   async beforeMount() {
     const indexDetails = await this.$axios.get("/api/Home/Index");
+    // console.log(indexDetails);
     if (indexDetails.data.statusCode == 200 && indexDetails.data.message == "Success") {
       this.newestCourses = indexDetails.data.data.newestCourses;
       this.mostVisitCourses = indexDetails.data.data.mostVisitCourses;
@@ -982,6 +983,9 @@ export default {
           nextEl: ".amazing-to-end",
           prevEl: ".amazing-to-first",
         },
+        autoplay: {
+          delay: 4000,
+        },
       };
     },
     newestOption() {
@@ -991,6 +995,9 @@ export default {
         navigation: {
           nextEl: ".newest-to-end",
           prevEl: ".newest-to-first",
+        },
+        autoplay: {
+          delay: 4000,
         },
       };
     },
@@ -1002,6 +1009,9 @@ export default {
           nextEl: ".popular-to-end",
           prevEl: ".popular-to-first",
         },
+        autoplay: {
+          delay: 4000,
+        },
       };
     },
     visitedOption() {
@@ -1011,6 +1021,9 @@ export default {
         navigation: {
           nextEl: ".visited-to-end",
           prevEl: ".visited-to-first",
+        },
+        autoplay: {
+          delay: 4000,
         },
       };
     },
@@ -1022,6 +1035,9 @@ export default {
           nextEl: ".news-to-end",
           prevEl: ".news-to-first",
         },
+        autoplay: {
+          delay: 4000,
+        },
       };
     },
     newsOption() {
@@ -1031,6 +1047,9 @@ export default {
         navigation: {
           nextEl: ".news-to-end",
           prevEl: ".news-to-first",
+        },
+        autoplay: {
+          delay: 4000,
         },
       };
     },
