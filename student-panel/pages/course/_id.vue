@@ -2027,4 +2027,7 @@ export default {
 .plyr__video-wrapper video {
   max-height: 350px !important;
 }
+.plyr:-webkit-full-screen video {
+  max-height: 100% !important;
+}
 </style>
