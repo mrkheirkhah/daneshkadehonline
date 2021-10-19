@@ -23,7 +23,7 @@
             <li><nuxt-link to="/my/login">ورود دانشجو</nuxt-link></li>
             <!-- <li><a href="#">اشتراک</a></li> -->
             <li><nuxt-link to="/work-with-us">همکاری با ما</nuxt-link></li>
-            <li><a href="#">وبلاگ</a></li>
+            <li><a href="https://mag.daneshkadeonline.ir" target="_blank">مقالات</a></li>
           </ul>
         </div>
         <div class="col-sm-6 col-lg-3 col-12 px-md-5 px-4 my-sm-1 my-2">
@@ -203,7 +203,7 @@ export default {
 </script>
 <style lang="scss">
 .call.persian-number {
-  transition: all .5s;
+  transition: all 0.5s;
 }
 .call.persian-number:hover {
   color: #e13535 !important;

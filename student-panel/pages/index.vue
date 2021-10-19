@@ -669,7 +669,7 @@
                 <div class="header">
                   <h4 class="title">پکیج ها</h4>
                   <div class="options">
-                    <nuxt-link to="/courses-list">مشاهده همه</nuxt-link>
+                    <nuxt-link to="/courses-list?isPackage=true">مشاهده همه</nuxt-link>
                     <div class="controls">
                       <button class="visited-to-first">
                         <svg
@@ -837,12 +837,13 @@
             </div>
             <div class="swiper-container news" v-swiper:mySwipper6="newsOption">
               <article class="items-container swiper-wrapper">
-                <section
+                <nuxt-link
+                  :to="'news/' + anyNews.newsId"
                   class="news swiper-slide"
                   v-for="anyNews in news"
-                  :key="news.indexOf(anyNews)"
+                  :key="anyNews.newsId"
                 >
-                  <nuxt-link :to="'/news/' + anyNews.id" class="image-container">
+                  <a href="" class="image-container">
                     <img
                       :src="
                         'https://api.daneshkadeonline.ir/Images/Public/News/' +
@@ -850,9 +851,9 @@
                       "
                       alt="خبر"
                     />
-                  </nuxt-link>
+                  </a>
                   <div class="title">{{ anyNews.newsTitle }}</div>
-                </section>
+                </nuxt-link>
               </article>
             </div>
           </div>

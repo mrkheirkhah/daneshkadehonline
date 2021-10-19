@@ -316,11 +316,21 @@ export default {
       const groups = await this.$axios.get(
         `/api/Public/ProfileActions/GetCourseGroups/${this.$route.query.filter}`
       );
-      this.headerGroups = groups.data.data;
+      if (groups.data.data.length > 5) {
+        this.headerGroups = groups.data.data.slice(0, 5);
+      } else {
+        this.headerGroups = groups.data.data;
+      }
     }
-    if (this.$route.query.filter != undefined) {
+    if (this.$route.query != undefined) {
       const courses = await this.$axios.get(
-        `/api/Course/Index?courseGroupId=${this.$route.query.filter}`
+        this.$route.query.filter != undefined && this.$route.query.isPackage != undefined
+          ? `/api/Course/Index?courseGroupId=${this.$route.query.filter}&isPackage=${this.$route.query.isPackage}`
+          : this.$route.query.filter != undefined
+          ? `/api/Course/Index?courseGroupId=${this.$route.query.filter}`
+          : this.$route.query.isPackage != undefined
+          ? `/api/Course/Index?isPackage=${this.$route.query.isPackage}`
+          : ""
       );
       if (courses.data.statusCode == 200 && courses.data.message == "Success") {
         this.courseItems = courses.data.data.courseItems;
@@ -360,7 +370,12 @@ export default {
     },
     filterThisPage(id, event) {
       event.stopPropagation();
-      this.$router.push("/courses-list?filter=" + id);
+      // console.log(this.$route);
+      if (Object.keys(this.$route.query).length != 0) {
+        this.$router.push(this.$route.fullPath + "&filter=" + id);
+      } else {
+        this.$router.push(this.$route.fullPath + "?filter=" + id);
+      }
     },
     async orderBy(event, id) {
       document.querySelectorAll(".filters-list li").forEach((item) => {

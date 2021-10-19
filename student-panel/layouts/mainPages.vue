@@ -16,16 +16,17 @@ export default {
 };
 </script>
 <style lang="scss">
-// body {
-//   overflow-x: hidden;
-// }
-// ::-webkit-scrollbar {
-//   width: 15px;
-//   // position: absolute;
-// }
 
-// ::-webkit-scrollbar-thumb {
-//   background-clip: padding-box;
-//   background-color: #d9d9d9;
-// }
+::-webkit-scrollbar {
+  width: 10px;
+  height: 5px;
+  border-radius: 20px;
+  background-color: #70707030;
+  padding: 0 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #e13535;
+  border-radius: 20px;
+}
 </style>

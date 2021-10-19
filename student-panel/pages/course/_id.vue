@@ -690,8 +690,8 @@
                   گزارش خرابی ویدئو
                 </a>
               </header>
-              <client-only>
-                <!-- <div class="custom-video-player">
+              <!-- <client-only> -->
+              <!-- <div class="custom-video-player">
                   <div class="video-container" tabindex="0" id="video-container">
                     <div class="playback-animation">
                       <svg class="playback-icons">
@@ -795,20 +795,20 @@
                     </div>
                   </div>
                 </div> -->
-                <vue-plyr>
-                  <video
-                    controls
-                    crossorigin
-                    playsinline
-                    :data-poster="
-                      'https://api.daneshkadeonline.ir/Images/Public/Course/' +
-                      courseDetail.imageName
-                    "
-                  >
-                    <source id="videoSrc" src="" type="video/mp4" />
-                  </video>
-                </vue-plyr>
-              </client-only>
+              <vue-plyr>
+                <video
+                  controls
+                  crossorigin
+                  playsinline
+                  :data-poster="
+                    'https://api.daneshkadeonline.ir/Images/Public/Course/' +
+                    courseDetail.imageName
+                  "
+                >
+                  <source id="videoSrc" src="" type="video/mp4" />
+                </video>
+              </vue-plyr>
+              <!-- </client-only> -->
               <div class="course-parts">
                 <div
                   class="course-part"
@@ -1584,8 +1584,14 @@ export default {
     if (this.$route.params.id == undefined || isNaN(this.$route.params.id)) {
       this.$router.push("/courses-list");
     }
+    let myIp = "";
+    await fetch("https://api.ipify.org?format=json")
+      .then((x) => x.json())
+      .then(({ ip }) => {
+        myIp = ip;
+      });
     const [course, comments, questions] = await Promise.all([
-      this.$axios.get(`/api/Course/Show/${this.$route.params.id}`),
+      this.$axios.get(`/api/Course/Show/${this.$route.params.id}?ip=${myIp}`),
       this.getComments(),
       this.getQuestions(),
     ]);
@@ -1841,7 +1847,9 @@ export default {
       }
     },
     seeVideo(id) {
-      document.querySelector("#videoSrc").setAttribute("src", "https://api.daneshkadeonline.ir/Course/Video/" + id);
+      document
+        .querySelector("#videoSrc")
+        .setAttribute("src", "https://api.daneshkadeonline.ir/Course/Video/" + id);
       const videoPlayer = document.querySelector("video");
       videoPlayer.load();
       // videoPlayer.play();
@@ -1993,4 +2001,30 @@ export default {
 <style lang="scss">
 @import "@/assets/swal-style.scss";
 @import "@/assets/styles/pages/course.scss";
+.plyr--full-ui input[type="range"] {
+  color: $active-color;
+}
+
+.plyr__control--overlaid {
+  background: rgba($active-color, 0.8);
+}
+
+.plyr--video .plyr__control.plyr__tab-focus,
+.plyr--video .plyr__control:hover,
+.plyr--video .plyr__control[aria-expanded="true"] {
+  background: $active-color;
+}
+
+.plyr__control.plyr__tab-focus {
+  box-shadow: 0 0 0 5px rgba($active-color, 0.5);
+}
+
+.plyr__menu__container .plyr__control[role="menuitemradio"][aria-checked="true"]::before {
+  background: $active-color;
+}
+
+.plyr--video,
+.plyr__video-wrapper video {
+  max-height: 350px !important;
+}
 </style>
