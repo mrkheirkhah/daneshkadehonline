@@ -48,45 +48,43 @@
                     </template>
                     <template v-else>
                       <li
-                        :class="group.courseGroups == null ? '' : 'has-list'"
-                        @click="filterThisPage(group.id)"
+                        :class="group.newsGroups == null ? '' : 'has-list'"
+                        @click="filterThisPage(group.id, $event)"
                         v-for="group in groups"
                         :key="group.id"
                         v-if="group.parentId == null"
                       >
                         <div
-                          :class="group.courseGroups == null ? '' : 'test'"
+                          :class="group.newsGroups == null ? '' : 'test'"
                           @click="toggle_li_open($event)"
                         ></div>
                         {{ group.groupTitle }}
                         <ul
                           class="child-list"
-                          v-if="
-                            group.courseGroups != null && group.courseGroups.length > 0
-                          "
+                          v-if="group.newsGroups != null && group.newsGroups.length > 0"
                         >
-                          <template v-for="subGroup in group.courseGroups">
+                          <template v-for="subGroup in group.newsGroups">
                             <li
-                              :class="subGroup.courseGroups == null ? '' : 'has-list'"
-                              @click="filterThisPage(subGroup.id)"
+                              :class="subGroup.newsGroups == null ? '' : 'has-list'"
+                              @click="filterThisPage(subGroup.id, $event)"
                               :key="subGroup.id"
                             >
                               <div
-                                :class="subGroup.courseGroups == null ? '' : 'test'"
+                                :class="subGroup.newsGroups == null ? '' : 'test'"
                                 @click="toggle_li_open($event)"
                               ></div>
                               {{ subGroup.groupTitle }}
                               <ul
                                 class="child-list"
                                 v-if="
-                                  subGroup.courseGroups != null &&
-                                  subGroup.courseGroups.length > 0
+                                  subGroup.newsGroups != null &&
+                                  subGroup.newsGroups.length > 0
                                 "
                               >
-                                <template v-for="subTwoGroup in subGroup.courseGroups">
+                                <template v-for="subTwoGroup in subGroup.newsGroups">
                                   <li
                                     :key="subTwoGroup.id"
-                                    @click="filterThisPage(subTwoGroup.id)"
+                                    @click="filterThisPage(subTwoGroup.id, $event)"
                                   >
                                     {{ subTwoGroup.groupTitle }}
                                   </li>
@@ -94,7 +92,7 @@
                               </ul>
                             </li>
                           </template>
-                          <li v-if="group.courseGroups == null">
+                          <li v-if="group.newsGroups == null">
                             {{ group.groupTitle }}
                           </li>
                         </ul>
@@ -287,11 +285,12 @@ export default {
     };
   },
   async mounted() {
-    const groups = await this.$axios.get("/api/Public/ProfileActions/GetAllCourseGroups");
+    const groups = await this.$axios.get("/api/Public/ProfileActions/GetAllNewsGroups");
+    console.log(groups);
     this.groups = groups.data.data;
     if (this.$route.query.filter != undefined) {
       const groups = await this.$axios.get(
-        `/api/Public/ProfileActions/GetCourseGroups/${this.$route.query.filter}`
+        `/api/Public/ProfileActions/GetNewsGroups/${this.$route.query.filter}`
       );
       this.headerGroups = groups.data.data;
     }
@@ -323,7 +322,8 @@ export default {
     this.loading = false;
   },
   methods: {
-    filterThisPage(id) {
+    filterThisPage(id, event) {
+      event.stopPropagation();
       this.$router.push("/articles-list?filter=" + id);
     },
     goToPage(event) {
@@ -385,7 +385,7 @@ export default {
           this.newsCount = news.data.data.newsCount;
         }
         const groups = await this.$axios.get(
-          `/api/Public/ProfileActions/GetCourseGroups/${this.$route.query.filter}`
+          `/api/Public/ProfileActions/GetNewsGroups/${this.$route.query.filter}`
         );
         this.headerGroups = groups.data.data;
       },

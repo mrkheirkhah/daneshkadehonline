@@ -210,6 +210,7 @@ export default {
           },
         }
       );
+      console.log(videos);
       this.videos = videos.data.data;
     },
     async editEpisode(id) {

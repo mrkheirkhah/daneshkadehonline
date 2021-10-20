@@ -82,7 +82,7 @@
                 class="form-input"
                 v-model="groupDrop"
                 readonly
-                placeholder="دسته دوره"
+                placeholder="دسته خبر"
                 @click="toggleDropDowns"
               />
               <ul class="floated-list custom-scrollbar">
@@ -101,7 +101,7 @@
               readonly
               class="form-input"
               :value="groupDrop"
-              placeholder="دسته دوره"
+              placeholder="دسته خبر"
             />
           </label>
           <label for="" class="form-row-col"> </label>
@@ -113,7 +113,7 @@
               class="form-input"
               v-model="subGroupDrop"
               readonly
-              placeholder="دسته دوره"
+              placeholder="دسته خبر"
               @click="toggleDropDowns"
             />
             <ul class="floated-list custom-scrollbar">
@@ -136,7 +136,7 @@
               class="form-input"
               v-model="subTwoGroupDrop"
               readonly
-              placeholder="دسته دوره"
+              placeholder="دسته خبر"
               @click="toggleDropDowns"
             />
             <ul class="floated-list custom-scrollbar">
@@ -554,7 +554,7 @@ export default {
       event.target.closest(".floated-list-container").classList.toggle("show");
     },
     async getGroups() {
-      const groups = await this.$axios.get("/api/Public/ProfileActions/GetCourseGroups", {
+      const groups = await this.$axios.get("/api/Public/ProfileActions/GetNewsGroups", {
         headers: {
           Authorization: `Bearer ${this.$cookies.get("key")}`,
         },
@@ -603,7 +603,7 @@ export default {
       this.selectedGroup = id;
       event.target.closest(".floated-list-container").classList.toggle("show");
       const subGroup = await this.$axios.get(
-        `/api/Public/ProfileActions/GetCourseGroups/${this.selectedGroup}`,
+        `/api/Public/ProfileActions/GetNewsGroups/${this.selectedGroup}`,
         {
           headers: {
             Authorization: `Bearer ${this.$cookies.get("key")}`,
@@ -621,7 +621,7 @@ export default {
       this.selectedGroup = id;
       event.target.closest(".floated-list-container").classList.toggle("show");
       const subTwoGroup = await this.$axios.get(
-        `/api/Public/ProfileActions/GetCourseGroups/${this.subGroupId}`,
+        `/api/Public/ProfileActions/GetNewsGroups/${this.subGroupId}`,
         {
           headers: {
             Authorization: `Bearer ${this.$cookies.get("key")}`,

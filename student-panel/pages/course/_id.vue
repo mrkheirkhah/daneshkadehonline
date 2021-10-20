@@ -698,7 +698,12 @@
                   alt="آیکون ویدئو لیست"
                 />
                 <h3>لیست ویدئو ها</h3>
-                <a href="#" class="video-alert">
+                <a
+                  href=""
+                  type="button"
+                  @click.prevent="studentIsLogin == true ? reportVideo : loginAlert"
+                  class="video-alert"
+                >
                   <span>⚠</span>
                   گزارش خرابی ویدئو
                 </a>
@@ -1605,6 +1610,8 @@ export default {
       // form validation
       noText: false,
       noName: false,
+
+      seeThisVideo: "",
     };
   },
   async beforeMount() {
@@ -1683,6 +1690,31 @@ export default {
     this.loading = false;
   },
   methods: {
+    loginAlert() {
+      this.$swal({
+        text: "برای گزارش خرابی ویدیو وارد حساب خود شوید!",
+        icon: "warning",
+        showCloseButton: true,
+        showCancelButton: true,
+        confirmButtonText: "ورود",
+        cancelButtonText: "لغو",
+      }).then(async (clickedBut) => {
+        if (clickedBut.isConfirmed) {
+          this.$router.push("/my/login");
+        }
+      });
+    },
+    async reportVideo() {
+      const repResp = await this.$axios.get(
+        `/api/Course/SendVideoCrashReport/${this.seeThisVideo}`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("key")}`,
+          },
+        }
+      );
+      console.log(repResp);
+    },
     seeMoreTeacherDetail(event) {
       document.querySelector(
         ".teacher-info .body .details"
@@ -1802,11 +1834,11 @@ export default {
             commentResp.data.message == "Success"
           ) {
             this.$swal({
-          text: "کامنت شما ثبت شد! بعد از تایید ادمین ها نشان داده خواهد شد",
-          icon: "success",
-          showCloseButton: true,
-          confirmButtonText: "تایید",
-        });
+              text: "کامنت شما ثبت شد! بعد از تایید ادمین ها نشان داده خواهد شد",
+              icon: "success",
+              showCloseButton: true,
+              confirmButtonText: "تایید",
+            });
             this.getComments();
             this.commentName = "";
             this.commentText = "";
@@ -1846,11 +1878,11 @@ export default {
         );
         if (commentResp.data.statusCode == 200 && commentResp.data.message == "Success") {
           this.$swal({
-          text: "کامنت شما ثبت شد! بعد از تایید ادمین ها نشان داده خواهد شد",
-          icon: "success",
-          showCloseButton: true,
-          confirmButtonText: "تایید",
-        });
+            text: "کامنت شما ثبت شد! بعد از تایید ادمین ها نشان داده خواهد شد",
+            icon: "success",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          });
           this.noText = false;
           this.getComments();
           this.commentName = "";
@@ -1914,6 +1946,7 @@ export default {
       }
     },
     seeVideo(id) {
+      this.seeThisVideo = id;
       document
         .querySelector("#videoSrc")
         .setAttribute("src", "https://api.daneshkadeonline.ir/Course/Video/" + id);
