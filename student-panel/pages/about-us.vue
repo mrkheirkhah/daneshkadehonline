@@ -60,7 +60,13 @@
                 :key="member.id"
               >
                 <div class="image-container">
-                  <img src="@/static/images/main-page-images/team-1.png" alt="عکس مدیر" />
+                  <img
+                    :src="
+                      'https://api.daneshkadeonline.ir/Images/Public/TeamMember/' +
+                      member.imageName
+                    "
+                    alt="عکس مدیر"
+                  />
                   <div class="overlay">
                     <div class="social-media">
                       <a :href="member.facebook" target="blank">
@@ -101,222 +107,6 @@
                   <small class="job">{{ member.role }}</small>
                 </div>
               </div>
-              <!-- <div class="member swiper-slide">
-                <div class="image-container">
-                  <img src="@/static/images/main-page-images/team-4.png" alt="عکس طراح" />
-                  <div class="overlay">
-                    <div class="social-media">
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/facebook-social.png"
-                          alt="فیسبوک"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/linkedin-social.png"
-                          alt="لینکدین"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/instagram-social.png"
-                          alt="اینستاگرام"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/telegram-social.png"
-                          alt="تلگرام"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/twitter-social.png"
-                          alt="توئیتر"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="info">
-                  <h4 class="name">رضا عطاران</h4>
-                  <small class="job">طراح UI</small>
-                </div>
-              </div>
-              <div class="member swiper-slide">
-                <div class="image-container">
-                  <img src="@/static/images/main-page-images/team-2.png" alt="عکس طراح" />
-                  <div class="overlay">
-                    <div class="social-media">
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/facebook-social.png"
-                          alt="فیسبوک"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/linkedin-social.png"
-                          alt="لینکدین"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/instagram-social.png"
-                          alt="اینستاگرام"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/telegram-social.png"
-                          alt="تلگرام"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/twitter-social.png"
-                          alt="توئیتر"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="info">
-                  <h4 class="name">امیررضا باقری</h4>
-                  <small class="job">طراح فرانت</small>
-                </div>
-              </div>
-              <div class="member swiper-slide">
-                <div class="image-container">
-                  <img src="@/static/images/main-page-images/team-4.png" alt="عکس طراح" />
-                  <div class="overlay">
-                    <div class="social-media">
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/facebook-social.png"
-                          alt="فیسبوک"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/linkedin-social.png"
-                          alt="لینکدین"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/instagram-social.png"
-                          alt="اینستاگرام"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/telegram-social.png"
-                          alt="تلگرام"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/twitter-social.png"
-                          alt="توئیتر"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="info">
-                  <h4 class="name">رضا عطاران</h4>
-                  <small class="job">طراح UI</small>
-                </div>
-              </div>
-
-              <div class="member swiper-slide">
-                <div class="image-container">
-                  <img src="@/static/images/main-page-images/team-3.png" alt="عکس بکند" />
-                  <div class="overlay">
-                    <div class="social-media">
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/facebook-social.png"
-                          alt="فیسبوک"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/linkedin-social.png"
-                          alt="لینکدین"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/instagram-social.png"
-                          alt="اینستاگرام"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/telegram-social.png"
-                          alt="تلگرام"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/twitter-social.png"
-                          alt="توئیتر"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="info">
-                  <h4 class="name">جواد خیابانی</h4>
-                  <small class="job"> متخصص سئو</small>
-                </div>
-              </div>
-              <div class="member swiper-slide">
-                <div class="image-container">
-                  <img src="@/static/images/main-page-images/team-4.png" alt="عکس طراح" />
-                  <div class="overlay">
-                    <div class="social-media">
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/facebook-social.png"
-                          alt="فیسبوک"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/linkedin-social.png"
-                          alt="لینکدین"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/instagram-social.png"
-                          alt="اینستاگرام"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/telegram-social.png"
-                          alt="تلگرام"
-                        />
-                      </a>
-                      <a href="#">
-                        <img
-                          src="@/static/images/main-page-images/twitter-social.png"
-                          alt="توئیتر"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="info">
-                  <h4 class="name">رضا عطاران</h4>
-                  <small class="job">طراح UI</small>
-                </div> 
-              </div> -->
             </div>
           </div>
         </div>
@@ -371,7 +161,7 @@ export default {
   methods: {
     async getTeamMembers() {
       const teamMembers = await this.$axios.get("/api/Home/GetTeamMembers");
-      // console.log(teamMembers);
+      console.log(teamMembers);
       this.teamMembers = teamMembers.data.data;
     },
     async getAboutData() {

@@ -12,7 +12,7 @@
               <nuxt-link to="/courses-list">دوره ها</nuxt-link>
             </li>
             <li>
-              <a href="#">ورود مدرس ها</a>
+              <a href="https://panel.daneshkadeonline.ir/">ورود مدرس ها</a>
             </li>
             <!-- <li>
               <a href="#">ورود کارفرما</a>
@@ -34,7 +34,16 @@
     </div>
     <div class="overview-items">
       <div class="overview" v-for="option in pageData.options" :key="option.id">
-        <div class="icon-container"></div>
+        <div class="icon-container">
+          <img
+            class="option-vector"
+            :src="
+              'https://api.daneshkadeonline.ir/Images/Public/Cooperation/' +
+              option.iconName
+            "
+            alt="تصویر آپشن"
+          />
+        </div>
         <h4 class="title">{{ option.title }}</h4>
         <p class="detail">{{ option.description }}</p>
       </div>
@@ -63,6 +72,7 @@ export default {
   methods: {
     async loadData() {
       const loadData = await this.$axios.get("/api/Cooperation/Index");
+      // console.log(loadData);
       this.pageData = loadData.data.data;
     },
   },
@@ -71,4 +81,10 @@ export default {
 <style lang="scss">
 @import "@/assets/swal-style.scss";
 @import "@/assets/styles/pages/work-with-us.scss";
+.option-vector {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
 </style>

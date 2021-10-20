@@ -15,9 +15,13 @@
           </div>
         </div>
         <div class="sample-courses" v-if="headerGroups != ''">
-          <a href="#" v-for="group in headerGroups" :key="headerGroups.indexOf(group)">{{
-            group.groupTitle
-          }}</a>
+          <a
+            href=""
+            @click.prevent="filterThisPage(group.id, $event)"
+            v-for="group in headerGroups"
+            :key="headerGroups.indexOf(group)"
+            >{{ group.groupTitle }}</a
+          >
         </div>
       </div>
       <main class="container-fluid px-2 px-md-4 py-5">
@@ -372,7 +376,11 @@ export default {
       event.stopPropagation();
       // console.log(this.$route);
       if (Object.keys(this.$route.query).length != 0) {
-        this.$router.push(this.$route.fullPath + "&filter=" + id);
+        if (this.$route.query.filter == undefined) {
+          this.$router.push(this.$route.fullPath + "&filter=" + id);
+        } else {
+          this.$router.replace({ query: { ...this.$route.query, filter: id } });
+        }
       } else {
         this.$router.push(this.$route.fullPath + "?filter=" + id);
       }
@@ -428,7 +436,11 @@ export default {
         const groups = await this.$axios.get(
           `/api/Public/ProfileActions/GetCourseGroups/${this.$route.query.filter}`
         );
-        this.headerGroups = groups.data.data;
+        if (groups.data.data.length > 5) {
+          this.headerGroups = groups.data.data.slice(0, 5);
+        } else {
+          this.headerGroups = groups.data.data;
+        }
       },
       deep: true,
     },

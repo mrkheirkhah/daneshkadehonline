@@ -166,6 +166,7 @@ export default {
           {
             id: this.optionId,
             title: this.optionTitle,
+            iconBae64: this.selectedVector,
             description: this.optionDescription,
           },
           {
@@ -185,6 +186,7 @@ export default {
           this.optionTitle = "";
           this.optionDescription = "";
           this.selectedOption = "";
+          this.vectorName = "";
         }
       } else {
         this.$swal({

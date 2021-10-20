@@ -174,7 +174,7 @@
       <div class="box-header">
         <h3>لیست اعضا</h3>
       </div>
-      <section class="box-content custom-scrollbar">
+      <section class="box-content custom-scrollbar" id="members-table">
         <header class="table-row table-header">
           <span>نام </span>
           <span>سمت </span>
@@ -192,9 +192,9 @@
           </span>
         </div>
 
-        <footer>
+        <footer class="table-footer">
           <hr />
-          <a href="#"> مشاهده همه </a>
+          <a href="" type="button" @click.prevent="seeAll"> مشاهده همه </a>
         </footer>
       </section>
     </div>
@@ -231,6 +231,11 @@ export default {
     await Promise.all([this.membersDetail(), this.aboutDetails()]);
   },
   methods: {
+    seeAll() {
+      const table = document.getElementById("members-table");
+      table.style.overflowY = "scroll";
+      const footer = (document.querySelector(".table-footer").style.display = "none");
+    },
     resetData() {
       this.memberName = "";
       this.role = "";

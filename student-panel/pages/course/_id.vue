@@ -1801,6 +1801,12 @@ export default {
             commentResp.data.statusCode == 200 &&
             commentResp.data.message == "Success"
           ) {
+            this.$swal({
+          text: "کامنت شما ثبت شد! بعد از تایید ادمین ها نشان داده خواهد شد",
+          icon: "success",
+          showCloseButton: true,
+          confirmButtonText: "تایید",
+        });
             this.getComments();
             this.commentName = "";
             this.commentText = "";
@@ -1839,6 +1845,12 @@ export default {
           }
         );
         if (commentResp.data.statusCode == 200 && commentResp.data.message == "Success") {
+          this.$swal({
+          text: "کامنت شما ثبت شد! بعد از تایید ادمین ها نشان داده خواهد شد",
+          icon: "success",
+          showCloseButton: true,
+          confirmButtonText: "تایید",
+        });
           this.noText = false;
           this.getComments();
           this.commentName = "";
