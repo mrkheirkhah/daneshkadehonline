@@ -30,18 +30,26 @@
           <div class="header">
             <h5 class="list-title">دوره ها</h5>
           </div>
-          <ul>
-            <li>
-              <nuxt-link :to="{ path: '/', hash: '#packages-part' }">پکیچ ها</nuxt-link>
+          <ul v-if="!loading">
+            <li v-if="packageAd.isActive">
+              <nuxt-link to="/#packages-part">پکیچ ها</nuxt-link>
             </li>
-            <li><nuxt-link to="/#amazing">شگفت انگیز ها </nuxt-link></li>
-            <li><nuxt-link to="/#newest">جدید ترین ها</nuxt-link></li>
-            <li><nuxt-link to="/#popular">محبوب ترین ها</nuxt-link></li>
-            <li><nuxt-link to="/#visited">پر بازدید ترین ها</nuxt-link></li>
+            <li v-if="amazingAd.isActive">
+              <nuxt-link to="/#amazing">شگفت انگیز ها </nuxt-link>
+            </li>
+            <li v-if="newestAd.isActive">
+              <nuxt-link to="/#newest">جدید ترین ها</nuxt-link>
+            </li>
+            <li v-if="favoritesAd.isActive">
+              <nuxt-link to="/#popular">محبوب ترین ها</nuxt-link>
+            </li>
+            <li v-if="mostVisitAd.isActive">
+              <nuxt-link to="/#visited">پر بازدید ترین ها</nuxt-link>
+            </li>
             <li><nuxt-link to="/#latest-news">آخرین اخبار</nuxt-link></li>
           </ul>
         </div>
-        <div class="col-sm-6 col-lg-3 col-12 px-md-5 px-4 my-sm-1 my-2">
+        <!-- <div class="col-sm-6 col-lg-3 col-12 px-md-5 px-4 my-sm-1 my-2">
           <div class="header">
             <h5 class="list-title">راهنمای مشتریان</h5>
           </div>
@@ -51,7 +59,7 @@
             <li><a href="#">شرایط استفاده</a></li>
             <li><a href="#">مشتریان</a></li>
           </ul>
-        </div>
+        </div> -->
       </div>
 
       <div class="row bottom-box">
@@ -71,8 +79,8 @@
           class="col-12 col-lg-5 d-flex align-items-center flex-column flex-sm-row justify-content-between"
         >
           <div class="social-media">
-            <a :href="siteInfo.youtube" target="blank" class="youtube"> Youtube </a>
-            <a :href="siteInfo.aparat" target="blank">
+            <!-- <a :href="siteInfo.youtube" target="blank" class="youtube"> Youtube </a> -->
+            <!-- <a :href="siteInfo.aparat" target="blank">
               <svg
                 class="twitter"
                 xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +93,7 @@
                   transform="translate(0 0)"
                 />
               </svg>
-            </a>
+            </a> -->
             <a :href="siteInfo.linkedIn" target="blank">
               <svg
                 class="linkedin"
@@ -136,7 +144,7 @@
                 />
               </svg>
             </a>
-            <a :href="siteInfo.facebook" target="blank">
+            <!-- <a :href="siteInfo.facebook" target="blank">
               <svg
                 class="facebook"
                 xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +157,7 @@
                   transform="translate(-0.5 0)"
                 />
               </svg>
-            </a>
+            </a> -->
           </div>
           <div class="confirmation">
             <img
@@ -182,6 +190,12 @@ export default {
   data() {
     return {
       siteInfo: "",
+      amazingAd: "",
+      favoritesAd: "",
+      newestAd: "",
+      mostVisitAd: "",
+      packageAd: "",
+      loading: true,
     };
   },
   async mounted() {
@@ -189,6 +203,24 @@ export default {
     if (siteInfo.data.statusCode == 200 && siteInfo.data.message == "Success") {
       this.siteInfo = siteInfo.data.data;
     }
+    const indexDetails = await this.$axios.get("/api/Home/Index");
+    if (indexDetails.data.statusCode == 200 && indexDetails.data.message == "Success") {
+      const ads = indexDetails.data.data.ads;
+      for (const ad in ads) {
+        if (ads[ad].section == "Amazing") {
+          this.amazingAd = ads[ad];
+        } else if (ads[ad].section == "Favorites") {
+          this.favoritesAd = ads[ad];
+        } else if (ads[ad].section == "Newest") {
+          this.newestAd = ads[ad];
+        } else if (ads[ad].section == "MostVisit") {
+          this.mostVisitAd = ads[ad];
+        } else if (ads[ad].section == "Package") {
+          this.packageAd = ads[ad];
+        }
+      }
+    }
+    this.loading = false;
   },
   methods: {
     namad() {
@@ -203,6 +235,7 @@ export default {
 </script>
 <style lang="scss">
 .call.persian-number {
+  color: inherit;
   transition: all 0.5s;
 }
 .call.persian-number:hover {

@@ -23,7 +23,7 @@
       <p class="section-title-text">شبکه های اجتماعی</p>
     </div>
     <form action="">
-      <div class="form-row">
+      <!-- <div class="form-row">
         <label for="" class="form-row-col">
           <input
             type="text"
@@ -40,7 +40,7 @@
             placeholder="آدرس یوتیوب"
           />
         </label>
-      </div>
+      </div> -->
       <div class="form-row">
         <label for="" class="form-row-col">
           <input
@@ -54,20 +54,20 @@
           <input
             type="text"
             class="form-input"
-            v-model="faceBook"
-            placeholder="آدرس فیسبوک"
+            v-model="instagram"
+            placeholder="آدرس اینستاگرام"
           />
         </label>
       </div>
       <div class="form-row">
-        <label for="" class="form-row-col">
+        <!-- <label for="" class="form-row-col">
           <input
             type="text"
             class="form-input"
             v-model="instagram"
             placeholder="آدرس اینستاگرام"
           />
-        </label>
+        </label> -->
         <label for="" class="form-row-col">
           <input
             type="tell"
@@ -76,8 +76,18 @@
             placeholder="شماره موبایل"
           />
         </label>
+        <label for="" class="form-row-col">
+          <textarea
+            name=""
+            cols="22"
+            rows="0"
+            v-model="address"
+            placeholder="آدرس"
+            class="form-input form-textarea"
+          ></textarea>
+        </label>
       </div>
-      <div class="form-row">
+      <!-- <div class="form-row">
         <label for="" class="form-row-col">
           <textarea
             name=""
@@ -89,7 +99,7 @@
           ></textarea>
         </label>
         <label for="" class="form-row-col"> </label>
-      </div>
+      </div> -->
 
       <button class="form-btn success" @click.prevent="editFooter">
         ثبت و تائید نهایی
@@ -103,10 +113,7 @@ export default {
   middleware: "userIsNotLog",
   data() {
     return {
-      aparat: "",
-      youTube: "",
       linkdin: "",
-      faceBook: "",
       instagram: "",
       phoneNumber: "",
       address: "",
@@ -130,10 +137,7 @@ export default {
         footerDetails.data.message == "Success"
       ) {
         const detailsData = footerDetails.data.data;
-        this.aparat = detailsData.aparat;
-        this.youTube = detailsData.youtube;
         this.linkdin = detailsData.linkedIn;
-        this.faceBook = detailsData.facebook;
         this.instagram = detailsData.instagram;
         this.phoneNumber = detailsData.phoneNumber;
         this.address = detailsData.address;
@@ -143,10 +147,7 @@ export default {
       const setFooterDetails = await this.$axios.post(
         "/api/Admin/AdminManageSiteInfo/FooterInfo",
         {
-          aparat: this.aparat,
-          youtube: this.youTube,
           linkedIn: this.linkdin,
-          facebook: this.faceBook,
           phoneNumber: this.phoneNumber,
           instagram: this.instagram,
           address: this.address,

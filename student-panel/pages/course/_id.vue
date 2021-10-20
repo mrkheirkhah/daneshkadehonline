@@ -141,8 +141,13 @@
             <template v-else>
               <div class="header">
                 <h5 class="title">قیمت دوره:</h5>
-                <span class="persian-number price" v-if="detailBox.coursePrice != 0">
-                  <span class="value">{{ detailBox.coursePrice }}</span>
+                <span
+                  class="persian-number price"
+                  v-if="detailBox.coursePrice != 0 && !loading"
+                >
+                  <span class="value">{{
+                    Number(detailBox.coursePrice).toLocaleString()
+                  }}</span>
                   <span class="currency"> تومان </span>
                 </span>
                 <span class="persian-number price" v-else>
@@ -151,10 +156,10 @@
               </div>
               <div class="body">
                 <ul class="info-list">
-                  <li>
+                  <!-- <li>
                     <span>تعداد دانشجویان</span>
                     <span class="persian-number">{{ courseDetail.studentCount }}</span>
-                  </li>
+                  </li> -->
                   <li>
                     <span>مدت زمان دوره</span>
                     <span class="persian-number">{{ courseDetail.time }} ساعت</span>
@@ -296,11 +301,19 @@
                     {{ education }}
                   </li>
                 </ul>
-                <p class="details">{{ teacherBox.shortDescription }}</p>
+                <template v-if="!loading && teacherBox.shortDescription != null">
+                  <p class="details" v-if="teacherBox.shortDescription.length < 300">
+                    {{ teacherBox.shortDescription }}
+                  </p>
+                  <p class="details" v-else>
+                    {{ teacherBox.shortDescription.substring(0, 300) + " ..." }}
+                    <a href="" @click.prevent="seeMoreTeacherDetail($event)">بیشتر</a>
+                  </p>
+                </template>
               </div>
-              <div class="footer">
+              <!-- <div class="footer">
                 <a href="#">درباره دکتر</a>
-              </div>
+              </div> -->
             </template>
           </div>
           <template v-if="!loading">
@@ -819,6 +832,11 @@
                       ? seeVideo(episode.episodeId)
                       : videoIsNotFree()
                   "
+                  @touch="
+                    episode.isFree || item1 == 1
+                      ? seeVideo(episode.episodeId)
+                      : videoIsNotFree()
+                  "
                 >
                   <div class="name-order">
                     <div class="part-order">
@@ -1114,20 +1132,25 @@
                     type="text"
                     :value="replayToCommentName"
                     placeholder="نام و نام خانوادگی"
+                    disabled
                   />
                 </template>
                 <input
                   type="text"
                   v-if="!studentIsLogin"
+                  :class="noName ? 'red' : ''"
                   v-model="commentName"
                   placeholder="نام و نام خانوادگی"
                 />
-
+                <p class="wrong-text" v-if="noName">نام خود را وارد کنید</p>
                 <textarea
                   class="message"
+                  :class="noText ? 'red' : ''"
                   v-model="commentText"
                   placeholder="نظر شما"
                 ></textarea>
+                <p class="wrong-text" v-if="noText">متن کامنت خالی است!</p>
+
                 <button class="submit-comment" @click.prevent="addComment">
                   ثبت نظر
                 </button>
@@ -1578,6 +1601,10 @@ export default {
       item2: null,
 
       audioBase64Data: "",
+
+      // form validation
+      noText: false,
+      noName: false,
     };
   },
   async beforeMount() {
@@ -1656,6 +1683,11 @@ export default {
     this.loading = false;
   },
   methods: {
+    seeMoreTeacherDetail(event) {
+      document.querySelector(
+        ".teacher-info .body .details"
+      ).innerHTML = this.teacherBox.shortDescription;
+    },
     onScriptLoaded(event = null) {
       window.videoPlayer();
     },
@@ -1747,18 +1779,36 @@ export default {
     },
     async addComment() {
       if (!this.$cookies.get("key") && !this.$cookies.get("refreshToken")) {
-        var commentResp = await this.$axios.post("/api/Course/AddComment", {
-          id: this.$route.params.id,
-          parentId: this.replayToCommentId == "" ? null : this.replayToCommentId,
-          userName: this.commentName,
-          commentText: this.commentText,
-        });
-        if (commentResp.data.statusCode == 200 && commentResp.data.message == "Success") {
-          this.getComments();
-          this.commentName = "";
-          this.commentText = "";
-          this.replayToCommentId = "";
-          this.replayToCommentName = "";
+        if (this.commentText.trim() == "" || this.commentName.trim() == "") {
+          if (this.commentText.trim() == "") {
+            this.noText = true;
+          } else {
+            this.noText = false;
+          }
+          if (this.commentName.trim() == "") {
+            this.noName = true;
+          } else {
+            this.noName = false;
+          }
+        } else {
+          var commentResp = await this.$axios.post("/api/Course/AddComment", {
+            id: this.$route.params.id,
+            parentId: this.replayToCommentId == "" ? null : this.replayToCommentId,
+            userName: this.commentName,
+            commentText: this.commentText,
+          });
+          if (
+            commentResp.data.statusCode == 200 &&
+            commentResp.data.message == "Success"
+          ) {
+            this.getComments();
+            this.commentName = "";
+            this.commentText = "";
+            this.noText = false;
+            this.noName = false;
+            this.replayToCommentId = "";
+            this.replayToCommentName = "";
+          }
         }
       } else if (!this.$cookies.get("key") && this.$cookies.get("refreshToken")) {
         this.refreshToken().then((res) => {
@@ -1771,26 +1821,31 @@ export default {
       }
     },
     async commentLogin() {
-      var commentResp = await this.$axios.post(
-        "/api/Course/AddComment",
-        {
-          id: this.$route.params.id,
-          parentId: this.replayToCommentId == "" ? null : this.replayToCommentId,
-          userName: this.commentName,
-          commentText: this.commentText,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
+      if (this.commentText.trim() == "") {
+        this.noText = true;
+      } else {
+        var commentResp = await this.$axios.post(
+          "/api/Course/AddComment",
+          {
+            id: this.$route.params.id,
+            parentId: this.replayToCommentId == "" ? null : this.replayToCommentId,
+            userName: this.commentName,
+            commentText: this.commentText,
           },
+          {
+            headers: {
+              Authorization: `Bearer ${this.$cookies.get("key")}`,
+            },
+          }
+        );
+        if (commentResp.data.statusCode == 200 && commentResp.data.message == "Success") {
+          this.noText = false;
+          this.getComments();
+          this.commentName = "";
+          this.commentText = "";
+          this.replayToCommentId = "";
+          this.replayToCommentName = "";
         }
-      );
-      if (commentResp.data.statusCode == 200 && commentResp.data.message == "Success") {
-        this.getComments();
-        this.commentName = "";
-        this.commentText = "";
-        this.replayToCommentId = "";
-        this.replayToCommentName = "";
       }
     },
     async buyCourse() {
@@ -1942,9 +1997,7 @@ export default {
           });
         }
       } else {
-        var likeResp = await this.$axios.get(
-          `/api/Course/CommentLike/${id}?ip=${myIp}`
-        );
+        var likeResp = await this.$axios.get(`/api/Course/CommentLike/${id}?ip=${myIp}`);
       }
     },
     async commentLiked(id) {
@@ -2028,5 +2081,16 @@ export default {
 }
 .plyr:-webkit-full-screen video {
   max-height: 100% !important;
+}
+.wrong-text {
+  position: relative;
+  display: block;
+  width: 100%;
+  font-size: 10px;
+  color: $active-color;
+}
+textarea.message.red,
+input.red {
+  border: 1px solid red !important;
 }
 </style>
