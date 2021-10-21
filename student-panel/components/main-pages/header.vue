@@ -348,6 +348,15 @@ export default {
       document.querySelector(".mega-menu-shadow").style.display = "none";
     },
   },
+  watch: {
+    $route: {
+      handler() {
+        const check = document.querySelector("#school-header-checkbox");
+        check.checked = false;
+      },
+      deep: true,
+    },
+  },
 };
 </script>
 <style lang="scss">

@@ -1,6 +1,6 @@
 <template>
   <aside class="panel-aside">
-    <button class="hamburger-button">
+    <button class="hamburger-button" @click.prevent="toggle_visitor_panel">
       <div class="hamburger-line"></div>
       <div class="hamburger-line"></div>
       <div class="hamburger-line"></div>
@@ -12,7 +12,7 @@
           class="profile-image"
           alt="تصویر پروفایل مدرس"
         />
-        <h2>امیررضا باقری</h2>
+        <h2>{{ name }}</h2>
       </div>
 
       <svg
@@ -585,3 +585,49 @@
     </div> -->
   </aside>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      loading: true,
+      name: "",
+      profImage: "",
+    };
+  },
+  async beforeMount() {
+    const profData = await this.$axios.get(
+      `/api/Visitor/VisitorProfile/Profile/${this.$route.params.id}`
+    );
+    if (profData.data.statusCode == 200 && profData.data.message == "Success") {
+      this.name = profData.data.data.visitorName;
+    }
+  },
+  mounted() {},
+  methods: {
+    toggle_visitor_panel() {
+      const panel_teacher_aside = document.querySelector(".panel-aside");
+      panel_teacher_aside.classList.toggle("show");
+    },
+    togglePanel() {
+      document.querySelector(".dropdown-preview").parentNode.classList.toggle("expanded");
+    },
+  },
+  computed: {
+    // profImagedata() {
+    //   return "https://api.daneshkadeonline.ir/Images/Public/Teacher/" + this.profImage;
+    // },
+  },
+  // close sidebar when navigate between pages
+  watch: {
+    $route: {
+      handler() {
+        const panel_teacher_aside = document.querySelector(".panel-aside");
+        if (panel_teacher_aside.classList.contains("show")) {
+          panel_teacher_aside.classList.remove("show");
+        }
+      },
+      deep: true,
+    },
+  },
+};
+</script>

@@ -95,6 +95,22 @@
               </div>
               <label for="" class="form-row-col guide-section">
                 <span class="guide-text gray" v-if="video.isFree">رایگان</span>
+                <span v-if="video.isAccepted == true" class="episode-status green"
+                  >تایید شده</span
+                >
+                <span v-else-if="video.isAccepted == null" class="episode-status yellow"
+                  >در انتظار تایید</span
+                >
+                <span v-else class="episode-status red">رد شده</span>
+                <span class="episode-status-btn">
+                  <button class="accept" @click="changeEpisodeStatus(video.id, true)">
+                    تایید
+                  </button>
+                  /
+                  <button class="decline" @click="changeEpisodeStatus(video.id, false)">
+                    رد
+                  </button>
+                </span>
               </label>
             </div>
           </div>
@@ -134,6 +150,28 @@ export default {
     };
   },
   methods: {
+    async changeEpisodeStatus(id, type) {
+      const changeStatusResp = await this.$axios.get(
+        `/api/Admin/AdminCourse/ChangeAcceptCourseEpisode/${id}/${type}`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("key")}`,
+          },
+        }
+      );
+      if (
+        changeStatusResp.data.statusCode == 200 &&
+        changeStatusResp.data.message == "Success"
+      ) {
+        this.$swal({
+          text: type == true ? "تایید شد!" : "رد شد!",
+          icon: "success",
+          showCloseButton: true,
+          confirmButtonText: "ادامه",
+        });
+        this.getVideos();
+      }
+    },
     uploadPart(event) {
       this.videoPartName = event.target.files[0].name;
       // this.createBase64Image(videoPart);
@@ -210,7 +248,7 @@ export default {
           },
         }
       );
-      console.log(videos);
+      // console.log(videos);
       this.videos = videos.data.data;
     },
     async editEpisode(id) {

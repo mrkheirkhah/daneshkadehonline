@@ -482,7 +482,7 @@ export default {
       this.shegeftRadio = adsActivate.amazingIsActive;
       this.mahboobRadio = adsActivate.favoriteIsActive;
       this.jadidRadio = adsActivate.newestIsActive;
-      this.bazdidRadio = adsActivate.mostxVisitIsActive;
+      this.bazdidRadio = adsActivate.mostVisitIsActive;
       this.packageRadio = adsActivate.packageIsActive;
     },
     async setSideAds() {

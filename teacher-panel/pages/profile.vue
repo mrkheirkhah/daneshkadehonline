@@ -156,7 +156,7 @@
               </label>
 
               <span class="hint-text">
-                <a href="#"> راهنمای انتخاب عکس پروفایل </a>
+                <a href="" type="button" @click.prevent="showProfHelp"> راهنمای انتخاب عکس پروفایل </a>
               </span>
             </div>
             <label for="" class="form-row-col">
@@ -299,6 +299,14 @@ export default {
   },
   mounted() {},
   methods: {
+    showProfHelp() {
+      this.$swal({
+        text:
+          "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد",
+        showCloseButton: true,
+        showConfirmButton: false,
+      });
+    },
     toggleDropDowns(event) {
       event.stopPropagation();
       event.target.closest(".floated-list-container").classList.toggle("show");

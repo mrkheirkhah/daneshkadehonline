@@ -42,7 +42,36 @@ form {
             display: flex;
             flex-flow: row wrap;
             align-items: center;
-
+            justify-content: space-between;
+            .episode-status{
+                &.red{
+                    color: $active-color;
+                }
+                &.green{
+                    color: $green-color;
+                }
+                &.yellow{
+                    color: $orange-color;
+                }
+            }
+            .episode-status-btn button{
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                transition: 0.5s;
+                &.accept{
+                    color: $green-color;
+                    &:hover{
+                        color: $green-hover-color;
+                    }
+                }
+                &.decline{
+                    color: $active-color;
+                    &:hover{
+                        color: $active-hover-color;
+                    }
+                }
+            }
             .guide-text {
                 color: $blue-color;
                 font-weight: $font-weight-regular;

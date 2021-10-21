@@ -65,7 +65,7 @@ export default {
     },
     async getTransactions() {
       const transactions = await this.$axios.get(
-        `/api/Visitor/VisitorWallet/GetVisitorWallets/${this.$route.params.id}`
+        `/api/Visitor/VisitorWallet/GetVisitorTransactions/${this.$route.params.id}`
       );
       if (transactions.data.statusCode == 200 && transactions.data.message == "Success") {
         this.transactions = transactions.data.data;

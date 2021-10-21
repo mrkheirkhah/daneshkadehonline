@@ -324,7 +324,7 @@ export default {
             sectionsCount: n.sectionsCount,
             suggestionPrice: n.suggestionPrice,
             isAccepted: n.isAccepted,
-            reqDate: new Date(n.createDate).toLocaleDateString(),
+            reqDate: new Date(n.createDate).toLocaleDateString('fa-ir'),
           });
         }
       }

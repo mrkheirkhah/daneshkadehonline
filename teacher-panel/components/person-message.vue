@@ -74,6 +74,7 @@
                 class="record-btn green endR"
                 v-if="recordedVoice == ''"
                 @mousedown="startRecord"
+                @touchstart="startRecord"
               >
                 <div
                   v-html="require('@/static/panel-teacher-icons/microphone-icon.svg?raw')"
@@ -81,7 +82,11 @@
               </button>
               <div class="pseudo-form-input">
                 <audio :src="recordedVoice" id="voicePlayer" controls></audio>
-                <span class="voice-timer persian-number"></span>
+                <span class="voice-timer persian-number"
+                  >{{ mins < 10 ? "0" + mins : mins }}:{{
+                    secs < 10 ? "0" + secs : secs
+                  }}</span
+                >
                 <div class="btn-container green">
                   <button type="button" class="play-btn" @click="playAudio">
                     <svg
@@ -103,7 +108,12 @@
                   <button
                     type="button"
                     class="delete-btn"
-                    @click="recordedVoice = ''"
+                    @click="
+                      recordedVoice = '';
+                      mins = 0;
+                      secs = 0;
+                      timerInterval = null;
+                    "
                     v-if="recordedVoice != ''"
                   >
                     <div v-html="require('@/static/panel-teacher-icons/bin.svg?raw')" />
@@ -183,6 +193,9 @@ export default {
       audioBase64Data: "",
       selectedAttachImage: "",
       replyTo: "",
+      secs: 0,
+      mins: 0,
+      timerInterval: null,
     };
   },
   methods: {
@@ -239,6 +252,12 @@ export default {
       sendMsgModal.style.display = "flex";
     },
     startRecord() {
+      this.timerInterval = setInterval(() => {
+        this.secs = this.secs + 1;
+        if (this.secs == 60) {
+          this.mins = this.mins + 1;
+        }
+      }, 1000);
       navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
         const mediaRecorder = new MediaRecorder(stream);
         mediaRecorder.start();
@@ -249,6 +268,14 @@ export default {
         });
         const endBut = document.querySelector(".endR");
         endBut.addEventListener("mouseup", () => {
+          clearInterval(this.timerInterval);
+          mediaRecorder.stop();
+          stream
+            .getTracks() // get all tracks from the MediaStream
+            .forEach((track) => track.stop());
+        });
+        document.addEventListener("touchend", () => {
+          clearInterval(this.timerInterval);
           mediaRecorder.stop();
           stream
             .getTracks() // get all tracks from the MediaStream

@@ -145,9 +145,14 @@
             </div>
             <div class="hover-box__content">
               <div class="items-container">
-                <p class="item" v-for="anyNews in news" :key="anyNews.newsId">
+                <nuxt-link
+                  :to="'https://daneshkadeonline.ir/news/' + anyNews.newsId"
+                  class="item"
+                  v-for="anyNews in news"
+                  :key="anyNews.newsId"
+                >
                   {{ anyNews.title }}
-                </p>
+                </nuxt-link>
               </div>
             </div>
             <div class="hover-box__footer">
@@ -229,60 +234,36 @@
             </div>
             <div class="hover-box__content">
               <div class="items-container">
-                <div class="item">
+                <a
+                  :href="mag.guid.rendered"
+                  target="_blank"
+                  class="item"
+                  v-for="mag in mags"
+                  :key="mag.id"
+                >
                   <div class="image-container">
-                    <img src="@/static/images/course-image.png" alt="عکس دوره" />
+                    <img
+                      v-if="mag.yoast_head_json.og_image"
+                      :src="mag.yoast_head_json.og_image[0].url"
+                      alt="عکس مقاله"
+                    />
+                    <img v-else src="" alt="عکس مقاله" />
                   </div>
-                  <h4 class="article-name">دوره علوم تجربی</h4>
-                  <span class="date persian-number">00/12/9</span>
-                  <p class="article-detail">
-                    لورم ایپسوم متن ساختی و نامفهوم برای استفاده در صنعت چاپ
+                  <h4 class="article-name" v-if="mag.title.rendered.length > 15">
+                    {{ mag.title.rendered.substring(0, 15) }}...
+                  </h4>
+                  <h4 class="article-name" v-else>
+                    {{ mag.title.rendered }}
+                  </h4>
+                  <p class="article-detail" v-if="mag.yoast_head_json.description">
+                    {{ mag.yoast_head_json.description.substring(0, 45) }}...
                   </p>
-                </div>
-                <div class="item">
-                  <div class="image-container">
-                    <img src="@/static/images/course-image.png" alt="عکس دوره" />
-                  </div>
-                  <h4 class="article-name">دوره علوم تجربی</h4>
-                  <span class="date persian-number">00/12/9</span>
-                  <p class="article-detail">
-                    لورم ایپسوم متن ساختی و نامفهوم برای استفاده در صنعت چاپ
-                  </p>
-                </div>
-                <div class="item">
-                  <div class="image-container">
-                    <img src="@/static/images/course-image.png" alt="عکس دوره" />
-                  </div>
-                  <h4 class="article-name">دوره علوم تجربی</h4>
-                  <span class="date persian-number">00/12/9</span>
-                  <p class="article-detail">
-                    لورم ایپسوم متن ساختی و نامفهوم برای استفاده در صنعت چاپ
-                  </p>
-                </div>
-                <div class="item">
-                  <div class="image-container">
-                    <img src="@/static/images/course-image.png" alt="عکس دوره" />
-                  </div>
-                  <h4 class="article-name">دوره علوم تجربی</h4>
-                  <span class="date persian-number">00/12/9</span>
-                  <p class="article-detail">
-                    لورم ایپسوم متن ساختی و نامفهوم برای استفاده در صنعت چاپ
-                  </p>
-                </div>
-                <div class="item">
-                  <div class="image-container">
-                    <img src="@/static/images/course-image.png" alt="عکس دوره" />
-                  </div>
-                  <h4 class="article-name">دوره علوم تجربی</h4>
-                  <span class="date persian-number">00/12/9</span>
-                  <p class="article-detail">
-                    لورم ایپسوم متن ساختی و نامفهوم برای استفاده در صنعت چاپ
-                  </p>
-                </div>
+                  <p class="article-detail" v-else>بدون متن!</p>
+                </a>
               </div>
             </div>
             <div class="hover-box__footer">
-              <a href="#">مشاهده همه</a>
+              <a href="https://mag.daneshkadeonline.ir/" target="_blank">مشاهده همه</a>
             </div>
           </div>
         </button>
@@ -391,13 +372,20 @@ export default {
     return {
       loading: true,
       news: "",
+      mags: "",
     };
   },
   async mounted() {
-    await this.getNews();
+    await Promise.all([this.getNews(), this.getMags()]);
     this.loading = false;
   },
   methods: {
+    async getMags() {
+      const mags = await this.$axios.get(
+        "https://mag.daneshkadeonline.ir/wp-json/wp/v2/posts?per_page=5"
+      );
+      this.mags = mags.data;
+    },
     async getNews() {
       const alerts = await this.$axios.get("/api/News/Index");
       if (alerts.data.statusCode == "200" && alerts.data.message == "Success") {

@@ -12,12 +12,14 @@
             name=""
             v-model="fullName"
             id="teacher-fullname"
+            :class="wrongName ? 'red' : ''"
             @keyup="checkPersian($event)"
             placeholder="نام و نام خانوادگی را وارد کنید"
           />
           <span class="icon-container">
             <img src="@/static/panel-teacher-icons/name-icon.svg" alt="آیکون کاربر" />
           </span>
+          <p class="wrong-text" v-if="wrongName">نام خود را صحیح وارد کنید</p>
         </label>
         <label for="teacher-mellicode" class="input-label">
           <input
@@ -55,17 +57,23 @@
             type="password"
             name=""
             v-model="password"
+            :class="wrongPass ? 'red' : wrongPassLength ? 'red' : ''"
             id="teacher-password"
             placeholder="رمز عبور خود را وارد کنید"
           />
           <span class="icon-container">
             <img src="@/static/panel-teacher-icons/lock-icon.svg" alt="آیکون قفل" />
           </span>
+          <p class="wrong-text" v-if="wrongPass">رمز یا تکرار رمز صحیح نمیباشد</p>
+          <p class="wrong-text" v-if="wrongPassLength">
+            طول رمز باید بیشتر یا مساوی هشت کاراکتر باشد
+          </p>
         </label>
         <label for="teacher-repeat-password" class="input-label">
           <input
             type="password"
             name=""
+            :class="wrongPass ? 'red' : wrongPassLength ? 'red' : ''"
             v-model="repeatPassword"
             id="teacher-repeat-password"
             placeholder="تائید رمز عبور"
@@ -73,6 +81,10 @@
           <span class="icon-container">
             <img src="@/static/panel-teacher-icons/lock-icon.svg" alt="آیکون قفل" />
           </span>
+          <p class="wrong-text" v-if="wrongPass">رمز یا تکرار رمز صحیح نمیباشد</p>
+          <p class="wrong-text" v-if="wrongPassLength">
+            طول رمز باید بیشتر یا مساوی هشت کاراکتر باشد
+          </p>
         </label>
         <div>
           <label for="remember-me" class="checkbox-label">
@@ -138,6 +150,9 @@ export default {
       rememberMe: false,
       acceptTerms: false,
       wrongCode: false,
+      wrongName: false,
+      wrongPass: false,
+      wrongPassLength: false,
     };
   },
   beforeCreate() {
@@ -147,20 +162,40 @@ export default {
   },
   methods: {
     async register() {
-      if (this.acceptTerms === false) {
-        this.$swal({
-          text: "قوانین سایت را مطالعه و تایید کنید!",
-          icon: "warning",
-          showCloseButton: true,
-          confirmButtonText: "تلاش مجدد!",
-        });
-      } else if (
-        this.nationalCardNumber.length < 10 ||
-        this.nationalCardNumber.length > 10
-      ) {
+      if (this.fullName.trim() == "") {
+        this.wrongName = true;
+      } else {
+        this.wrongName = false;
+      }
+      if (this.nationalCardNumber.length < 10 || this.nationalCardNumber.length > 10) {
         this.wrongCode = true;
       } else {
+        this.wrongCode = false;
+      }
+      if (this.password.length < 8) {
+        this.wrongPassLength = true;
+      } else {
+        this.wrongPassLength = false;
         if (this.password === this.repeatPassword) {
+          this.wrongPass = true;
+        } else {
+          this.wrongPass = false;
+        }
+      }
+      if (
+        this.fullName.trim() != "" &&
+        this.nationalCardNumber.length == 10 &&
+        this.password.length >= 8 &&
+        this.password === this.repeatPassword
+      ) {
+        if (this.acceptTerms === false) {
+          this.$swal({
+            text: "قوانین سایت را مطالعه و تایید کنید!",
+            icon: "warning",
+            showCloseButton: true,
+            confirmButtonText: "تلاش مجدد!",
+          });
+        } else {
           try {
             const registerData = await this.$axios.$post(
               "/api/Teacher/TeacherAccount/Register",
@@ -184,15 +219,47 @@ export default {
               confirmButtonText: "تلاش مجدد!",
             });
           }
-        } else {
-          this.$swal({
-            text: "رمز و تکرار برابر نیستند!",
-            icon: "warning",
-            showCloseButton: true,
-            confirmButtonText: "تلاش مجدد!",
-          });
         }
       }
+      // } else if (
+      //   this.nationalCardNumber.length < 10 ||
+      //   this.nationalCardNumber.length > 10
+      // ) {
+      //   this.wrongCode = true;
+      // } else {
+      //   if (this.password === this.repeatPassword) {
+      //     try {
+      //       const registerData = await this.$axios.$post(
+      //         "/api/Teacher/TeacherAccount/Register",
+      //         {
+      //           teacherName: this.fullName,
+      //           nationalCardNumber: this.nationalCardNumber,
+      //           phoneNumber: this.$store.state.login.phoneNumber,
+      //           password: this.password,
+      //           verifyCode: this.$route.params.code,
+      //         }
+      //       );
+      //       if (registerData.data.tokenString) {
+      //         this.$store.dispatch("login/setRegisterData", registerData);
+      //         this.$router.push("/register-one");
+      //       }
+      //     } catch (e) {
+      //       this.$swal({
+      //         text: "مشکلی رخ داده است.کمی بعد دوباره امتحان کنید",
+      //         icon: "warning",
+      //         showCloseButton: true,
+      //         confirmButtonText: "تلاش مجدد!",
+      //       });
+      //     }
+      //   } else {
+      //     this.$swal({
+      //       text: "رمز و تکرار برابر نیستند!",
+      //       icon: "warning",
+      //       showCloseButton: true,
+      //       confirmButtonText: "تلاش مجدد!",
+      //     });
+      //   }
+      // }
     },
     checkPersian(e) {
       // javascript

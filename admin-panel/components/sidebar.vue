@@ -867,6 +867,17 @@ export default {
       document.querySelector(".dropdown-preview").parentNode.classList.toggle("expanded");
     },
   },
+  watch: {
+    $route: {
+      handler() {
+        const panel_teacher_aside = document.querySelector(".panel-aside");
+        if (panel_teacher_aside.classList.contains("show")) {
+          panel_teacher_aside.classList.remove("show");
+        }
+      },
+      deep: true,
+    },
+  },
 };
 </script>
 <style lang="scss">

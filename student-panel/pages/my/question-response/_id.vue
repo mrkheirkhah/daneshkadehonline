@@ -136,6 +136,7 @@
               class="record-btn endR"
               v-if="recordedVoice == ''"
               @mousedown="startRecord"
+              @touchstart="startRecord"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -232,6 +233,7 @@
                     recordedVoice = '';
                     mins = 0;
                     secs = 0;
+                    timerInterval = null;
                   "
                   v-if="recordedVoice != ''"
                 >
@@ -316,6 +318,7 @@ export default {
       timerInterval: null,
       secs: 0,
       mins: 0,
+      timerInterval: null,
       loading: true,
       answerText: "",
     };
@@ -398,6 +401,13 @@ export default {
         });
         const endBut = document.querySelector(".endR");
         endBut.addEventListener("mouseup", () => {
+          clearInterval(this.timerInterval);
+          mediaRecorder.stop();
+          stream
+            .getTracks() // get all tracks from the MediaStream
+            .forEach((track) => track.stop());
+        });
+        document.addEventListener("touchend", () => {
           clearInterval(this.timerInterval);
           mediaRecorder.stop();
           stream

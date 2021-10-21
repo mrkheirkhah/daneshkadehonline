@@ -247,22 +247,11 @@
               </label>
 
               <span class="hint-text">
-                <a href="#"> راهنمای انتخاب عکس پروفایل </a>
+                <a href="" type="button" @click.prevent="showProfHelp">
+                  راهنمای انتخاب عکس پروفایل
+                </a>
               </span>
             </div>
-            <label for="" class="form-row-col">
-              <input
-                type="password"
-                class="form-input"
-                disabled
-                placeholder="*********"
-              />
-              <span class="hint-text">
-                <a href="">برای تغییر رمز عبور کلیک کنید</a>
-              </span>
-            </label>
-          </div>
-          <div class="form-row">
             <label for="" class="form-row-col">
               <input
                 type="email"
@@ -270,16 +259,18 @@
                 v-model="email"
                 placeholder="ایمیل"
               />
-              <label for="" class="form-row-col">
-                <input
-                  v-if="referralCodeIsNull == null"
-                  type="text"
-                  class="form-input"
-                  v-model="reffererCode"
-                  placeholder="کد معرف"
-                />
-              </label>
+              <!-- <input
+                type="password"
+                class="form-input"
+                disabled
+                placeholder="*********"
+              />
+              <span class="hint-text">
+                <a href="">برای تغییر رمز عبور کلیک کنید</a>
+              </span> -->
             </label>
+          </div>
+          <div class="form-row">
             <div class="form-row-col">
               <textarea
                 name=""
@@ -292,6 +283,23 @@
               >
               </textarea>
             </div>
+            <label for="" class="form-row-col">
+              <!-- <input
+                type="email"
+                class="form-input"
+                v-model="email"
+                placeholder="ایمیل"
+              /> -->
+              <label for="" class="form-row-col">
+                <input
+                  v-if="referralCodeIsNull == null"
+                  type="text"
+                  class="form-input"
+                  v-model="reffererCode"
+                  placeholder="کد معرف"
+                />
+              </label>
+            </label>
           </div>
           <div class="section-title">
             <svg
@@ -526,6 +534,14 @@ export default {
     };
   },
   methods: {
+    showProfHelp() {
+      this.$swal({
+        text:
+          "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد",
+        showCloseButton: true,
+        showConfirmButton: false,
+      });
+    },
     toggleDropDowns(event) {
       event.stopPropagation();
       event.target.closest(".floated-list-container").classList.toggle("show");

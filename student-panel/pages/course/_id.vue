@@ -1948,7 +1948,7 @@ export default {
     seeVideo(id) {
       this.seeThisVideo = id;
       document
-        .querySelector("#videoSrc")
+        .getElementById("videoSrc")
         .setAttribute("src", "https://api.daneshkadeonline.ir/Course/Video/" + id);
       var videoPlayer = document.querySelector("video");
       videoPlayer.load();
@@ -2096,28 +2096,26 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "@/assets/swal-style.scss";
-@import "@/assets/styles/pages/course.scss";
 .plyr--full-ui input[type="range"] {
-  color: $active-color;
+  color: $active-color !important;
 }
 
 .plyr__control--overlaid {
-  background: rgba($active-color, 0.8);
+  background: rgba($active-color, 0.8) !important;
 }
 
 .plyr--video .plyr__control.plyr__tab-focus,
 .plyr--video .plyr__control:hover,
 .plyr--video .plyr__control[aria-expanded="true"] {
-  background: $active-color;
+  background: $active-color !important;
 }
 
 .plyr__control.plyr__tab-focus {
-  box-shadow: 0 0 0 5px rgba($active-color, 0.5);
+  box-shadow: 0 0 0 5px rgba($active-color, 0.5) !important;
 }
 
 .plyr__menu__container .plyr__control[role="menuitemradio"][aria-checked="true"]::before {
-  background: $active-color;
+  background: $active-color !important;
 }
 
 .plyr--video,
@@ -2138,4 +2136,6 @@ textarea.message.red,
 input.red {
   border: 1px solid red !important;
 }
+@import "@/assets/swal-style.scss";
+@import "@/assets/styles/pages/course.scss";
 </style>
