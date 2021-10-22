@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="col-12 col-lg-3 mt-3 mt-lg-0">
-            <div class="discount-code-box">
+            <div class="discount-code-box" :class="noCode ? 'red' : ''">
               <input
                 type="text"
                 placeholder="کد تخفیف"
@@ -51,6 +51,7 @@
               />
               <button class="apply" @click.prevent="submitDiscount">اعمال</button>
             </div>
+            <p class="wrong-text" v-if="noCode">کد تخفیف را وارد کنید</p>
             <div class="factor">
               <ul class="list">
                 <li>
@@ -110,6 +111,7 @@ export default {
       orders: "",
       discountCode: "",
       Tokenforpay: "",
+      noCode: false,
     };
   },
   mounted() {
@@ -149,19 +151,45 @@ export default {
       }
     },
     async submitDiscount() {
-      const discode = await this.$axios.get(
-        `/api/Student/StudentOrder/UseDiscount/${this.orders.orderId}/${this.discountCode}`,
-        {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+      if (this.discountCode.trim() == "") {
+        this.noCode = true;
+      } else {
+        this.noCode = false;
+        const discode = await this.$axios.get(
+          `/api/Student/StudentOrder/UseDiscount/${this.orders.orderId}/${this.discountCode}`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.$cookies.get("key")}`,
+            },
+          }
+        );
+        console.log(discode);
+        if (
+          discode.data.data == "Success" ||
+          (discode.data.data == "UserUsed" && discode.data.isSuccess == true)
+        ) {
+          this.$swal({
+            text: "کد تخفیف اعمال شد",
+            icon: "success",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          });
+          this.getOrders();
+        } else if (discode.data.data == "NotFound") {
+          this.$swal({
+            text: "کد تخفیف اشتباه می باشد",
+            icon: "error",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          });
+        } else if (discode.data.data == "ExpireDate") {
+          this.$swal({
+            text: "زمان انقضای این کد به پایان رسیده است!",
+            icon: "error",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          });
         }
-      );
-      if (
-        discode.data.data == "Success" ||
-        (discode.data.data == "UserUsed" && discode.data.isSuccess == true)
-      ) {
-        this.getOrders();
       }
     },
   },
@@ -170,4 +198,15 @@ export default {
 <style lang="scss">
 @import "@/assets/swal-style.scss";
 @import "@/assets/styles/pages/cart.scss";
+.wrong-text {
+  position: relative;
+  display: block;
+  width: 100%;
+  font-size: 10px;
+  top: -10px;
+  color: $active-color;
+}
+.discount-code-box.red {
+  border: 1px solid red !important;
+}
 </style>

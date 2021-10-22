@@ -98,44 +98,75 @@
                 disabled
               />
             </label>
+            <label for="" class="form-row-col floated-list-container in-panel">
+              <input
+                type="text"
+                class="form-input"
+                v-model="drop"
+                readonly
+                placeholder="آخرین مدرک تحصیلی"
+                @click="toggleDropDowns"
+              />
+              <ul class="floated-list custom-scrollbar">
+                <li
+                  v-for="option in degree"
+                  :key="option.index"
+                  @click="chooseDegre($event, option.id, option.imageNeed)"
+                >
+                  {{ option.title }}
+                </li>
+              </ul>
+            </label>
+          </div>
+          <div class="form-row">
             <label for="" class="form-row-col">
               <div class="floated-list-container select-multiple">
                 <input
                   type="text"
                   class="form-input"
-                  v-model="drop"
                   readonly
-                  placeholder="مدرک تحصیلی"
+                  placeholder="انتخاب دروس برای تدریس"
                   @click="toggleDropDowns"
                 />
                 <ul class="floated-list custom-scrollbar">
                   <li
-                    v-for="option in degree"
-                    :class="selectedDegreGroups.includes(option.id) ? 'selected' : ''"
-                    :key="option.index"
+                    v-for="option in courseGroups"
+                    @click="chooseCourseGroup($event, option.id)"
+                    :class="
+                      selectedCourseGroups.length > 0 &&
+                      selectedCourseGroups.includes(option.id)
+                        ? 'selected'
+                        : ''
+                    "
+                    :key="option.id"
                   >
-                    {{ option.title }}
+                    <!-- :class="
+                      needImage.includes(option.id) || dontNeedImage.includes(option.id)
+                        ? 'selected'
+                        : ''
+                    " -->
+                    {{ option.groupTitle }}
                   </li>
                 </ul>
               </div>
             </label>
-          </div>
-          <div class="form-row">
-            <div class="form-row-col darken-color" v-for="i in needImage" :key="i">
+            <div class="form-row-col darken-color" v-if="needImage != ''">
               <div class="separator pseudo-form-input">
                 <input
                   type="file"
-                  :id="'upload-degre-image-' + i"
-                  @change="uploadDegreImg($event, i)"
+                  :id="'upload-degre-image-' + needImage"
+                  @change="uploadDegreImg($event, needImage)"
                 />
-                <span> بارگذاری تصویر {{ degreName(i) }}</span>
+                <span> بارگذاری تصویر {{ degreName(needImage) }}</span>
                 <!-- <span else>{{ NCImageName }}</span> -->
                 <span>
-                  <label :for="'upload-degre-image-' + i" class="cover-btn">انتخاب</label>
+                  <label :for="'upload-degre-image-' + needImage" class="cover-btn"
+                    >انتخاب</label
+                  >
                 </span>
               </div>
             </div>
-            <label for="" class="form-row-col" v-if="needImage.length % 2 != 0"> </label>
+            <label for="" class="form-row-col" v-else> </label>
           </div>
           <div class="form-row">
             <div class="form-row-col darken-color">
@@ -156,7 +187,9 @@
               </label>
 
               <span class="hint-text">
-                <a href="" type="button" @click.prevent="showProfHelp"> راهنمای انتخاب عکس پروفایل </a>
+                <a href="" type="button" @click.prevent="showProfHelp">
+                  راهنمای انتخاب عکس پروفایل
+                </a>
               </span>
             </div>
             <label for="" class="form-row-col">
@@ -262,10 +295,12 @@ export default {
       },
       aboutTeacher: "",
       loading: true,
-      selectedDegreGroup: {},
+      selectedDegreGroup: "",
+      selectedDegreGroupImage: "",
       needImage: [],
       dontNeedImage: [],
-      selectedDegreGroups: "",
+      courseGroups: [],
+      selectedCourseGroups: [],
     };
   },
   async beforeMount() {
@@ -287,13 +322,20 @@ export default {
     });
     // console.log(profData);
     if (profData.data.statusCode == 200) {
-      this.selectedDegreGroups = profData.data.data.selectedEducations;
-
+      this.selectedCourseGroups = profData.data.data.groupIds;
       this.aboutTeacher = profData.data.data.description;
-      this.profData.degreeEducationId = profData.data.data.degreeEducationId;
+      this.selectedDegreGroup = profData.data.data.degreeEducationId;
+      for (const i in this.degree) {
+        if (this.selectedDegreGroup == i.id) {
+          this.drop = i.title;
+        }
+      }
       this.profData.email = profData.data.data.email;
       this.profData.phoneNumber = profData.data.data.phoneNumber;
-
+      const getGroups = await this.$axios.get(
+        "/api/Public/ProfileActions/GetAllCourseGroups"
+      );
+      this.courseGroups = getGroups.data.data;
       this.loading = false;
     }
   },
@@ -312,6 +354,17 @@ export default {
       event.target.closest(".floated-list-container").classList.toggle("show");
     },
     chooseDegre(event, id, imageNeed) {
+      this.drop = event.target.innerHTML.trim();
+      event.target.closest(".floated-list-container").classList.toggle("show");
+      this.selectedDegreGroup = id;
+      if (imageNeed == true) {
+        this.needImage = id;
+      } else {
+        this.needImage = "";
+        this.dontNeedImage = id;
+      }
+    },
+    chooseCourseGroup(event, id) {
       if (
         event.target
           .closest(".floated-list-container")
@@ -325,27 +378,14 @@ export default {
           elem.classList.toggle("selected");
         }
       }
-      if (id in this.selectedDegreGroup) {
-        delete this.selectedDegreGroup[id];
-      } else if (this.dontNeedImage.includes(id)) {
-        for (var i = this.dontNeedImage.length - 1; i >= 0; i--) {
-          if (this.dontNeedImage[i] == id) {
-            this.dontNeedImage.splice(i, 1);
-          }
-        }
-      } else if (this.needImage.includes(id)) {
-        for (var i = this.needImage.length - 1; i >= 0; i--) {
-          if (this.needImage[i] == id) {
-            this.needImage.splice(i, 1);
-          }
+      if (this.selectedCourseGroups.includes(id)) {
+        var index = this.selectedCourseGroups.indexOf(id);
+
+        if (index > -1) {
+          this.selectedCourseGroups.splice(index, 1);
         }
       } else {
-        if (imageNeed == true) {
-          this.needImage.push(id);
-          // this.selectedDegreGroup[id] = "";
-        } else {
-          this.dontNeedImage.push(id);
-        }
+        this.selectedCourseGroups.push(id);
       }
     },
     degreName(id) {
@@ -356,16 +396,10 @@ export default {
       }
     },
     uploadDegreImg(event, i) {
-      event.target.nextElementSibling.innerHTML = event.target.files[0].name;
-      const NTImg = event.target.files[0];
-      this.createBase64ImageDegre(NTImg, i);
-    },
-    createBase64ImageDegre(fileObject, i) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.selectedDegreGroup[i] = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
+      try {
+        event.target.nextElementSibling.innerHTML = event.target.files[0].name;
+        this.selectedDegreGroupImage = event.target.files[0];
+      } catch {}
     },
     croppie(e) {
       var files = e.target.files || e.dataTransfer.files;
@@ -385,7 +419,7 @@ export default {
       // Options can be updated.
       // Current option will return a base64 version of the uploaded image with a size of 600px X 450px.
       let options = {
-        type: "base64",
+        type: "blob",
         size: { width: 600, height: 600 },
         format: "jpeg",
       };
@@ -398,20 +432,20 @@ export default {
     },
 
     async editProf() {
-      for (const i of this.dontNeedImage) {
-        this.selectedDegreGroup[i] = "";
-      }
+      // console.log(this.cropped);
+      let formData = new FormData();
+      formData.append("EducationImage", this.selectedDegreGroupImage);
+      formData.append("EducationId", this.selectedDegreGroup);
+      formData.append("GroupIds", JSON.stringify(this.selectedCourseGroups));
+      formData.append("ProfileImage", this.cropped);
+      formData.append("Email", this.profData.email);
+      formData.append("Description ", this.aboutTeacher);
       const editProfResponse = await this.$axios.post(
         "/api/Teacher/TeacherProfile/Profile",
-        {
-          selectedEducations: this.selectedDegreGroup,
-          degreeEducationId: this.selectedDegree,
-          profileImageBase64: this.cropped,
-          email: this.profData.email,
-          description: this.aboutTeacher,
-        },
+        formData,
         {
           headers: {
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${this.$cookies.get("key")}`,
           },
         }

@@ -277,8 +277,7 @@
       <section class="box-content custom-scrollbar" id="groupTable">
         <header class="table-row table-header">
           <span>نام دسته</span>
-          <span>تعداد دوره ها</span>
-          <span>تعداد دانشجویان</span>
+          <span>تعداد خبر ها</span>
           <span>تعداد زیرمجموعه</span>
           <span>ویرایش</span>
           <span>حذف</span>
@@ -286,8 +285,7 @@
         </header>
         <div class="table-row" v-for="group in groups" :key="group.groupId">
           <span>{{ group.groupTitle }}</span>
-          <span class="persian-number">{{ group.courseCount }}</span>
-          <span class="persian-number">{{ group.studentCount }}</span>
+          <span class="persian-number">{{ group.newsCount }}</span>
           <span class="persian-number">{{ group.subCount }}</span>
           <span @click="editGroup(group.groupId, group.groupTitle)">ویرایش</span>
           <span @click="deleteGroup(group.groupId)">حذف</span>
@@ -309,8 +307,7 @@
       <section class="box-content custom-scrollbar" id="subGroupTable">
         <header class="table-row table-header">
           <span>نام دسته</span>
-          <span>تعداد دوره ها</span>
-          <span>تعداد دانشجویان</span>
+          <span>تعداد خبر ها</span>
           <span>تعداد زیرمجموعه</span>
           <span>ویرایش</span>
           <span>حذف</span>
@@ -322,8 +319,7 @@
           :key="subGroup.groupId"
         >
           <span>{{ subGroup.groupTitle }}</span>
-          <span class="persian-number">{{ subGroup.courseCount }}</span>
-          <span class="persian-number">{{ subGroup.studentCount }}</span>
+          <span class="persian-number">{{ subGroup.newsCount }}</span>
           <span class="persian-number">{{ subGroup.subCount }}</span>
           <span @click="editGroup(subGroup.groupId, subGroup.groupTitle)">ویرایش</span>
           <span @click="deleteGroup(subGroup.groupId)">حذف</span>
@@ -345,8 +341,7 @@
       <section class="box-content custom-scrollbar" id="subTwoGroupTable">
         <header class="table-row table-header">
           <span>نام دسته</span>
-          <span>تعداد دوره ها</span>
-          <span>تعداد دانشجویان</span>
+          <span>تعداد خبر ها</span>
           <span>تعداد زیرمجموعه</span>
           <span>ویرایش</span>
           <span>حذف</span>
@@ -357,8 +352,7 @@
           :key="subGroup.groupId"
         >
           <span>{{ subGroup.groupTitle }}</span>
-          <span class="persian-number">{{ subGroup.courseCount }}</span>
-          <span class="persian-number">{{ subGroup.studentCount }}</span>
+          <span class="persian-number">{{ subGroup.newsCount }}</span>
           <span class="persian-number">{{ subGroup.subCount }}</span>
           <span @click="editGroup(subGroup.groupId, subGroup.groupTitle)">ویرایش</span>
           <span @click="deleteGroup(subGroup.groupId)">حذف</span>
@@ -593,6 +587,7 @@ export default {
           Authorization: `Bearer ${this.$cookies.get("key")}`,
         },
       });
+      console.log(groupsResp);
       if (groupsResp.data.statusCode == 200 && groupsResp.data.message == "Success") {
         this.groups = groupsResp.data.data;
       }

@@ -64,7 +64,11 @@
             </label>
             <div for="" class="form-row-col darken-color">
               <div class="separator pseudo-form-input">
-                <input type="file" id="upload-course-image" @change="selectNewsImage" />
+                <input
+                  type="file"
+                  id="upload-course-image"
+                  @change="selectNewsImage($event)"
+                />
                 <span v-if="imageName == ''">بارگذاری تصویر خبر</span>
                 <span v-else>{{ imageName }}</span>
                 <span>
@@ -199,7 +203,11 @@
         <div class="form-row">
           <div for="" class="form-row-col darken-color">
             <div class="separator pseudo-form-input">
-              <input type="file" id="upload-ads-news-1" @change="selectNewsFirstAd" />
+              <input
+                type="file"
+                id="upload-ads-news-1"
+                @change="selectNewsFirstAd($event)"
+              />
               <span>آپلود تبلیغ اول</span>
               <span>
                 <label for="upload-ads-news-1" class="cover-btn">انتخاب</label>
@@ -208,7 +216,11 @@
           </div>
           <div for="" class="form-row-col darken-color">
             <div class="separator pseudo-form-input">
-              <input type="file" id="upload-ads-news-2" @change="selectNewsSecondAd" />
+              <input
+                type="file"
+                id="upload-ads-news-2"
+                @change="selectNewsSecondAd($event)"
+              />
               <span>آپلود تبلیغ دوم</span>
               <span>
                 <label for="upload-ads-news-2" class="cover-btn">انتخاب</label>
@@ -638,100 +650,115 @@ export default {
       this.selectedGroup = id;
       event.target.closest(".floated-list-container").classList.toggle("show");
     },
-    selectNewsImage() {
+    selectNewsImage(event) {
       try {
         this.imageName = event.target.files[0].name;
-        const courseImage = event.target.files[0];
-        this.newsImageBase64(courseImage);
+        this.newsImg = event.target.files[0];
+        // this.newsImageBase64(courseImage);
       } catch {}
     },
-    newsImageBase64(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.newsImg = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
-    selectNewsFirstAd() {
+    // newsImageBase64(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.newsImg = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
+    selectNewsFirstAd(event) {
       try {
         this.firstAdFileName = event.target.files[0].name;
-        const courseImage = event.target.files[0];
-        this.newsFirstAdImageBase64(courseImage);
+        this.firstAdBase64 = event.target.files[0];
+        // this.newsFirstAdImageBase64(courseImage);
       } catch {}
     },
-    selectNewsSecondAd() {
+    selectNewsSecondAd(event) {
       try {
         this.secondAdFileName = event.target.files[0].name;
-        const courseImage = event.target.files[0];
-        this.newsSecondAdImageBase64(courseImage);
+        this.secondAdBase64 = event.target.files[0];
+        // this.newsSecondAdImageBase64(courseImage);
       } catch {}
     },
-    newsFirstAdImageBase64(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.firstAdBase64 = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
-    newsSecondAdImageBase64(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.secondAdBase64 = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // newsFirstAdImageBase64(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.firstAdBase64 = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
+    // newsSecondAdImageBase64(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.secondAdBase64 = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
     async submitNewNews() {
       if (this.submitType == "add") {
-        const submitNewsResp = await this.$axios.post(
-          "/api/Admin/AdminNews/News",
-          {
-            groupId: this.selectedGroup,
-            title: this.newsTitle,
-            shortDescription: this.shortDescription,
-            text: this.content,
-            readTime: this.readTime,
-            newsImageBase64: this.newsImg,
-            firstAdsImageBase64: this.firstAdBase64,
-            firstAdsLink: this.firstAdLink,
-            secondAdsImageBase64: this.secondAdBase64,
-            secondAdsLink: this.secondAdLink,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
-          }
-        );
         if (
-          submitNewsResp.data.statusCode == 200 &&
-          submitNewsResp.data.message == "Success"
+          this.selectedGroup != "" &&
+          this.newsTitle.trim() != "" &&
+          this.shortDescription.trim() != "" &&
+          this.content != "" &&
+          this.readTime != ""
         ) {
+          let formData = new FormData();
+          formData.append("groupId", this.selectedGroup);
+          formData.append("title", this.newsTitle);
+          formData.append("shortDescription", this.shortDescription);
+          formData.append("text", this.content);
+          formData.append("readTime", this.readTime);
+          formData.append("newsImage", this.newsImg);
+          formData.append("firstAdsImage", this.firstAdBase64);
+          formData.append("firstAdsLink", this.firstAdLink);
+          formData.append("secondAdsImage", this.secondAdBase64);
+          formData.append("secondAdsLink", this.secondAdLink);
+          const submitNewsResp = await this.$axios.post(
+            "/api/Admin/AdminNews/News",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${this.$cookies.get("key")}`,
+              },
+            }
+          );
+          if (
+            submitNewsResp.data.statusCode == 200 &&
+            submitNewsResp.data.message == "Success"
+          ) {
+            this.$swal({
+              text: "ثبت شد",
+              icon: "success",
+              showCloseButton: true,
+              showCancelButton: true,
+              confirmButtonText: "بله",
+              cancelButtonText: "خیر",
+            });
+            this.resetData();
+            this.getNewsData();
+          }
+        } else {
           this.$swal({
-            text: "ثبت شد",
-            icon: "success",
+            text: "اطلاعات را کامل کنید",
+            icon: "warning",
             showCloseButton: true,
-            showCancelButton: true,
-            confirmButtonText: "بله",
-            cancelButtonText: "خیر",
+            confirmButtonText: "تایید",
           });
-          this.resetData();
-          this.getNewsData();
         }
       } else if (this.submitType == "edit") {
+        formData.append("newsId", this.editThis);
+        formData.append("title", this.newsTitle);
+        formData.append("shortDescription", this.shortDescription);
+        formData.append("text", this.content);
+        formData.append("readTime", this.readTime);
+        formData.append("newsImage", this.newsImg);
+        formData.append("firstAdsImage", this.firstAdBase64);
+        formData.append("firstAdsLink", this.firstAdLink);
+        formData.append("secondAdsImage", this.secondAdBase64);
+        formData.append("secondAdsLink", this.secondAdLink);
         const submitNewsResp = await this.$axios.put(
           "/api/Admin/AdminNews/News",
-          {
-            newsId: this.editThis,
-            title: this.newsTitle,
-            shortDescription: this.shortDescription,
-            text: this.content,
-            readTime: this.readTime,
-            newsImageBase64: this.newsImg,
-            firstAdsImageBase64: this.firstAdBase64,
-            firstAdsLink: this.firstAdLink,
-            secondAdsImageBase64: this.secondAdBase64,
-            secondAdsLink: this.secondAdLink,
-          },
+          formData,
           {
             headers: {
               Authorization: `Bearer ${this.$cookies.get("key")}`,

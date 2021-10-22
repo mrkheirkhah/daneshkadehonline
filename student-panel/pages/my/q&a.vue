@@ -290,16 +290,17 @@ export default {
           confirmButtonText: "تایید",
         });
       } else {
+        let formData = new FormData();
+        formData.append("courseId", this.questionToCourse);
+        formData.append("text", this.questionText);
+        formData.append("attachImage", this.selectedAttachImage);
+        formData.append("audioFileBase64", this.recordedVoice);
         const questionSendResp = await this.$axios.post(
           `/api/Student/StudentQuestion/SendNewQuestion`,
-          {
-            courseId: this.questionToCourse,
-            text: this.questionText,
-            attachImageBase64: this.selectedAttachImage,
-            audioFileBase64: this.recordedVoice,
-          },
+          formData,
           {
             headers: {
+              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${this.$cookies.get("key")}`,
             },
           }
@@ -327,17 +328,19 @@ export default {
       event.target.closest(".floated-list-container").classList.toggle("show");
     },
     uploadAttchedImage(event) {
-      const attachedImg = event.target.files[0];
-      this.uploadedFileName = event.target.files[0].name;
-      this.createBase64Image(attachedImg);
+      try {
+        this.selectedAttachImage = event.target.files[0];
+        this.uploadedFileName = event.target.files[0].name;
+      } catch {}
+      // this.createBase64Image(attachedImg);
     },
-    createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.selectedAttachImage = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createBase64Image(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.selectedAttachImage = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
     async playAudio() {
       const player = document.getElementById("voicePlayer");
       // player.addEventListener("loadedmetadata", function () {

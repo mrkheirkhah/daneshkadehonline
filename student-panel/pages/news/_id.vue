@@ -3,7 +3,7 @@
     <div class="banner expand">
       <div class="bg-image"></div>
       <h2 class="title">
-        <template v-if="loading">
+        <!-- <template v-if="loading">
           <skeleton
             v-if="loading"
             class="skeleton"
@@ -11,12 +11,12 @@
             height="35px"
             borderRadius="5px"
           />
-        </template>
-        <span v-else>
+        </template> -->
+        <!-- <span v-else>
           {{ newsDetail.title }}
-        </span>
+        </span> -->
       </h2>
-      <p class="banner-detail">{{ newsDetail.shortDescription }}</p>
+      <!-- <p class="banner-detail">{{ newsDetail.shortDescription }}</p> -->
       <div class="banner-overlay"></div>
     </div>
 
@@ -76,7 +76,10 @@
                 />
               </template>
               <template v-else>
-                <a href="#">
+                <a :href="
+                      'https://www.linkedin.com/sharing/share-offsite/?url=https://www.daneshkadeonline.ir' +
+                      $route.fullPath
+                    " target="_blank">
                   <svg
                     class="linkedin"
                     xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +130,12 @@
                     />
                   </svg>
                 </a>
-                <a href="#">
+                <a
+                  :href="
+                    'https://twitter.com/intent/tweet?url=https://www.daneshkadeonline.ir' +
+                    $route.fullPath
+                  " target="_blank"
+                >
                   <svg
                     class="twitter"
                     xmlns="http://www.w3.org/2000/svg"
@@ -200,11 +208,11 @@
             <skeleton class="skeleton mt" width="30%" height="20px" borderRadius="5px" />
           </template>
           <template v-else>
-            <img
-              :src="newsImage(newsDetail.imageName)"
-              alt="بنر خبر"
-              class="news-intro-banner"
-            />
+            <div class="part">
+              <h4 class="part-title">{{ newsDetail.title }}</h4>
+              <p class="part-detail">{{ newsDetail.shortDescription }}</p>
+            </div>
+
             <div v-html="newsDetail.text"></div>
           </template>
           <!-- <div class="part">
@@ -463,6 +471,9 @@ export default {
     // console.log(news);
     if (news.data.statusCode == 200 && news.data.message == "Success") {
       this.newsDetail = news.data.data;
+      document.querySelector(
+        ".bg-image"
+      ).style.backgroundImage = `url(https://api.daneshkadeonline.ir/Images/Public/News/${news.data.data.imageName})`;
     } else {
       console.log("course");
     }

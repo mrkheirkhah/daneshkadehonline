@@ -298,17 +298,18 @@ export default {
 
     // add member
     memberImage(event) {
-      const vectorImg = event.target.files[0];
-      this.memberImageName = event.target.files[0].name;
-      this.createBase64Image(vectorImg);
+      try {
+        this.memberImageBase64 = event.target.files[0];
+        this.memberImageName = event.target.files[0].name;
+      } catch {}
     },
-    createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.memberImageBase64 = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createBase64Image(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.memberImageBase64 = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
     async membersDetail() {
       const memberDetails = await this.$axios.get(
         "/api/Admin/AdminManageSiteInfo/TeamMember",
@@ -326,67 +327,87 @@ export default {
       }
     },
     async addMember() {
-      const addMemberResp = await this.$axios.post(
-        `/api/Admin/AdminManageSiteInfo/TeamMember`,
-        {
-          name: this.memberName,
-          role: this.role,
-          twitter: this.twiterLink,
-          linkedIn: this.linkdinLink,
-          facebook: this.facebookLink,
-          instagram: this.instagramLink,
-          telegram: this.telegramLink,
-          imageBase64: this.memberImageBase64,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+      if (this.memberName != "" && this.role != "" && this.memberImageBase64 != "") {
+        let formData = new FormData();
+        formData.append("name", this.memberName);
+        formData.append("role", this.role);
+        formData.append("twitter", this.twiterLink);
+        formData.append("linkedIn", this.linkdinLink);
+        formData.append("facebook", this.facebookLink);
+        formData.append("instagram", this.instagram);
+        formData.append("telegram", this.telegramLink);
+        formData.append("image", this.memberImageBase64);
+        const addMemberResp = await this.$axios.post(
+          `/api/Admin/AdminManageSiteInfo/TeamMember`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${this.$cookies.get("key")}`,
+            },
+          }
+        );
+        if (
+          addMemberResp.data.statusCode == 200 &&
+          addMemberResp.data.message == "Success"
+        ) {
+          this.$swal({
+            text: "ثبت شد",
+            icon: "success",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          });
+          this.resetData();
         }
-      );
-      if (
-        addMemberResp.data.statusCode == 200 &&
-        addMemberResp.data.message == "Success"
-      ) {
+      } else {
         this.$swal({
-          text: "ثبت شد",
-          icon: "success",
+          text: "اطلاعات ناقص میباشد",
+          icon: "warning",
           showCloseButton: true,
           confirmButtonText: "تایید",
         });
-        this.resetData();
       }
     },
     async submitEditMember() {
-      const addMemberResp = await this.$axios.put(
-        `/api/Admin/AdminManageSiteInfo/TeamMember?memberId=${this.editThisId}`,
-        {
-          name: this.memberName,
-          role: this.role,
-          twitter: this.twiterLink,
-          linkedIn: this.linkdinLink,
-          facebook: this.facebookLink,
-          instagram: this.instagramLink,
-          telegram: this.telegramLink,
-          imageBase64: this.memberImageBase64,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+      if (this.memberName != "" && this.role != "") {
+        let formData = new FormData();
+        formData.append("name", this.memberName);
+        formData.append("role", this.role);
+        formData.append("twitter", this.twiterLink);
+        formData.append("linkedIn", this.linkdinLink);
+        formData.append("facebook", this.facebookLink);
+        formData.append("instagram", this.instagram);
+        formData.append("telegram", this.telegramLink);
+        formData.append("image", this.memberImageBase64);
+        const addMemberResp = await this.$axios.put(
+          `/api/Admin/AdminManageSiteInfo/TeamMember?memberId=${this.editThisId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${this.$cookies.get("key")}`,
+            },
+          }
+        );
+        if (
+          addMemberResp.data.statusCode == 200 &&
+          addMemberResp.data.message == "Success"
+        ) {
+          this.$swal({
+            text: "ویرایش شد",
+            icon: "success",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          });
+          this.resetData();
         }
-      );
-      if (
-        addMemberResp.data.statusCode == 200 &&
-        addMemberResp.data.message == "Success"
-      ) {
+      } else {
         this.$swal({
-          text: "ویرایش شد",
-          icon: "success",
+          text: "اطلاعات ناقص میباشد",
+          icon: "warning",
           showCloseButton: true,
           confirmButtonText: "تایید",
         });
-        this.resetData();
       }
     },
     async editMember(id) {

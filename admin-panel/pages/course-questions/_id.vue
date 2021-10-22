@@ -1068,38 +1068,51 @@ export default {
       player.play();
     },
     uploadAttchedImage(event) {
-      const attachedImg = event.target.files[0];
-      this.attachedImgName = event.target.files[0].name;
-      this.createBase64Image(attachedImg);
+      try {
+        this.selectedAttachImage = event.target.files[0];
+        this.attachedImgName = event.target.files[0].name;
+      } catch {}
+      // this.createBase64Image(attachedImg);
     },
-    createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.selectedAttachImage = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createBase64Image(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.selectedAttachImage = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
     replayToQuestion(id, name) {
       this.replayQuestionId = id;
       this.replayQuestionName = name;
     },
     async sendQuestionAnswer() {
       if (this.replayQuestionId != "") {
+        let formData = new FormData();
+        formData.append("parentId", this.replayQuestionId);
+        formData.append("text", this.replayQuestionText);
+        formData.append("attachImage", this.selectedAttachImage);
+        formData.append("audioFileBase64", this.recordedVoice);
         const sendAnswerResp = await this.$axios.post(
           "/api/Admin/AdminQuestion/SendQuestionResponse",
-          {
-            parentId: Number(this.replayQuestionId),
-            text: this.replayQuestionText,
-            attachImageBase64: this.selectedAttachImage,
-            audioFileBase64: this.recordedVoice,
-          },
+          formData,
           {
             headers: {
+              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${this.$cookies.get("key")}`,
             },
           }
         );
-        console.log(sendAnswerResp);
+        if (
+          sendAnswerResp.data.statusCode == 200 &&
+          sendAnswerResp.data.message == "Success"
+        ) {
+          this.$swal({
+            text: "ارسال شد",
+            icon: "success",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          });
+        }
       }
     },
   },

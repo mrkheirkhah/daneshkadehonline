@@ -249,32 +249,52 @@ export default {
       }
     },
     async addNewAdmin() {
-      const addAdminResp = await this.$axios.post(
-        "/api/Admin/AdminManage/Admin",
-        {
-          profileImageBase64: this.newAdminPhotoBase64,
-          name: this.adminName,
-          phoneNumber: this.adminPhone,
-          email: this.email,
-          role: this.selectedRole,
-          nationalCardNumber: this.nationalCardNumber,
-          password: this.password,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+      if (
+        this.newAdminPhotoBase64 != "" &&
+        this.adminName.trim() != "" &&
+        this.adminPhone != "" &&
+        this.selectedRole != "" &&
+        this.nationalCardNumber != "" &&
+        this.password != ""
+      ) {
+        let formData = new FormData();
+        formData.append("profileImage", this.newAdminPhotoBase64);
+        formData.append("name", this.adminName);
+        formData.append("phoneNumber", this.adminPhone);
+        formData.append("email", this.email);
+        formData.append("role", this.selectedRole);
+        formData.append("nationalCardNumber", this.nationalCardNumber);
+        formData.append("password", this.password);
+        const addAdminResp = await this.$axios.post(
+          "/api/Admin/AdminManage/Admin",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${this.$cookies.get("key")}`,
+            },
+          }
+        );
+        if (
+          addAdminResp.data.statusCode == 200 &&
+          addAdminResp.data.message == "Success"
+        ) {
+          this.$swal({
+            text: "ثبت شد",
+            icon: "success",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          }).then(() => {
+            this.resetData();
+            this.getAdminsList();
+          });
         }
-      );
-      if (addAdminResp.data.statusCode == 200 && addAdminResp.data.message == "Success") {
+      } else {
         this.$swal({
-          text: "ثبت شد",
-          icon: "success",
+          text: "اطلاعات ناقص میباشد",
+          icon: "warning",
           showCloseButton: true,
           confirmButtonText: "تایید",
-        }).then(() => {
-          this.resetData();
-          this.getAdminsList();
         });
       }
     },
@@ -304,35 +324,50 @@ export default {
       }
     },
     async editAdmin() {
-      const editAdminResp = await this.$axios.put(
-        `/api/Admin/AdminManage/Admin?adminId=${this.editThisId}`,
-        {
-          profileImageBase64: this.newAdminPhotoBase64,
-          name: this.adminName,
-          phoneNumber: this.adminPhone,
-          email: this.email,
-          role: this.selectedRole,
-          nationalCardNumber: this.nationalCardNumber,
-          password: this.password,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
-        }
-      );
       if (
-        editAdminResp.data.statusCode == 200 &&
-        editAdminResp.data.message == "Success"
+        this.adminName.trim() != "" &&
+        this.adminPhone != "" &&
+        this.selectedRole != "" &&
+        this.nationalCardNumber != ""
       ) {
+        let formData = new FormData();
+        formData.append("profileImage", this.newAdminPhotoBase64);
+        formData.append("name", this.adminName);
+        formData.append("phoneNumber", this.adminPhone);
+        formData.append("email", this.email);
+        formData.append("role", this.selectedRole);
+        formData.append("nationalCardNumber", this.nationalCardNumber);
+        formData.append("password", this.password);
+        const editAdminResp = await this.$axios.put(
+          `/api/Admin/AdminManage/Admin?adminId=${this.editThisId}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${this.$cookies.get("key")}`,
+            },
+          }
+        );
+        if (
+          editAdminResp.data.statusCode == 200 &&
+          editAdminResp.data.message == "Success"
+        ) {
+          this.$swal({
+            text: "ثبت شد",
+            icon: "success",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          }).then(() => {
+            this.resetData();
+            this.getAdminsList();
+          });
+        }
+      } else {
         this.$swal({
-          text: "ثبت شد",
-          icon: "success",
+          text: "اطلاعات ناقص میباشد",
+          icon: "warning",
           showCloseButton: true,
           confirmButtonText: "تایید",
-        }).then(() => {
-          this.resetData();
-          this.getAdminsList();
         });
       }
     },
@@ -416,17 +451,19 @@ export default {
       });
     },
     newAdminPhoto(event) {
-      const adminPhoto = event.target.files[0];
-      this.adminPhotoName = event.target.files[0].name;
-      this.createBase64Image(adminPhoto);
+      try {
+        this.newAdminPhotoBase64 = event.target.files[0];
+        this.adminPhotoName = event.target.files[0].name;
+      } catch {}
+      // this.createBase64Image(adminPhoto);
     },
-    createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.newAdminPhotoBase64 = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createBase64Image(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.newAdminPhotoBase64 = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
   },
 };
 </script>

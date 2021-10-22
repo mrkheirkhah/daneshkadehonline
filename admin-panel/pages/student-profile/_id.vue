@@ -108,9 +108,9 @@
                 <span>تصویر پروفایل</span>
 
                 <span>
-                  <label for="upload-file-croppie" class="cover-btn select-profile-btn"
+                  <!-- <label for="upload-file-croppie" class="cover-btn select-profile-btn"
                     >انتخاب</label
-                  >
+                  > -->
                   <label
                     for="upload-course-image"
                     class="cover-btn"
@@ -200,7 +200,7 @@
         </template>
       </form>
     </div>
-    <div class="basic-modal show-image">
+    <!-- <div class="basic-modal show-image">
       <div class="content-box">
         <header>
           <div class="empty"></div>
@@ -215,8 +215,8 @@
           />
         </form>
       </div>
-    </div>
-    <div class="basic-modal profModal">
+    </div> -->
+    <!-- <div class="basic-modal profModal">
       <div class="content-box">
         <header>
           <div class="empty"></div>
@@ -258,7 +258,7 @@
           </footer>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -281,6 +281,7 @@ export default {
       degreeEducationId: "",
       notificationText: "",
       modalPicTitle: "",
+      profileImageName: "person-avatar.png",
     };
   },
   async beforeMount() {
@@ -392,7 +393,7 @@ export default {
           address: this.address,
           phoneNumber: this.phoneNumber,
           password: this.password,
-          profileImageBase64: this.profileImageBase64,
+          profileImageName: this.profileImageName,
         },
         {
           headers: {

@@ -661,17 +661,19 @@ export default {
       }
     },
     uploadCoursePic(event) {
-      const coursePic = event.target.files[0];
-      this.coursePicName = event.target.files[0].name;
-      this.createBase64Image(coursePic);
+      try {
+        this.uploadedCourseImage = event.target.files[0];
+        this.coursePicName = event.target.files[0].name;
+      } catch {}
+      // this.createBase64Image(coursePic);
     },
-    createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.uploadedCourseImage = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createBase64Image(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.uploadedCourseImage = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
     async uploadCourse() {
       if (
         this.courseName != "" &&
@@ -685,27 +687,32 @@ export default {
           if (this.selectedGroup != "") {
             try {
               if (this.courseDiscount >= 0 && this.courseDiscount <= 100) {
+                let formData = new FormData();
+                formData.append("courseName", this.courseName);
+                formData.append("groupId", this.selectedGroup);
+                formData.append("shortDescription", this.shortDescription);
+                formData.append("description", this.content);
+                formData.append(
+                  "price",
+                  this.subscriptionRadio == "free" ? 0 : Number(this.coursePrice)
+                );
+                formData.append(
+                  "discountPercentage",
+                  this.subscriptionRadio == "free"
+                    ? 0
+                    : this.courseDiscount == ""
+                    ? 0
+                    : Number(this.courseDiscount)
+                );
+                formData.append("courseTopics", this.topicsString);
+                formData.append("type", this.subscriptionRadio);
+                formData.append("courseImage", this.uploadedCourseImage);
                 const uploadCourseResponse = await this.$axios.post(
                   "/api/Teacher/TeacherCourse/Course",
-                  {
-                    courseName: this.courseName,
-                    groupId: Number(this.selectedGroup),
-                    shortDescription: this.shortDescription,
-                    description: this.content,
-                    price:
-                      this.subscriptionRadio == "free" ? 0 : Number(this.coursePrice),
-                    discountPercentage:
-                      this.subscriptionRadio == "free"
-                        ? 0
-                        : this.courseDiscount == ""
-                        ? 0
-                        : Number(this.courseDiscount),
-                    courseTopics: this.topicsString,
-                    type: this.subscriptionRadio,
-                    courseImageBase64Image: this.uploadedCourseImage,
-                  },
+                  formData,
                   {
                     headers: {
+                      "Content-Type": "multipart/form-data",
                       Authorization: `Bearer ${this.$cookies.get("key")}`,
                     },
                   }
@@ -747,21 +754,31 @@ export default {
         } else if (this.SubmitType == "edit") {
           try {
             if (this.courseDiscount >= 0 && this.courseDiscount <= 100) {
+              let formData = new FormData();
+              formData.append("courseId", this.courseId);
+              formData.append("shortDescription", this.shortDescription);
+              formData.append("description", this.content);
+              formData.append(
+                "price",
+                this.subscriptionRadio == "free" ? 0 : Number(this.coursePrice)
+              );
+              formData.append(
+                "discountPercentage",
+                this.subscriptionRadio == "free"
+                  ? 0
+                  : this.courseDiscount == ""
+                  ? 0
+                  : Number(this.courseDiscount)
+              );
+              formData.append("courseTopics", this.topicsString);
+              formData.append("type", this.subscriptionRadio);
+              formData.append("courseImage", this.uploadedCourseImage);
               const uploadCourseResponse = await this.$axios.put(
                 "/api/Teacher/TeacherCourse/Course",
-                {
-                  courseId: Number(this.courseId),
-                  description: this.content,
-                  shortDescription: this.shortDescription,
-                  price: this.subscriptionRadio == "free" ? 0 : Number(this.coursePrice),
-                  discountPercentage:
-                    this.subscriptionRadio == "free" ? 0 : Number(this.courseDiscount),
-                  courseTopics: this.topicsString,
-                  type: this.subscriptionRadio,
-                  courseImageBase64Image: this.uploadedCourseImage,
-                },
+                formData,
                 {
                   headers: {
+                    "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${this.$cookies.get("key")}`,
                   },
                 }

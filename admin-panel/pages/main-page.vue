@@ -63,6 +63,24 @@
           </div>
         </label>
       </div>
+      <div class="form-row">
+        <label for="" class="form-row-col">
+          <input
+            type="text"
+            class="form-input"
+            v-model="buttonLink"
+            placeholder="لینک دکمه"
+          />
+        </label>
+        <label for="" class="form-row-col">
+          <!-- <input
+            type="text"
+            class="form-input"
+            v-model="headerTitle"
+            placeholder="عنوان"
+          /> -->
+        </label>
+      </div>
       <button class="form-btn success" @click.prevent="uploadLanding">تائید</button>
 
       <div class="section-title">
@@ -360,6 +378,7 @@ export default {
       buttonName: "",
       selectedVector: "",
       vectorName: "",
+      buttonLink: "",
 
       // radios
       shegeftRadio: false,
@@ -400,78 +419,90 @@ export default {
       this.selectedHeader = event.target.innerHTML.trim();
     },
     uploadVector(event) {
-      const vectorImg = event.target.files[0];
-      this.vectorName = event.target.files[0].name;
-      this.createBase64Image(vectorImg);
+      try {
+        this.selectedVector = event.target.files[0];
+        this.vectorName = event.target.files[0].name;
+      } catch {}
+      // this.createBase64Image(vectorImg);
     },
-    createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.selectedVector = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createBase64Image(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.selectedVector = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
     // upload ads
     uploadShegeftBanner(event) {
-      const ShegeftBannerImg = event.target.files[0];
-      this.ShegeftBannerName = event.target.files[0].name;
-      this.createBase64Banner(ShegeftBannerImg);
+      try {
+        this.ShegeftBanner = event.target.files[0];
+        this.ShegeftBannerName = event.target.files[0].name;
+        // this.createBase64Banner(ShegeftBannerImg);
+      } catch {}
     },
     uploadJadidBanner(event) {
-      const JadidBannerImg = event.target.files[0];
-      this.jadidBannerName = event.target.files[0].name;
-      this.createBase64Banner(JadidBannerImg);
+      try {
+        this.jadidBanner = event.target.files[0];
+        this.jadidBannerName = event.target.files[0].name;
+        // this.createBase64Banner(JadidBannerImg);
+      } catch {}
     },
     uploadMahboobBanner(event) {
-      const mahboobBannerImg = event.target.files[0];
-      this.mahboobBannerName = event.target.files[0].name;
-      this.createBase64Banner(mahboobBannerImg);
+      try {
+        this.mahboobBanner = event.target.files[0];
+        this.mahboobBannerName = event.target.files[0].name;
+        // this.createBase64Banner(mahboobBannerImg);
+      } catch {}
     },
     uploadBazdidBanner(event) {
-      const bazdidBannerImg = event.target.files[0];
-      this.bazdidBannerName = event.target.files[0].name;
-      this.createBase64Banner(bazdidBannerImg);
+      try {
+        this.bazdidBanner = event.target.files[0];
+        this.bazdidBannerName = event.target.files[0].name;
+        // this.createBase64Banner(bazdidBannerImg);
+      } catch {}
     },
     uploadPackageBanner(event) {
-      const packageBannerImg = event.target.files[0];
-      this.packageBannerName = event.target.files[0].name;
-      this.createBase64Banner(packageBannerImg);
+      try {
+        this.packageBanner = event.target.files[0];
+        this.packageBannerName = event.target.files[0].name;
+        // this.createBase64Banner(packageBannerImg);
+      } catch {}
     },
-    createShegeftBase64Banner(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.ShegeftBanner = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
-    createJadidBase64Banner(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.jadidBanner = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
-    createMahboobBase64Banner(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.mahboobBanner = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
-    createBazdidBase64Banner(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.bazdidBanner = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
-    createPackageBase64Banner(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.packageBanner = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createShegeftBase64Banner(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.ShegeftBanner = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
+    // createJadidBase64Banner(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.jadidBanner = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
+    // createMahboobBase64Banner(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.mahboobBanner = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
+    // createBazdidBase64Banner(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.bazdidBanner = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
+    // createPackageBase64Banner(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.packageBanner = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
     async getSiteAds() {
       const adsInfo = await this.$axios.get("/api/Admin/AdminManageSiteInfo/Ads", {
         headers: {
@@ -486,26 +517,29 @@ export default {
       this.packageRadio = adsActivate.packageIsActive;
     },
     async setSideAds() {
+      let formData = new FormData();
+      formData.append("amazingImage", this.ShegeftBanner);
+      formData.append("amazingIsActive", this.shegeftRadio);
+      formData.append(
+        "selectedAmazingCourses",
+        this.$store.state.selectedCourses.selectedCourses == ""
+          ? []
+          : JSON.stringify(this.$store.state.selectedCourses.selectedCourses)
+      );
+      formData.append("favoriteImage", this.mahboobBanner);
+      formData.append("favoriteIsActive", this.mahboobRadio);
+      formData.append("newestImage", this.jadidBanner);
+      formData.append("newestIsActive", this.jadidRadio);
+      formData.append("mostVisitImage", this.bazdidBanner);
+      formData.append("mostVisitIsActive", this.bazdidRadio);
+      formData.append("packageImage", this.packageBanner);
+      formData.append("packageIsActive", this.packageRadio);
       const setAdsInfo = await this.$axios.post(
         "/api/Admin/AdminManageSiteInfo/Ads",
-        {
-          amazingImageBase64: this.ShegeftBanner,
-          amazingIsActive: this.shegeftRadio,
-          selectedAmazingCourses:
-            this.$store.state.selectedCourses.selectedCourses == ""
-              ? []
-              : this.$store.state.selectedCourses.selectedCourses,
-          favoriteImageBase64: this.mahboobBanner,
-          favoriteIsActive: this.mahboobRadio,
-          newestImageBase64: this.jadidBanner,
-          newestIsActive: this.jadidRadio,
-          mostVisitImageBase64: this.bazdidBanner,
-          mostVisitIsActive: this.bazdidRadio,
-          packageImageBase64: this.packageBanner,
-          packageIsActive: this.packageRadio,
-        },
+        formData,
         {
           headers: {
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${this.$cookies.get("key")}`,
           },
         }
@@ -522,33 +556,45 @@ export default {
       }
     },
     async uploadLanding() {
-      const uploadResp = await this.$axios.post(
-        "/api/Admin/AdminManageSiteInfo/UpdateLandingContent",
-        {
-          id: this.headerId,
-          title: this.headerTitle,
-          description: this.headerDescription,
-          buttonName: this.buttonName,
-          vectorBase64: this.selectedVector,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+      if (this.headerId != "" && this.headerTitle != "" && this.buttonName != "") {
+        let formData = new FormData();
+        formData.append("id", this.headerId);
+        formData.append("title", this.headerTitle);
+        formData.append("description", this.headerDescription);
+        formData.append("buttonName", this.buttonName);
+        formData.append("ButtonLink", this.ButtonLink);
+        formData.append("vector", this.selectedVector);
+        const uploadResp = await this.$axios.post(
+          "/api/Admin/AdminManageSiteInfo/UpdateLandingContent",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${this.$cookies.get("key")}`,
+            },
+          }
+        );
+        if (uploadResp.data.statusCode == 200 && uploadResp.data.message == "Success") {
+          this.$swal({
+            text: "ثبت شد",
+            icon: "success",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          });
+          this.headerId = "";
+          this.ButtonLink="";
+          this.headerTitle = "";
+          this.headerDescription = "";
+          this.buttonName = "";
+          this.selectedVector = "";
         }
-      );
-      if (uploadResp.data.statusCode == 200 && uploadResp.data.message == "Success") {
+      } else {
         this.$swal({
-          text: "ثبت شد",
-          icon: "success",
+          text: "اطلاعات را کامل کنید",
+          icon: "warning",
           showCloseButton: true,
           confirmButtonText: "تایید",
         });
-        this.headerId = "";
-        this.headerTitle = "";
-        this.headerDescription = "";
-        this.buttonName = "";
-        this.selectedVector = "";
       }
     },
   },
@@ -570,6 +616,7 @@ export default {
           ) {
             const headerDetailsData = headerDetails.data.data;
             this.buttonName = headerDetailsData.buttonName;
+            this.ButtonLink=headerDetailsData.buttonLink;
             this.headerDescription = headerDetailsData.description;
             this.headerTitle = headerDetailsData.title;
           }

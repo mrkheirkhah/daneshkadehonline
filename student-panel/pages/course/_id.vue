@@ -302,11 +302,11 @@
                   </li>
                 </ul>
                 <template v-if="!loading && teacherBox.shortDescription != null">
-                  <p class="details" v-if="teacherBox.shortDescription.length < 300">
+                  <p class="details" v-if="teacherBox.shortDescription.length < 100">
                     {{ teacherBox.shortDescription }}
                   </p>
                   <p class="details" v-else>
-                    {{ teacherBox.shortDescription.substring(0, 300) + " ..." }}
+                    {{ teacherBox.shortDescription.substring(0, 100) + " ..." }}
                     <a href="" @click.prevent="seeMoreTeacherDetail($event)">بیشتر</a>
                   </p>
                 </template>
@@ -323,7 +323,7 @@
                 <div class="social-media">
                   <a
                     :href="
-                      'https://twitter.com/intent/tweet?url=https://www.my.daneshkadeonline.ir' +
+                      'https://twitter.com/intent/tweet?url=https://www.daneshkadeonline.ir' +
                       $route.fullPath
                     "
                     target="blank"
@@ -344,7 +344,7 @@
                   </a>
                   <a
                     :href="
-                      'https://www.linkedin.com/sharing/share-offsite/?url=https://www.my.daneshkadeonline.ir' +
+                      'https://www.linkedin.com/sharing/share-offsite/?url=https://www.daneshkadeonline.ir' +
                       $route.fullPath
                     "
                     type="button"
@@ -597,7 +597,11 @@
                 borderRadius="5px"
               />
             </template>
-            <div v-html="courseDetail.description" v-else></div>
+            <div
+              v-html="courseDescription"
+              @click.prevent="seeAllDescription"
+              v-else
+            ></div>
             <!-- <header>
               <h3>یک عنوان تستی</h3> -->
             <!-- <div class="course-link-box">
@@ -828,7 +832,7 @@
               </vue-plyr>
               <!-- </client-only> -->
               <div class="course-parts">
-                <div
+                <button
                   class="course-part"
                   v-for="episode in courseEpisodes"
                   :key="courseEpisodes.indexOf(episode)"
@@ -933,7 +937,7 @@
                     </svg>
                   </a> -->
                   </div>
-                </div>
+                </button>
               </div>
             </section>
             <div class="row">
@@ -1612,6 +1616,7 @@ export default {
       noName: false,
 
       seeThisVideo: "",
+      courseDescription: "",
     };
   },
   async beforeMount() {
@@ -1635,6 +1640,9 @@ export default {
         .substring(0, course.data.data.detail.topics.length - 1)
         .split(",");
       this.courseDetail = course.data.data.detail;
+      this.courseDescription =
+        course.data.data.detail.description.substring(0, 800) +
+        "<a href='' type='button' class='see-more'>... بیشتر<a>";
       this.detailBox = course.data.data.detailBox;
       this.teacherBox = course.data.data.teacherBox;
       this.relatedCourses = course.data.data.relatedCourses;
@@ -1690,6 +1698,11 @@ export default {
     this.loading = false;
   },
   methods: {
+    seeAllDescription(e) {
+      if (e.target.matches(".see-more")) {
+        this.courseDescription = this.courseDetail.description;
+      }
+    },
     loginAlert() {
       this.$swal({
         text: "برای گزارش خرابی ویدیو وارد حساب خود شوید!",
@@ -2015,7 +2028,7 @@ export default {
       }
     },
     async likeComment(event, id) {
-      console.log(event);
+      // console.log(event);
       event.target.closest(".like").classList.toggle("liked");
       var myIp = "";
       await fetch("https://api.ipify.org?format=json")
@@ -2096,6 +2109,8 @@ export default {
 };
 </script>
 <style lang="scss">
+@import "@/assets/swal-style.scss";
+@import "@/assets/styles/pages/course.scss";
 .plyr--full-ui input[type="range"] {
   color: $active-color !important;
 }
@@ -2136,6 +2151,4 @@ textarea.message.red,
 input.red {
   border: 1px solid red !important;
 }
-@import "@/assets/swal-style.scss";
-@import "@/assets/styles/pages/course.scss";
 </style>

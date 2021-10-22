@@ -67,7 +67,7 @@
         </div>
       </div>
       <div v-else class="panel-item-container top custom-scrollbar">
-        <nuxt-link class="panel-item" to="/" v-intro="'The content of tooltip'">
+        <nuxt-link class="panel-item" to="/" v-intro="'The first content of tooltip'">
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"
@@ -76,7 +76,11 @@
             پروفایل کاربری
           </div>
         </nuxt-link>
-        <nuxt-link class="panel-item" to="/create-package">
+        <nuxt-link
+          class="panel-item"
+          to="/create-package"
+          v-intro="'The second content of tooltip'"
+        >
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"
@@ -85,7 +89,11 @@
             ثبت پکیج
           </div>
         </nuxt-link>
-        <nuxt-link class="panel-item" to="/buy-volume">
+        <nuxt-link
+          class="panel-item"
+          to="/buy-volume"
+          v-intro="'The third content of tooltip'"
+        >
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"
@@ -94,7 +102,11 @@
             خرید حجم اضافه
           </div>
         </nuxt-link>
-        <nuxt-link class="panel-item" to="/discount-code">
+        <nuxt-link
+          class="panel-item"
+          to="/discount-code"
+          v-intro="'The fourth content of tooltip'"
+        >
           <div class="sidebar-links">
             <!-- most be change icon -->
             <div
@@ -272,6 +284,15 @@
             پشتیبانی
           </div>
         </nuxt-link>
+        <a class="panel-item" href="" type="button" @click.prevent="startIntro">
+          <div class="sidebar-links">
+            <div
+              class="sidebar-links-icon"
+              v-html="require('@/static/panel-teacher-icons/headphone.svg?raw')"
+            />
+            راهنمای پنل
+          </div>
+        </a>
       </div>
     </div>
   </aside>
@@ -320,6 +341,9 @@ export default {
   },
   mounted() {},
   methods: {
+    startIntro() {
+      this.$intro().start();
+    },
     toggle_teacher_panel() {
       const panel_teacher_aside = document.querySelector(".panel-teacher-aside");
       panel_teacher_aside.classList.toggle("show");

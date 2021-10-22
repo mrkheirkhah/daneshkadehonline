@@ -62,7 +62,8 @@
                   id="upload-file-for-question"
                   @change="uploadAttchedImage"
                 />
-                <span>بارگذاری فایل ضمیمه</span>
+                <span v-if="uploadedFileName == ''">بارگذاری عکس ضمیمه</span>
+              <span v-else>{{ uploadedFileName }}</span>
                 <span>
                   <label for="upload-file-for-question" class="cover-btn">انتخاب</label>
                 </span>
@@ -196,6 +197,7 @@ export default {
       secs: 0,
       mins: 0,
       timerInterval: null,
+      uploadedFileName:''
     };
   },
   methods: {
@@ -307,16 +309,18 @@ export default {
       player.play();
     },
     uploadAttchedImage(event) {
-      const attachedImg = event.target.files[0];
-      this.createBase64Image(attachedImg);
+      try{
+        this.selectedAttachImage = event.target.files[0];
+        this.uploadedFileName = event.target.files[0].name;
+      }catch{}
     },
-    createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.selectedAttachImage = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createBase64Image(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.selectedAttachImage = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
     testSend() {
       console.log(this.replyTo);
     },

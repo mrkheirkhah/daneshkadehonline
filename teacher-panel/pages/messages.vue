@@ -255,7 +255,8 @@
                   id="upload-file-for-question"
                   @change="uploadAttchedImage"
                 />
-                <span>بارگذاری عکس ضمیمه</span>
+                <span v-if="uploadedFileName == ''">بارگذاری فایل ضمیمه</span>
+                <span v-else>{{ uploadedFileName }}</span>
                 <span>
                   <label for="upload-file-for-question" class="cover-btn">انتخاب</label>
                 </span>
@@ -384,6 +385,7 @@ export default {
       timerInterval: null,
       secs: 0,
       mins: 0,
+      uploadedFileName: "",
     };
   },
   methods: {
@@ -458,16 +460,19 @@ export default {
       sendMsgModal.style.display = "flex";
     },
     uploadAttchedImage(event) {
-      const attachedImg = event.target.files[0];
-      this.createBase64Image(attachedImg);
+      try {
+        this.selectedAttachImage = event.target.files[0];
+        this.uploadedFileName = event.target.files[0].name;
+      } catch {}
+      // this.createBase64Image(attachedImg);
     },
-    createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.selectedAttachImage = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createBase64Image(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.selectedAttachImage = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
     startRecord() {
       this.timerInterval = setInterval(() => {
         this.secs = this.secs + 1;
@@ -529,16 +534,17 @@ export default {
       audioPlayerModal.style.display = "none";
     },
     async sendAnswer(id) {
+      let formData = new FormData();
+      formData.append("parentId", Number(id));
+      formData.append("text", this.yourAnswer);
+      formData.append("attachImage", this.selectedAttachImage);
+      formData.append("audioFileBase64", this.recordedVoice);
       const sendAnswerResp = await this.$axios.post(
         "/api/Teacher/TeacherQuestionAndAlert/Question",
-        {
-          parentId: Number(id),
-          text: this.yourAnswer,
-          attachImageBase64: this.selectedAttachImage,
-          audioFileBase64: this.recordedVoice,
-        },
+        formData,
         {
           headers: {
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${this.$cookies.get("key")}`,
           },
         }

@@ -181,8 +181,27 @@
                 disabled
               />
             </label>
-            <label for="" class="form-row-col">
-              <div class="floated-list-container select-multiple">
+            <!-- <label for="" class="form-row-col"> -->
+            <label for="" class="form-row-col floated-list-container in-panel">
+              <input
+                type="text"
+                class="form-input"
+                v-model="drop"
+                readonly
+                placeholder="آخرین مدرک تحصیلی"
+                @click="toggleDropDowns"
+              />
+              <ul class="floated-list custom-scrollbar">
+                <li
+                  v-for="option in degree"
+                  :key="option.index"
+                  @click="chooseDegre($event, option.id, option.imageNeed)"
+                >
+                  {{ option.title }}
+                </li>
+              </ul>
+            </label>
+            <!-- <div class="floated-list-container select-multiple">
                 <input
                   type="text"
                   class="form-input"
@@ -205,26 +224,54 @@
                     {{ option.title }}
                   </li>
                 </ul>
-              </div>
-            </label>
+              </div> -->
+            <!-- </label> -->
           </div>
 
           <div class="form-row">
-            <div class="form-row-col darken-color" v-for="i in needImage" :key="i">
+            <label for="" class="form-row-col">
+              <div class="floated-list-container select-multiple">
+                <input
+                  type="text"
+                  class="form-input"
+                  readonly
+                  placeholder="انتخاب دروس برای تدریس"
+                  @click="toggleDropDowns"
+                />
+                <ul class="floated-list custom-scrollbar">
+                  <li
+                    v-for="option in courseGroups"
+                    @click="chooseCourseGroup($event, option.id)"
+                    :class="
+                      selectedCourseGroups.length > 0 &&
+                      selectedCourseGroups.includes(option.id)
+                        ? 'selected'
+                        : ''
+                    "
+                    :key="option.id"
+                  >
+                    {{ option.groupTitle }}
+                  </li>
+                </ul>
+              </div>
+            </label>
+            <div class="form-row-col darken-color" v-if="needImage != ''">
               <div class="separator pseudo-form-input">
                 <input
                   type="file"
-                  :id="'upload-degre-image-' + i"
-                  @change="uploadDegreImg($event, i)"
+                  :id="'upload-degre-image-' + needImage"
+                  @change="uploadDegreImg($event, needImage)"
                 />
-                <span> بارگذاری تصویر {{ degreName(i) }}</span>
+                <span> بارگذاری تصویر {{ degreName(needImage) }}</span>
                 <!-- <span else>{{ NCImageName }}</span> -->
                 <span>
-                  <label :for="'upload-degre-image-' + i" class="cover-btn">انتخاب</label>
+                  <label :for="'upload-degre-image-' + needImage" class="cover-btn"
+                    >انتخاب</label
+                  >
                 </span>
               </div>
             </div>
-            <label for="" class="form-row-col" v-if="needImage.length % 2 != 0"> </label>
+            <label for="" class="form-row-col" v-else> </label>
           </div>
 
           <div class="form-row">
@@ -436,10 +483,10 @@
 import skeleton from "@/components/skeleton-components/skeletonCreator";
 export default {
   layout: "dashboardLay",
-  middleware: "newMember",
+  // middleware: "newMember",
   components: { skeleton },
   async mounted() {
-    let [getProfData, getDocData, getdegre] = await Promise.all([
+    let [getProfData, getDocData, getdegre, getGroups] = await Promise.all([
       this.$axios.get("/api/Teacher/TeacherProfile/CompleteProfile", {
         headers: {
           Authorization: `Bearer ${this.$cookies.get("key")}`,
@@ -455,13 +502,17 @@ export default {
           Authorization: `Bearer ${this.$cookies.get("key")}`,
         },
       }),
+      this.$axios.get("/api/Public/ProfileActions/GetAllCourseGroups"),
     ]);
     // console.log(getProfData);
     if (
       getdegre.data.statusCode == 200 &&
       getDocData.data.statusCode == 200 &&
-      getProfData.data.statusCode == 200
+      getProfData.data.statusCode == 200 &&
+      getGroups.data.statusCode == 200
     ) {
+      this.courseGroups = getGroups.data.data;
+      // console.log(getGroups);
       for (const n of getdegre.data.data) {
         this.degree.push({ title: n.title, id: n.id, imageNeed: n.isRequiredImage });
       }
@@ -479,22 +530,29 @@ export default {
         ? (this.address = getDocData.data.data.address)
         : {};
       // profile data
+      this.selectedCourseGroups = getProfData.data.data.groupIds;
+      this.selectedDegreGroup = getProfData.data.data.educationId;
+      for (const i in this.degree) {
+        if (this.selectedDegreGroup == i.id) {
+          this.drop = i.title;
+        }
+      }
       this.aboutTeacher = getProfData.data.data.description;
       this.phoneNumber = getProfData.data.data.phoneNumber;
       getProfData.data.data.email !== null
         ? (this.email = getProfData.data.data.email)
         : {};
-      for (const n of this.degree) {
-        for (const j of getProfData.data.data.selectedEducations) {
-          if (j == n.id) {
-            if (n.imageNeed == true) {
-              this.needImage.push(j);
-            } else {
-              this.dontNeedImage.push(j);
-            }
-          }
-        }
-      }
+      // for (const n of this.degree) {
+      //   for (const j of getProfData.data.data.selectedEducations) {
+      //     if (j == n.id) {
+      //       if (n.imageNeed == true) {
+      //         this.needImage.push(j);
+      //       } else {
+      //         this.dontNeedImage.push(j);
+      //       }
+      //     }
+      //   }
+      // }
       this.loading = false;
     } else {
       this.$swal({
@@ -526,11 +584,14 @@ export default {
       profImageName: "",
       tempProfImage: "",
       aboutTeacher: "",
-      selectedDegreGroup: {},
-      dontNeedImage: [],
-      needImage: [],
+      selectedDegreGroup: "",
+      dontNeedImage: "",
+      needImage: "",
       reffererCode: "",
       referralCodeIsNull: "",
+      courseGroups: "",
+      selectedCourseGroups: [],
+      selectedDegreGroupImage: "",
     };
   },
   methods: {
@@ -547,6 +608,18 @@ export default {
       event.target.closest(".floated-list-container").classList.toggle("show");
     },
     chooseDegre(event, id, imageNeed) {
+      this.drop = event.target.innerHTML.trim();
+      event.target.closest(".floated-list-container").classList.toggle("show");
+
+      this.selectedDegreGroup = id;
+      if (imageNeed == true) {
+        this.needImage = id;
+      } else {
+        this.needImage = "";
+        this.dontNeedImage = id;
+      }
+    },
+    chooseCourseGroup(event, id) {
       if (
         event.target
           .closest(".floated-list-container")
@@ -560,27 +633,14 @@ export default {
           elem.classList.toggle("selected");
         }
       }
-      if (id in this.selectedDegreGroup) {
-        delete this.selectedDegreGroup[id];
-      } else if (this.dontNeedImage.includes(id)) {
-        for (var i = this.dontNeedImage.length - 1; i >= 0; i--) {
-          if (this.dontNeedImage[i] == id) {
-            this.dontNeedImage.splice(i, 1);
-          }
-        }
-      } else if (this.needImage.includes(id)) {
-        for (var i = this.needImage.length - 1; i >= 0; i--) {
-          if (this.needImage[i] == id) {
-            this.needImage.splice(i, 1);
-          }
+      if (this.selectedCourseGroups.includes(id)) {
+        var index = this.selectedCourseGroups.indexOf(id);
+
+        if (index > -1) {
+          this.selectedCourseGroups.splice(index, 1);
         }
       } else {
-        if (imageNeed == true) {
-          this.needImage.push(id);
-          // this.selectedDegreGroup[id] = "";
-        } else {
-          this.dontNeedImage.push(id);
-        }
+        this.selectedCourseGroups.push(id);
       }
     },
     croppie(e) {
@@ -600,7 +660,7 @@ export default {
       // Options can be updated.
       // Current option will return a base64 version of the uploaded image with a size of 600px X 450px.
       let options = {
-        type: "base64",
+        type: "blob",
         size: { width: 600, height: 600 },
         format: "jpeg",
       };
@@ -613,29 +673,33 @@ export default {
       document.querySelector(".profModal").classList.toggle("show");
     },
     uploadNCImg(event) {
-      this.NCImageName = event.target.files[0].name;
-      const NTImg = event.target.files[0];
-      this.createBase64Image(NTImg);
+      try {
+        this.NCImageName = event.target.files[0].name;
+        this.selectedNTImage = event.target.files[0];
+      } catch {}
+      // this.createBase64Image(NTImg);
     },
-    createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.selectedNTImage = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createBase64Image(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.selectedNTImage = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
     uploadDegreImg(event, i) {
-      event.target.nextElementSibling.innerHTML = event.target.files[0].name;
-      const NTImg = event.target.files[0];
-      this.createBase64ImageDegre(NTImg, i);
+      try {
+        event.target.nextElementSibling.innerHTML = event.target.files[0].name;
+        this.selectedDegreGroupImage = event.target.files[0];
+      } catch {}
+      // this.createBase64ImageDegre(NTImg, i);
     },
-    createBase64ImageDegre(fileObject, i) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.selectedDegreGroup[i] = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createBase64ImageDegre(fileObject, i) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.selectedDegreGroup[i] = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
     degreName(id) {
       for (const i of this.degree) {
         if (i.id == id) {
@@ -644,40 +708,35 @@ export default {
       }
     },
     async complateProfile() {
-      for (const i of this.dontNeedImage) {
-        this.selectedDegreGroup[i] = "";
-      }
+      let formData = new FormData();
+      formData.append("EducationImage", this.selectedDegreGroupImage);
+      formData.append("EducationId", this.selectedDegreGroup);
+      formData.append("GroupIds", JSON.stringify(this.selectedCourseGroups));
+      formData.append("ProfileImage", this.cropped);
+      formData.append("Email", this.email);
+      formData.append("Description", this.aboutTeacher);
+      formData.append("ReferralCode", this.reffererCode);
+
+      let formDataDoc = new FormData();
+      formDataDoc.append("ShebaNumber", this.shebaNumber);
+      formDataDoc.append("CardNumber", this.cardNumber);
+      formDataDoc.append("Address", this.address);
+      formDataDoc.append("NationalCardImage", this.selectedNTImage);
       {
         let [profData, docData] = await Promise.all([
-          this.$axios.post(
-            "/api/Teacher/TeacherProfile/CompleteProfile",
-            {
-              selectedEducations: this.selectedDegreGroup,
-              referralCode: this.reffererCode,
-              profileImageBase64: this.cropped,
-              email: this.email,
-              description: this.aboutTeacher,
+          this.$axios.post("/api/Teacher/TeacherProfile/CompleteProfile", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${this.$cookies.get("key")}`,
             },
-            {
-              headers: {
-                Authorization: `Bearer ${this.$cookies.get("key")}`,
-              },
-            }
-          ),
-          this.$axios.post(
-            "/api/Teacher/TeacherDocument/Document",
-            {
-              shebaNumber: String(this.shebaNumber),
-              cardNumber: String(this.cardNumber),
-              address: String(this.address),
-              nationalCardImageBase64: String(this.selectedNTImage),
+          }),
+
+          this.$axios.post("/api/Teacher/TeacherDocument/Document", formDataDoc, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${this.$cookies.get("key")}`,
             },
-            {
-              headers: {
-                Authorization: `Bearer ${this.$cookies.get("key")}`,
-              },
-            }
-          ),
+          }),
         ]);
         if (profData.data.statusCode == 200 && docData.data.statusCode == 200) {
           this.$swal({

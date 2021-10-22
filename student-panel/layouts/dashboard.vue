@@ -10,14 +10,13 @@
 <script>
 export default {
   mounted() {
-    document.body.style.backgroundColor="#f3f3f3"
+    document.body.style.backgroundColor = "#f3f3f3";
   },
-}
+};
 </script>
 <style lang="scss">
-
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 7px;
   height: 5px;
   border-radius: 20px;
   background-color: #70707030;

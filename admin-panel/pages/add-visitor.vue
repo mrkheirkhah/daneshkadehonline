@@ -366,7 +366,7 @@ export default {
       // Options can be updated.
       // Current option will return a base64 version of the uploaded image with a size of 600px X 450px.
       let options = {
-        type: "base64",
+        type: "blob",
         size: { width: 600, height: 600 },
         format: "jpeg",
       };
@@ -384,19 +384,20 @@ export default {
         this.nationalCardNumber != ""
       ) {
         if (this.submitType == "add") {
+          let formData = new FormData();
+      formData.append("VisitorName", this.fullName);
+      formData.append("PhoneNumber", this.phoneNumber);
+      formData.append("ProfileImage", this.cropped);
+      formData.append("NationalCardNumber", this.nationalCardNumber);
+      formData.append("CardNumber", this.cardNumber);
+      formData.append("ShebaNumber", this.shebaNumber);
+      formData.append("Commission", this.commision);
           const addVisitorResp = await this.$axios.post(
             "/api/Admin/AdminManageVisitor/Visitor",
-            {
-              phoneNumber: this.phoneNumber,
-              profileImageBase64: this.cropped != "" ? this.cropped : null,
-              visitorName: this.fullName,
-              nationalCardNumber: this.nationalCardNumber,
-              commission: this.commision,
-              shebaNumber: this.shebaNumber,
-              cardNumber: this.cardNumber,
-            },
+            formData,
             {
               headers: {
+                "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${this.$cookies.get("key")}`,
               },
             }
@@ -416,19 +417,20 @@ export default {
             });
           }
         } else if (this.submitType == "edit") {
+          let formData = new FormData();
+      formData.append("VisitorName", this.fullName);
+      formData.append("PhoneNumber", this.phoneNumber);
+      formData.append("ProfileImage", this.cropped);
+      formData.append("NationalCardNumber", this.nationalCardNumber);
+      formData.append("CardNumber", this.cardNumber);
+      formData.append("ShebaNumber", this.shebaNumber);
+      formData.append("Commission", this.commision);
           const editVisitorResp = await this.$axios.put(
             `/api/Admin/AdminManageVisitor/Visitor?visitorId=${this.editThisId}`,
-            {
-              phoneNumber: this.phoneNumber,
-              profileImageBase64: this.cropped != "" ? this.cropped : null,
-              visitorName: this.fullName,
-              nationalCardNumber: this.nationalCardNumber,
-              commission: this.commision,
-              shebaNumber: this.shebaNumber,
-              cardNumber: this.cardNumber,
-            },
+            formData,
             {
               headers: {
+                "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${this.$cookies.get("key")}`,
               },
             }

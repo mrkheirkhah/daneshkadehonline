@@ -132,17 +132,19 @@ export default {
       this.selectedOption = event.target.innerHTML.trim();
     },
     uploadVector(event) {
-      const vectorImg = event.target.files[0];
-      this.vectorName = event.target.files[0].name;
-      this.createBase64Image(vectorImg);
+      try {
+        this.selectedVector = event.target.files[0];
+        this.vectorName = event.target.files[0].name;
+      } catch {}
+      // this.createBase64Image(vectorImg);
     },
-    createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.selectedVector = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createBase64Image(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.selectedVector = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
 
     async getBodyData() {
       const bodyData = await this.$axios.get(
@@ -161,16 +163,17 @@ export default {
     },
     async uploadLanding() {
       if (this.optionId != "") {
+        let formData = new FormData();
+        formData.append("id", this.optionId);
+        formData.append("title", this.optionTitle);
+        formData.append("icon", this.shortDescription);
+        formData.append("description", this.optionDescription);
         const uploadResp = await this.$axios.put(
           "/api/Admin/AdminCooperation/CooperationOption",
-          {
-            id: this.optionId,
-            title: this.optionTitle,
-            iconBae64: this.selectedVector,
-            description: this.optionDescription,
-          },
+          formData,
           {
             headers: {
+              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${this.$cookies.get("key")}`,
             },
           }

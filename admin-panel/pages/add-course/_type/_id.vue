@@ -282,7 +282,9 @@
             </div>
           </div>
           <label for="" class="form-row-col guide-section">
-            <a href="#" class="guide-text"> راهنمای انتخاب عکس مناسب </a>
+            <a href="" type="button" @click.prevent="showProfHelp" class="guide-text">
+              راهنمای انتخاب عکس مناسب
+            </a>
           </label>
         </div>
 
@@ -484,6 +486,14 @@ export default {
   },
   async mounted() {},
   methods: {
+    showProfHelp() {
+      this.$swal({
+        text:
+          "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد",
+        showCloseButton: true,
+        showConfirmButton: false,
+      });
+    },
     toggleDropDowns(event) {
       event.stopPropagation();
       event.target.closest(".floated-list-container").classList.toggle("show");
@@ -527,9 +537,6 @@ export default {
       this.selectedGroup = id;
       event.target.closest(".floated-list-container").classList.toggle("show");
     },
-    focusDate() {
-      this.$refs.vidTime.setAttribute("type", "time");
-    },
     addTopic() {
       if (this.newTopic !== "") {
         this.topics.push(this.newTopic);
@@ -546,17 +553,16 @@ export default {
     selectCourseImage() {
       try {
         this.imageName = event.target.files[0].name;
-        const courseImage = event.target.files[0];
-        this.createBase64Image(courseImage);
+        this.courseImageBase64 = event.target.files[0];
       } catch {}
     },
-    createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.courseImageBase64 = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createBase64Image(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.courseImageBase64 = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
     deleteDiscount(id) {
       this.$swal({
         text: "از حذف تخفیف اطمینان دارید؟",
@@ -608,26 +614,30 @@ export default {
         this.teacherPhoneNumber != "" &&
         this.coursePriceType != ""
       ) {
+        let formData = new FormData();
+        formData.append("CourseName", this.courseName);
+        formData.append("GroupId", this.selectedGroup);
+        formData.append("ShortDescription", this.shortDescription);
+        formData.append("Description", this.content);
+        formData.append("Price", this.coursePrice);
+        formData.append(
+          "DiscountPercentage",
+          this.courseDiscount != "" ? this.courseDiscount : 0
+        );
+        formData.append("CourseTopics", this.topicsString);
+        formData.append("Type", this.coursePriceType);
+        formData.append("CourseImage", this.courseImageBase64);
+        formData.append("TeacherPhoneNumber", this.teacherPhoneNumber);
+        formData.append("IsPackage", this.isPack);
+
         if (this.courseDiscount >= 0 && this.courseDiscount <= 100) {
           if (this.$route.params.type == "add") {
             const addCourseResponse = await this.$axios.post(
               "/api/Admin/AdminCourse/Course",
-              {
-                courseName: this.courseName,
-                groupId: Number(this.selectedGroup),
-                shortDescription: this.shortDescription,
-                description: this.content,
-                price: Number(this.coursePrice),
-                discountPercentage:
-                  this.courseDiscount != "" ? Number(this.courseDiscount) : 0,
-                courseTopics: this.topicsString,
-                type: this.coursePriceType,
-                courseImageBase64Image: this.courseImageBase64,
-                teacherPhoneNumber: String(this.teacherPhoneNumber),
-                isPackage: this.isPack,
-              },
+              formData,
               {
                 headers: {
+                  "Content-Type": "multipart/form-data",
                   Authorization: `Bearer ${this.$cookies.get("key")}`,
                 },
               }
@@ -658,24 +668,27 @@ export default {
               this.$router.push("/add-episode/" + addCourseResponse.data.data);
             }
           } else if (this.$route.params.type == "edit") {
+            let formDataEdit = new FormData();
+            formDataEdit.append("courseName", this.courseName);
+            formDataEdit.append("courseId", this.$route.params.id);
+            formDataEdit.append("shortDescription", this.shortDescription);
+            formDataEdit.append("description", this.content);
+            formDataEdit.append("price", this.coursePrice);
+            formDataEdit.append(
+              "discountPercentage",
+              this.courseDiscount != "" ? this.courseDiscount : 0
+            );
+            formDataEdit.append("courseTopics", this.topicsString);
+            formDataEdit.append("type", this.coursePriceType);
+            formDataEdit.append("courseImage", this.courseImageBase64);
+            formDataEdit.append("teacherPhoneNumber", this.teacherPhoneNumber);
+            formDataEdit.append("isPackage", this.isPack);
             const editCourseResponse = await this.$axios.put(
               "/api/Admin/AdminCourse/Course",
-              {
-                courseName: this.courseName,
-                courseId: Number(this.$route.params.id),
-                shortDescription: this.shortDescription,
-                description: this.content,
-                price: Number(this.coursePrice),
-                discountPercentage:
-                  this.courseDiscount != "" ? Number(this.courseDiscount) : 0,
-                courseTopics: this.topicsString,
-                type: this.coursePriceType,
-                courseImageBase64Image: this.courseImageBase64,
-                teacherPhoneNumber: String(this.teacherPhoneNumber),
-                isPackage: this.isPack,
-              },
+              formDataEdit,
               {
                 headers: {
+                  "Content-Type": "multipart/form-data",
                   Authorization: `Bearer ${this.$cookies.get("key")}`,
                 },
               }

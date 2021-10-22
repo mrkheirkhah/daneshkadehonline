@@ -248,14 +248,6 @@
           </div>
           <div class="form-row">
             <label for="" class="form-row-col">
-              <input
-                type="text"
-                class="form-input has-cover-btn"
-                placeholder="رمز عبور"
-                v-model="password"
-              />
-            </label>
-            <label for="" class="form-row-col">
               <textarea
                 name=""
                 cols="22"
@@ -264,6 +256,14 @@
                 v-model="aboutTeacher"
                 class="form-input form-textarea"
               ></textarea>
+            </label>
+            <label for="" class="form-row-col">
+              <!-- <input
+                type="text"
+                class="form-input has-cover-btn"
+                placeholder="رمز عبور"
+                v-model="password"
+              /> -->
             </label>
           </div>
           <div class="form-row">
@@ -299,8 +299,8 @@
         <form action="#" class="image profile">
           <img
             :src="'data:image/png;base64,' + modalPicSrc"
-            title="عکس پروفایل"
-            alt="عکس معلم"
+            :title="' عکس ' + modalPicTitle"
+            :alt="' عکس ' + modalPicTitle"
           />
         </form>
       </div>
@@ -428,7 +428,7 @@ export default {
     if (this.$route.params.id == undefined || isNaN(this.$route.params.id)) {
       this.$router.push("/teachers-list");
     } else {
-      this.getTeacherDegres();
+      // this.getTeacherDegres();
       const getTeacherProfile = await this.$axios.get(
         `/api/Admin/AdminManageTeacher/GetTeacherProfile?teacherId=${this.$route.params.id}`,
         {
@@ -437,7 +437,7 @@ export default {
           },
         }
       );
-      console.log(getTeacherProfile);
+      // console.log(getTeacherProfile);
       const teacherProfile = getTeacherProfile.data.data;
       // this.degreeEducationId = teacherProfile.degreeEducationId;
       // for (const n of this.degres) {
@@ -453,8 +453,8 @@ export default {
       this.phoneNumber = teacherProfile.phoneNumber;
       this.shebaNumber = teacherProfile.shebaNumber;
       this.fullName = teacherProfile.teacherName;
-      this.nationalCardImageBase64 = teacherProfile.nationalCardImageBase64;
-      this.profileImageBase64 = teacherProfile.profileImageBase64;
+      this.nationalCardImage = teacherProfile.nationalCardImage;
+      this.profileImage = teacherProfile.profileImage;
     }
     this.loading = false;
   },
@@ -462,27 +462,11 @@ export default {
     seeProfImage(type) {
       document.querySelector(".show-image").style.display = "flex";
       if (type == "prof") {
-        this.modalPicSrc = this.profileImageBase64;
+        this.modalPicSrc = this.profileImage;
         this.modalPicTitle = "پروفایل";
       } else {
-        this.modalPicSrc = this.nationalCardImageBase64;
+        this.modalPicSrc = this.nationalCardImage;
         this.modalPicTitle = "کارت ملی";
-      }
-    },
-    async getTeacherDegres() {
-      const getTeacherDegres = await this.$axios.get(
-        `/api/Admin/AdminManageTeacher/GetTeacherEducations/${this.$route.params.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
-        }
-      );
-      if (
-        getTeacherDegres.data.statusCode == 200 &&
-        getTeacherDegres.data.message == "Success"
-      ) {
-        this.teacherDegres = getTeacherDegres.data.data;
       }
     },
     showSpecialties() {
@@ -538,6 +522,14 @@ export default {
     },
     async setTeacherProf(type) {
       if (type == "accept") {
+        //   let formData = new FormData();
+        // formData.append("TeacherId", this.$route.params.id);
+        // formData.append("EducationId", this.phoneNumber);
+        // formData.append("ProfileImage", this.cropped);
+        // formData.append("NationalCardNumber", this.nationalCardNumber);
+        // formData.append("CardNumber", this.cardNumber);
+        // formData.append("ShebaNumber", this.shebaNumber);
+        // formData.append("Commission", this.commision);
         const setStatusResponse = await this.$axios.post(
           "/api/Admin/AdminManageTeacher/SetTeacherProfile",
           {
