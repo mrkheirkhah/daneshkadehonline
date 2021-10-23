@@ -140,13 +140,13 @@
 
             <template v-else>
               <div class="header">
-                <h5 class="title">قیمت دوره:</h5>
+                <h5 class="title">قیمت نهایی دوره:</h5>
                 <span
                   class="persian-number price"
-                  v-if="detailBox.coursePrice != 0 && !loading"
+                  v-if="detailBox.finalPrice != 0 && !loading"
                 >
                   <span class="value">{{
-                    Number(detailBox.coursePrice).toLocaleString()
+                    Number(detailBox.finalPrice).toLocaleString()
                   }}</span>
                   <span class="currency"> تومان </span>
                 </span>
@@ -189,6 +189,18 @@
                     <span>آخرین بروز رسانی</span>
                     <span class="persian-number">{{
                       new Date(detailBox.updateDate).toLocaleDateString("fa-IR")
+                    }}</span>
+                  </li>
+                  <li>
+                    <span>قیمت اصلی دوره</span>
+                    <span class="persian-number">{{
+                      Number(detailBox.originalPrice).toLocaleString()
+                    }}</span>
+                  </li>
+                  <li>
+                    <span>تخفیف دوره</span>
+                    <span class="persian-number">{{
+                      Number(detailBox.discountPercentage)
                     }}</span>
                   </li>
                   <li v-if="item1 == 1 && item2 != null">
@@ -1635,6 +1647,7 @@ export default {
       this.getQuestions(),
     ]);
     if (course.data.statusCode == 200 && course.data.message == "Success") {
+      // console.log(course);
       this.courseEpisodes = course.data.data.episodeItems;
       this.topics = course.data.data.detail.topics
         .substring(0, course.data.data.detail.topics.length - 1)

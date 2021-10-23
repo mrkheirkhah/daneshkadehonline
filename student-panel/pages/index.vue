@@ -39,7 +39,9 @@
               {{ headContent.description }}
             </template>
           </p>
-          <a href="#" class="get-signup" v-if="!loading">{{ headContent.buttonName }}</a>
+          <a :href="headContent.buttonLink" class="get-signup" v-if="!loading">{{
+            headContent.buttonName
+          }}</a>
         </div>
         <div class="col-md-6 d-none d-md-flex landing-image">
           <skeleton
@@ -867,7 +869,9 @@
           <p class="landing-content-detail">
             {{ footerContent.description }}
           </p>
-          <a href="#" class="get-signup">{{ footerContent.buttonName }}</a>
+          <a :href="footerContent.buttonLink" class="get-signup">{{
+            footerContent.buttonName
+          }}</a>
         </div>
         <div class="col-md-4 d-none d-md-flex landing-image">
           <img

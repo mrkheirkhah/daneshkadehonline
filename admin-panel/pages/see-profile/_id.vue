@@ -105,7 +105,8 @@
             <div for="" class="form-row-col darken-color">
               <div class="separator pseudo-form-input">
                 <input type="file" id="upload-profile-image" accept="image/*" />
-                <span>تصویر پروفایل</span>
+                <span v-if="profImageName==''">تصویر پروفایل</span>
+                <span v-else>{{profImageName}}</span>
 
                 <span>
                   <label
@@ -298,7 +299,11 @@
         </header>
         <form action="#" class="image profile">
           <img
-            :src="'data:image/png;base64,' + modalPicSrc"
+            :src="
+              modalType == 'card'
+                ? 'data:image/png;base64,' + modalPicSrc
+                : 'https://api.daneshkadeonline.ir/Images/Public/Teacher/' + modalPicSrc
+            "
             :title="' عکس ' + modalPicTitle"
             :alt="' عکس ' + modalPicTitle"
           />
@@ -410,6 +415,9 @@ export default {
       aboutTeacher: "",
       modalPicTitle: "",
       teacherDegres: "",
+      modalType: "",
+      educationId: "",
+      profImageName:''
     };
   },
   async beforeMount() {
@@ -437,7 +445,7 @@ export default {
           },
         }
       );
-      // console.log(getTeacherProfile);
+      console.log(getTeacherProfile);
       const teacherProfile = getTeacherProfile.data.data;
       // this.degreeEducationId = teacherProfile.degreeEducationId;
       // for (const n of this.degres) {
@@ -449,18 +457,20 @@ export default {
       this.address = teacherProfile.address;
       this.cardNumber = teacherProfile.cardNumber;
       this.email = teacherProfile.email;
+      this.educationId = teacherProfile.educationId;
       this.nationalCardNumber = teacherProfile.nationalCardNumber;
       this.phoneNumber = teacherProfile.phoneNumber;
       this.shebaNumber = teacherProfile.shebaNumber;
       this.fullName = teacherProfile.teacherName;
-      this.nationalCardImage = teacherProfile.nationalCardImage;
-      this.profileImage = teacherProfile.profileImage;
+      this.nationalCardImage = teacherProfile.nationalCardImageBase64;
+      this.profileImage = teacherProfile.profileImageName;
     }
     this.loading = false;
   },
   methods: {
     seeProfImage(type) {
       document.querySelector(".show-image").style.display = "flex";
+      this.modalType = type;
       if (type == "prof") {
         this.modalPicSrc = this.profileImage;
         this.modalPicTitle = "پروفایل";
@@ -487,7 +497,7 @@ export default {
     croppie(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
-
+      this.profImageName = e.target.files[0].name;
       var reader = new FileReader();
       reader.onload = (e) => {
         this.$refs.croppieRef.bind({
@@ -501,54 +511,50 @@ export default {
       // Options can be updated.
       // Current option will return a base64 version of the uploaded image with a size of 600px X 450px.
       let options = {
-        type: "base64",
+        type: "blob",
         size: { width: 600, height: 600 },
         format: "jpeg",
       };
       this.$refs.croppieRef.result(options, (output) => {
-        this.profileImageBase64 = output;
+        this.profileImageBase64  = new File([output], this.profImageName)
       });
     },
     uploadNCImg(event) {
-      const NCImg = event.target.files[0];
-      this.createBase64Image(NCImg);
+      try {
+        this.nationalCardImageBase64 = event.target.files[0];
+      } catch {}
+      // this.createBase64Image(NCImg);
     },
-    createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.nationalCardImageBase64 = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
+    // createBase64Image(fileObject) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.nationalCardImageBase64 = e.target.result;
+    //   };
+    //   reader.readAsDataURL(fileObject);
+    // },
     async setTeacherProf(type) {
       if (type == "accept") {
-        //   let formData = new FormData();
-        // formData.append("TeacherId", this.$route.params.id);
-        // formData.append("EducationId", this.phoneNumber);
-        // formData.append("ProfileImage", this.cropped);
-        // formData.append("NationalCardNumber", this.nationalCardNumber);
-        // formData.append("CardNumber", this.cardNumber);
-        // formData.append("ShebaNumber", this.shebaNumber);
-        // formData.append("Commission", this.commision);
+        let formData = new FormData();
+        formData.append("TeacherId", this.$route.params.id);
+        formData.append("EducationId", this.educationId);
+        formData.append("ProfileImage", this.cropped);
+        formData.append("NationalCardImage", this.nationalCardImageBase64);
+        formData.append("TeacherName", this.fullName);
+        formData.append("CardNumber", this.cardNumber);
+        formData.append("Address", this.address);
+        formData.append("NationalCardNumber", this.nationalCardNumber);
+        formData.append("PhoneNumber", this.phoneNumber);
+        formData.append("Email", this.email);
+        formData.append("ShebaNumber", this.shebaNumber);
+        formData.append("Password", this.password);
+        formData.append("Description", this.aboutTeacher);
+        formData.append("isAccepted", true);
         const setStatusResponse = await this.$axios.post(
           "/api/Admin/AdminManageTeacher/SetTeacherProfile",
-          {
-            teacherId: Number(this.$route.params.id),
-            profileImageBase64: this.profileImageBase64,
-            nationalCardImageBase64: this.nationalCardImageBase64,
-            teacherName: this.fullName,
-            cardNumber: this.cardNumber,
-            address: this.address,
-            nationalCardNumber: this.nationalCardNumber,
-            phoneNumber: this.phoneNumber,
-            email: this.email,
-            shebaNumber: this.shebaNumber,
-            description: this.aboutTeacher,
-            password: this.password,
-            isAccepted: true,
-          },
+          formData,
           {
             headers: {
+              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${this.$cookies.get("key")}`,
             },
           }
@@ -567,15 +573,16 @@ export default {
           });
         }
       } else {
+        let formData = new FormData();
+        formData.append("TeacherId", this.$route.params.id);
+        formData.append("isAccepted", false);
+        formData.append("notificationText", this.notificationText);
         const setStatusResponse = await this.$axios.post(
           "/api/Admin/AdminManageTeacher/SetTeacherProfile",
-          {
-            teacherId: Number(this.$route.params.id),
-            isAccepted: false,
-            notificationText: this.notificationText,
-          },
+          formData,
           {
             headers: {
+              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${this.$cookies.get("key")}`,
             },
           }

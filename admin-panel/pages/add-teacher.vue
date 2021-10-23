@@ -304,7 +304,8 @@ export default {
       degreDropText: "",
       courseGroups: "",
       selectedCourseGroups: [],
-      aboutTeacher:''
+      aboutTeacher:'',
+      profImageName:''
     };
   },
   async beforeMount() {
@@ -392,7 +393,7 @@ export default {
     croppie(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
-
+      this.profImageName = e.target.files[0].name;
       var reader = new FileReader();
       reader.onload = (e) => {
         this.$refs.croppieRef.bind({
@@ -411,7 +412,7 @@ export default {
         format: "jpeg",
       };
       this.$refs.croppieRef.result(options, (output) => {
-        this.cropped = this.croppieImage = output;
+        this.cropped =new File([output], this.profImageName);
       });
     },
     selectProfImg() {

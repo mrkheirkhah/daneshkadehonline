@@ -424,7 +424,7 @@ export default {
         format: "jpeg",
       };
       this.$refs.croppieRef.result(options, (output) => {
-        this.cropped = this.croppieImage = output;
+        this.cropped =  new File([output], this.profImageName);
       });
     },
     selectProfImg() {
