@@ -105,6 +105,26 @@
                   </ul>
                 </div>
               </div>
+              <div class="custom-accordion mt-4">
+                <div class="accordion-header">
+                  <form action="#">
+                    <label for="testi-checkbox">
+                      <span class="circular-checkbox-container">
+                        <input
+                          type="checkbox"
+                          name=""
+                          v-model="packageRadio"
+                          class="circular-checkbox"
+                          id="testi-checkbox"
+                        />
+                        <label for="testi-checkbox" class="circle"></label>
+                        <span class="background"></span>
+                      </span>
+                      <h5>پکیج</h5>
+                    </label>
+                  </form>
+                </div>
+              </div>
             </aside>
           </div>
           <div class="col-12 col-lg-9 mt-lg-0 mt-2 section-has-filters">
@@ -129,7 +149,7 @@
                     <li @click.prevent="orderBy($event, 2)">
                       <a href="" type="button">پر بازدید ترین ها</a>
                     </li>
-                    <li @click.prevent="orderBy($event, 2)">
+                    <li @click.prevent="orderBy($event, 3)">
                       <a href="" type="button">محبوب ترین ها</a>
                     </li>
                   </ul>
@@ -311,6 +331,7 @@ export default {
       loading: true,
       studentCount: "",
       headerGroups: "",
+      packageRadio: false,
     };
   },
   async mounted() {
@@ -327,15 +348,12 @@ export default {
       }
     }
     if (Object.keys(this.$route.query).length != 0) {
-      const courses = await this.$axios.get(
-        this.$route.query.filter != undefined && this.$route.query.isPackage != undefined
-          ? `/api/Course/Index?courseGroupId=${this.$route.query.filter}&isPackage=${this.$route.query.isPackage}`
-          : this.$route.query.filter != undefined
-          ? `/api/Course/Index?courseGroupId=${this.$route.query.filter}`
-          : this.$route.query.isPackage != undefined
-          ? `/api/Course/Index?isPackage=${this.$route.query.isPackage}`
-          : ""
-      );
+      let query = "";
+      for (const i in this.$route.query) {
+        query = query + i + "=" + this.$route.query[i] + "&";
+      }
+      query = query.slice(0, -1);
+      const courses = await this.$axios.get(`/api/Course/Index?${query}`);
       if (courses.data.statusCode == 200 && courses.data.message == "Success") {
         this.courseItems = courses.data.data.courseItems;
         this.filter = courses.data.data.filter;
@@ -359,6 +377,7 @@ export default {
   },
   methods: {
     goToPage(event) {
+      console.log(this.goTo);
       this.goTo = event.target.innerHTML;
     },
     seeCourse(id) {
@@ -376,13 +395,13 @@ export default {
       event.stopPropagation();
       // console.log(this.$route);
       if (Object.keys(this.$route.query).length != 0) {
-        if (this.$route.query.filter == undefined) {
-          this.$router.push(this.$route.fullPath + "&filter=" + id);
+        if (this.$route.query.courseGroupId == undefined) {
+          this.$router.push(this.$route.fullPath + "&courseGroupId=" + id);
         } else {
-          this.$router.replace({ query: { ...this.$route.query, filter: id } });
+          this.$router.replace({ query: { ...this.$route.query, courseGroupId: id } });
         }
       } else {
-        this.$router.push(this.$route.fullPath + "?filter=" + id);
+        this.$router.push(this.$route.fullPath + "?courseGroupId=" + id);
       }
     },
     async orderBy(event, id) {
@@ -391,12 +410,21 @@ export default {
       });
       this.orderById = id;
       event.target.closest("li").classList.add("active");
-      const courses = await this.$axios.get(`/api/Course/Index?orderBy=${id}`);
-      if (courses.data.statusCode == 200 && courses.data.message == "Success") {
-        this.courseItems = courses.data.data.courseItems;
-        this.filter = courses.data.data.filter;
-        this.studentCount = courses.data.data.studentCount;
+      if (Object.keys(this.$route.query).length != 0) {
+        if (this.$route.query.orderBy == undefined) {
+          this.$router.push(this.$route.fullPath + "&orderBy=" + id);
+        } else {
+          this.$router.replace({ query: { ...this.$route.query, orderBy: id } });
+        }
+      } else {
+        this.$router.push(this.$route.fullPath + "?orderBy=" + id);
       }
+      // const courses = await this.$axios.get(`/api/Course/Index?orderBy=${id}`);
+      // if (courses.data.statusCode == 200 && courses.data.message == "Success") {
+      //   this.courseItems = courses.data.data.courseItems;
+      //   this.filter = courses.data.data.filter;
+      //   this.studentCount = courses.data.data.studentCount;
+      // }
     },
   },
   watch: {
@@ -410,36 +438,71 @@ export default {
     },
     goTo: {
       async handler() {
-        const courses = await this.$axios.get(
-          `/api/Course/Index?pageId=${this.goTo}&orderBy=${this.orderById}`
-        );
-        if (courses.data.statusCode == 200 && courses.data.message == "Success") {
-          this.courseItems = courses.data.data.courseItems;
-          this.filter = courses.data.data.filter;
-
-          this.studentCount = courses.data.data.studentCount;
+        if (Object.keys(this.$route.query).length != 0) {
+          if (this.$route.query.pageId == undefined) {
+            this.$router.push(this.$route.fullPath + "&pageId=" + this.goTo);
+          } else {
+            this.$router.replace({ query: { ...this.$route.query, pageId: this.goTo } });
+          }
+        } else {
+          this.$router.push(this.$route.fullPath + "?pageId=" + this.goTo);
+        }
+      },
+      deep: true,
+    },
+    packageRadio: {
+      async handler() {
+        if (Object.keys(this.$route.query).length != 0) {
+          if (this.$route.query.isPackage == undefined) {
+            this.$router.push(this.$route.fullPath + "&isPackage=" + this.packageRadio);
+          } else {
+            this.$router.replace({
+              query: { ...this.$route.query, isPackage: this.packageRadio },
+            });
+          }
+        } else {
+          this.$router.push(this.$route.fullPath + "?isPackage=" + this.packageRadio);
         }
       },
       deep: true,
     },
     "$route.query": {
       async handler() {
-        const courses = await this.$axios.get(
-          `/api/Course/Index?courseGroupId=${this.$route.query.filter}`
-        );
-        if (courses.data.statusCode == 200 && courses.data.message == "Success") {
-          this.courseItems = courses.data.data.courseItems;
-          this.filter = courses.data.data.filter;
-
-          this.studentCount = courses.data.data.studentCount;
-        }
-        const groups = await this.$axios.get(
-          `/api/Public/ProfileActions/GetCourseGroups/${this.$route.query.filter}`
-        );
-        if (groups.data.data.length > 5) {
-          this.headerGroups = groups.data.data.slice(0, 5);
+        if (Object.keys(this.$route.query).length != 0) {
+          let query = "";
+          for (const i in this.$route.query) {
+            query = query + i + "=" + this.$route.query[i] + "&";
+          }
+          query = query.slice(0, -1);
+          const courses = await this.$axios.get(`/api/Course/Index?${query}`);
+          if (courses.data.statusCode == 200 && courses.data.message == "Success") {
+            this.courseItems = courses.data.data.courseItems;
+            this.filter = courses.data.data.filter;
+            this.studentCount = courses.data.data.studentCount;
+          }
         } else {
-          this.headerGroups = groups.data.data;
+          if (this.$store.state.search.courseItems != "") {
+            this.courseItems = this.$store.state.search.courseItems;
+            this.filter = this.$store.state.search.filter;
+            this.studentCount = this.$store.state.search.studentCount;
+          } else {
+            const courses = await this.$axios.get("/api/Course/Index");
+            if (courses.data.statusCode == 200 && courses.data.message == "Success") {
+              this.courseItems = courses.data.data.courseItems;
+              this.filter = courses.data.data.filter;
+              this.studentCount = courses.data.data.studentCount;
+            }
+          }
+        }
+        if (this.$route.query.courseGroupId != undefined) {
+          const groups = await this.$axios.get(
+            `/api/Public/ProfileActions/GetCourseGroups/${this.$route.query.courseGroupId}`
+          );
+          if (groups.data.data.length > 5) {
+            this.headerGroups = groups.data.data.slice(0, 5);
+          } else {
+            this.headerGroups = groups.data.data;
+          }
         }
       },
       deep: true,

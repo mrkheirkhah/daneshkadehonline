@@ -1972,12 +1972,22 @@ export default {
       }
     },
     seeVideo(id) {
+      this.$swal({
+        text:
+          "episode Id = " +
+          id +
+          "& src = https://api.daneshkadeonline.ir/Course/Video/" +
+          id,
+        icon: "success",
+        showCloseButton: true,
+        confirmButtonText: "تایید",
+      });
       this.seeThisVideo = id;
       document
         .getElementById("videoSrc")
         .setAttribute("src", "https://api.daneshkadeonline.ir/Course/Video/" + id);
-      var videoPlayer = document.querySelector("video");
-      videoPlayer.load();
+      // var videoPlayer = document.querySelector("video");
+      // videoPlayer.load();
     },
     async downloadAttachAudio(id) {
       var audioresp = await this.$axios.get(

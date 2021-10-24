@@ -105,8 +105,8 @@
             <div for="" class="form-row-col darken-color">
               <div class="separator pseudo-form-input">
                 <input type="file" id="upload-profile-image" accept="image/*" />
-                <span v-if="profImageName==''">تصویر پروفایل</span>
-                <span v-else>{{profImageName}}</span>
+                <span v-if="profImageName == ''">تصویر پروفایل</span>
+                <span v-else>{{ profImageName }}</span>
 
                 <span>
                   <label
@@ -259,13 +259,38 @@
               ></textarea>
             </label>
             <label for="" class="form-row-col">
-              <!-- <input
+              <div class="floated-list-container select-multiple">
+                <input
+                  type="text"
+                  class="form-input"
+                  readonly
+                  placeholder="مقاطع تدریس"
+                  :class="
+                    selectedCourseGroups.length > 0 &&
+                    selectedCourseGroups.includes(option.id)
+                      ? 'selected'
+                      : ''
+                  "
+                  @click="toggleDropDowns"
+                />
+                <ul class="floated-list custom-scrollbar">
+                  <li
+                    v-for="option in courseGroups"
+                    @click="chooseCourseGroup($event, option.id)"
+                    :key="option.id"
+                  >
+                    {{ option.groupTitle }}
+                  </li>
+                </ul>
+              </div>
+            </label>
+            <!-- <input
                 type="text"
                 class="form-input has-cover-btn"
                 placeholder="رمز عبور"
                 v-model="password"
               /> -->
-            </label>
+            <!-- </label> -->
           </div>
           <div class="form-row">
             <label for="" class="form-row-col">
@@ -417,7 +442,9 @@ export default {
       teacherDegres: "",
       modalType: "",
       educationId: "",
-      profImageName:''
+      profImageName: "",
+      courseGroups: "",
+      selectedCourseGroups: "",
     };
   },
   async beforeMount() {
@@ -445,6 +472,10 @@ export default {
           },
         }
       );
+      const groups = await this.$axios.get(
+        "/api/Public/ProfileActions/GetAllCourseGroups"
+      );
+      this.courseGroups = groups.data.data;
       console.log(getTeacherProfile);
       const teacherProfile = getTeacherProfile.data.data;
       // this.degreeEducationId = teacherProfile.degreeEducationId;
@@ -453,6 +484,7 @@ export default {
       //     this.degre = n.title;
       //   }
       // }
+      this.selectedCourseGroups = teacherProfile.groupIds;
       this.aboutTeacher = getTeacherProfile.data.data.description;
       this.address = teacherProfile.address;
       this.cardNumber = teacherProfile.cardNumber;
@@ -494,6 +526,34 @@ export default {
     selectProfImg() {
       document.querySelector(".profModal").classList.toggle("show");
     },
+    toggleDropDowns(event) {
+      event.stopPropagation();
+      event.target.closest(".floated-list-container").classList.toggle("show");
+    },
+    chooseCourseGroup(event, id) {
+      if (
+        event.target
+          .closest(".floated-list-container")
+          .classList.contains("select-multiple")
+      ) {
+        event.target.closest(".floated-list-container").classList.add("show");
+        toggle_selected_item(event.target);
+      }
+      function toggle_selected_item(elem) {
+        if (elem.tagName === "LI") {
+          elem.classList.toggle("selected");
+        }
+      }
+      if (this.selectedCourseGroups.includes(id)) {
+        var index = this.selectedCourseGroups.indexOf(id);
+
+        if (index > -1) {
+          this.selectedCourseGroups.splice(index, 1);
+        }
+      } else {
+        this.selectedCourseGroups.push(id);
+      }
+    },
     croppie(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
@@ -516,7 +576,7 @@ export default {
         format: "jpeg",
       };
       this.$refs.croppieRef.result(options, (output) => {
-        this.profileImageBase64  = new File([output], this.profImageName)
+        this.profileImageBase64 = new File([output], this.profImageName);
       });
     },
     uploadNCImg(event) {
@@ -539,6 +599,7 @@ export default {
         formData.append("EducationId", this.educationId);
         formData.append("ProfileImage", this.cropped);
         formData.append("NationalCardImage", this.nationalCardImageBase64);
+        formData.append("GroupIds", JSON.stringify(this.selectedCourseGroups));
         formData.append("TeacherName", this.fullName);
         formData.append("CardNumber", this.cardNumber);
         formData.append("Address", this.address);
