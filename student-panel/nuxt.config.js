@@ -14,6 +14,12 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/logo.png' },
     ],
+    script: [
+      {
+        src: "https://www.googletagmanager.com/gtag/js?id=G-6N54C4LD3T",
+        async:true
+      },
+    ]
   },
   loading: {
     color: '#e13535'
@@ -30,7 +36,11 @@ export default {
   plugins: [
     '@/plugins/axios.js',
     { src: '@/plugins/vue-awesome-swiper', mode: 'client' },
-    { src: '~/plugins/vue-plyr', mode: 'client' }
+    { src: '~/plugins/vue-plyr', mode: 'client' },
+    {
+      src: '~/plugins/GoogleAnalytics.js',
+      mode: 'client'
+    }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

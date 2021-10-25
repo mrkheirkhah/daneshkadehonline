@@ -238,6 +238,22 @@ export default {
   components: { skeleton },
   layout: "dashboard",
   middleware: "userIsNotLog",
+  head() {
+    return {
+      title: "پنل دانش آموز",
+      script: [
+        {
+          type: "text/javascript",
+          innerHTML:
+            "const token = '8oo00c84gsc080040w00so0ks00400kcw4sskgss'; const tools = 'ThankUpixel';",
+          charset: "utf-8",
+        },
+        {
+          src: 'https://trk.tablighdrive.com/pixel/submit.action.js'
+        }
+      ],
+    };
+  },
   data() {
     return {
       showAvatarSelect: false,

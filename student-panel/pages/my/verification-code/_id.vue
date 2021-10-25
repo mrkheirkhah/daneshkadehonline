@@ -201,6 +201,12 @@ export default {
     }
   },
   mounted() {
+    if (this.$route.params.id == "register") {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "https://trk.tablighdrive.com/pixel/init.action.js";
+      document.head.appendChild(script);
+    }
     // this.myTimer();
   },
   beforeDestroy() {

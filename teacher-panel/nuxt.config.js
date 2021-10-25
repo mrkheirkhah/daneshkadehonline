@@ -14,6 +14,12 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/logo.png' },
+    ],
+    script: [
+      {
+        src: "https://www.googletagmanager.com/gtag/js?id=G-6N54C4LD3T",
+        async:true
+      },
     ]
   },
   loading: {
@@ -32,6 +38,10 @@ export default {
     { src: '~/plugins/croppie.js', ssr: false },
     '@/plugins/axios',
     { src: '~plugins/vue-introjs.js', mode: 'client' },
+    {
+      src: '~/plugins/GoogleAnalytics.js',
+      mode: 'client'
+    }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

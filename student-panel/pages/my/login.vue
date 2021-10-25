@@ -73,6 +73,11 @@ export default {
   head() {
     return {
       title: "login with number",
+      script: [
+        {
+          src: "https://trk.tablighdrive.com/pixel/init.action.js",
+        },
+      ],
     };
   },
   methods: {

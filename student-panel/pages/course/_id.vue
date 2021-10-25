@@ -831,16 +831,16 @@
                 </div> -->
               <vue-plyr>
                 <video
+                  v-if="videoLoading"
                   controls
                   crossorigin
                   playsinline
-                  id="videoSrc"
                   :data-poster="
                     'https://api.daneshkadeonline.ir/Images/Public/Course/' +
                     courseDetail.imageName
                   "
                 >
-                  <!-- <source  src="" type="video/mp4" /> -->
+                  <source id="videoSrc" src="" type="video/mp4" />
                 </video>
               </vue-plyr>
               <!-- </client-only> -->
@@ -1607,6 +1607,7 @@ export default {
       messageGroups: [],
       studentIsLogin: false,
       videoEpisode: "6",
+      videoLoading: true,
       // comment
       commentName: "",
       commentEmail: "",
@@ -1973,17 +1974,11 @@ export default {
       }
     },
     seeVideo(id) {
+      this.videoLoading = false;
       this.seeThisVideo = id;
       var player = document.querySelector("#videoSrc");
       player.src = "https://api.daneshkadeonline.ir/Course/Video/" + id;
-      // player.setAttribute("src", "https://api.daneshkadeonline.ir/Course/Video/" + id);
-      // alert(player.attributes.src.value);
-      this.$swal({
-        text: player.attributes.src.value,
-        icon: "success",
-        showCloseButton: true,
-        confirmButtonText: "تایید",
-      });
+      this.videoLoading = true;
       // var videoPlayer = document.querySelector("video");
       // videoPlayer.load();
     },

@@ -107,6 +107,11 @@ export default {
   head() {
     return {
       title: "register",
+      script: [
+        {
+          src: "https://trk.tablighdrive.com/pixel/init.action.js",
+        },
+      ],
     };
   },
   data() {

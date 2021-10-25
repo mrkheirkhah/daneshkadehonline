@@ -19,6 +19,7 @@
     "sass-loader": "^10.1.1",
     "swiper": "^5.4.5",
     "vue-awesome-swiper": "^4.1.1",
+    "vue-gtag": "^1.16.1",
     "vue-plyr": "^7.0.0",
     "vue-sweetalert2": "^5.0.2"
   },

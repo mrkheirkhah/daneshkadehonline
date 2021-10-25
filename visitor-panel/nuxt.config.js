@@ -13,6 +13,12 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/logo.png' }
+    ],
+    script: [
+      {
+        src: "https://www.googletagmanager.com/gtag/js?id=G-6N54C4LD3T",
+        async:true
+      },
     ]
   },
   loading: {
@@ -28,7 +34,11 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {src: '@/plugins/chart.js', mode: 'client'}
+    {src: '@/plugins/chart.js', mode: 'client'},
+    {
+      src: '~/plugins/GoogleAnalytics.js',
+      mode: 'client'
+    }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
