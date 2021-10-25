@@ -286,7 +286,7 @@ export default {
   },
   async mounted() {
     const groups = await this.$axios.get("/api/Public/ProfileActions/GetAllNewsGroups");
-    console.log(groups);
+    // console.log(groups);
     this.groups = groups.data.data;
     if (this.$route.query.filter != undefined) {
       const groups = await this.$axios.get(

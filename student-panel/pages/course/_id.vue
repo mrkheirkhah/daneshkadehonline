@@ -834,12 +834,13 @@
                   controls
                   crossorigin
                   playsinline
+                  id="videoSrc"
                   :data-poster="
                     'https://api.daneshkadeonline.ir/Images/Public/Course/' +
                     courseDetail.imageName
                   "
                 >
-                  <source id="videoSrc" src="" type="video/mp4" />
+                  <!-- <source  src="" type="video/mp4" /> -->
                 </video>
               </vue-plyr>
               <!-- </client-only> -->
@@ -1972,20 +1973,17 @@ export default {
       }
     },
     seeVideo(id) {
+      this.seeThisVideo = id;
+      var player = document.querySelector("#videoSrc");
+      player.src = "https://api.daneshkadeonline.ir/Course/Video/" + id;
+      // player.setAttribute("src", "https://api.daneshkadeonline.ir/Course/Video/" + id);
+      // alert(player.attributes.src.value);
       this.$swal({
-        text:
-          "episode Id = " +
-          id +
-          "& src = https://api.daneshkadeonline.ir/Course/Video/" +
-          id,
+        text: player.attributes.src.value,
         icon: "success",
         showCloseButton: true,
         confirmButtonText: "تایید",
       });
-      this.seeThisVideo = id;
-      document
-        .getElementById("videoSrc")
-        .setAttribute("src", "https://api.daneshkadeonline.ir/Course/Video/" + id);
       // var videoPlayer = document.querySelector("video");
       // videoPlayer.load();
     },

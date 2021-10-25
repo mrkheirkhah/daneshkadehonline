@@ -54,27 +54,49 @@
             <p class="wrong-text" v-if="noCode">کد تخفیف را وارد کنید</p>
             <div class="factor">
               <ul class="list">
-                <li>
-                  <span>مبلغ کل:</span>
-                  <span class="persian-number price"
-                    >{{ Number(orders.sum).toLocaleString() }}
-                    <span class="currency">تومان</span></span
-                  >
-                </li>
-                <li>
-                  <span>تخفیف:</span>
-                  <span class="persian-number price"
-                    >{{ Number(orders.discount).toLocaleString() }}
-                    <span class="currency">تومان</span></span
-                  >
-                </li>
-                <li>
-                  <span>قابل پرداخت:</span>
-                  <span class="persian-number price"
-                    >{{ Number(orders.finalPrice).toLocaleString() }}
-                    <span class="currency">تومان</span></span
-                  >
-                </li>
+                <template v-if="loading">
+                  <li>
+                    <span>مبلغ کل:</span>
+                    <span class="persian-number price"
+                      >0 <span class="currency">تومان</span></span
+                    >
+                  </li>
+                  <li>
+                    <span>تخفیف:</span>
+                    <span class="persian-number price"
+                      >0 <span class="currency">تومان</span></span
+                    >
+                  </li>
+                  <li>
+                    <span>قابل پرداخت:</span>
+                    <span class="persian-number price"
+                      >0 <span class="currency">تومان</span></span
+                    >
+                  </li>
+                </template>
+                <template v-else>
+                  <li>
+                    <span>مبلغ کل:</span>
+                    <span class="persian-number price"
+                      >{{ Number(orders.sum).toLocaleString() }}
+                      <span class="currency">تومان</span></span
+                    >
+                  </li>
+                  <li>
+                    <span>تخفیف:</span>
+                    <span class="persian-number price"
+                      >{{ Number(orders.discount).toLocaleString() }}
+                      <span class="currency">تومان</span></span
+                    >
+                  </li>
+                  <li>
+                    <span>قابل پرداخت:</span>
+                    <span class="persian-number price"
+                      >{{ Number(orders.finalPrice).toLocaleString() }}
+                      <span class="currency">تومان</span></span
+                    >
+                  </li>
+                </template>
               </ul>
               <footer>
                 <form action="https://sep.shaparak.ir/OnlinePG/OnlinePG" method="post">
@@ -112,6 +134,7 @@ export default {
       discountCode: "",
       Tokenforpay: "",
       noCode: false,
+      loading: true,
     };
   },
   mounted() {
@@ -119,6 +142,7 @@ export default {
   },
   methods: {
     async getOrders() {
+      this.loading = true;
       const order = await this.$axios.get("/api/Student/StudentOrder/GetOrder", {
         headers: {
           Authorization: `Bearer ${this.$cookies.get("key")}`,
@@ -136,6 +160,7 @@ export default {
       if (order.data.statusCode == 200 && order.data.message == "Success") {
         this.orders = order.data.data;
       }
+      this.loading = false;
     },
     async deleteOrder(id) {
       const deleteResp = await this.$axios.delete(
