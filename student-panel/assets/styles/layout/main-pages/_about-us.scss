@@ -1,7 +1,8 @@
 .about-us {
     .banner {
         .bg-image {
-            background-image: url("@/static/images/main-page-images/about-us-bg.png");
+            background-image: url("@/static/images/main-page-images/about-us-bg.jpg");
+            background-position-y: -175px;
         }
     }
 
@@ -240,6 +241,11 @@
 }
 @media screen and (max-width: $big-mobile-responsive) {
     .about-us {
+        .banner {
+            .bg-image {
+                background-position-y: unset;
+            }
+        }
         .get-know-us {
             padding-bottom: 23px;
         }
@@ -265,6 +271,11 @@
 }
 @media screen and (max-width: $mobile-responsive) {
     .about-us {
+        .banner {
+            .bg-image {
+                background-position-y: unset;
+            }
+        }
         .get-know-us {
             font-size: $font-size-2-mobile;
             margin-bottom: 18px;

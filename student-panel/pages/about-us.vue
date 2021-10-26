@@ -31,7 +31,7 @@
               </div>
             </div>
             <div class="istatistic col-12 col-md-9 order-1 order-md-0">
-              <img src="@/static/images/main-page-images/our-team.png" alt="عکس تیم ما" />
+              <img src="@/static/images/main-page-images/our-team.jpg" alt="عکس تیم ما" />
             </div>
             <div class="experience col-12 col-md-3">
               <h2>

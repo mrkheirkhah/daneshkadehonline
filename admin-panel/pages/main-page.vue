@@ -518,22 +518,22 @@ export default {
     },
     async setSideAds() {
       let formData = new FormData();
-      formData.append("amazingImage", this.ShegeftBanner);
-      formData.append("amazingIsActive", this.shegeftRadio);
+      formData.append("AmazingImage", this.ShegeftBanner);
+      formData.append("AmazingIsActive", this.shegeftRadio);
       formData.append(
-        "selectedAmazingCourses",
+        "SelectedAmazingCourses",
         this.$store.state.selectedCourses.selectedCourses == ""
           ? []
           : JSON.stringify(this.$store.state.selectedCourses.selectedCourses)
       );
-      formData.append("favoriteImage", this.mahboobBanner);
-      formData.append("favoriteIsActive", this.mahboobRadio);
-      formData.append("newestImage", this.jadidBanner);
-      formData.append("newestIsActive", this.jadidRadio);
-      formData.append("mostVisitImage", this.bazdidBanner);
-      formData.append("mostVisitIsActive", this.bazdidRadio);
-      formData.append("packageImage", this.packageBanner);
-      formData.append("packageIsActive", this.packageRadio);
+      formData.append("FavoriteImage", this.mahboobBanner);
+      formData.append("FavoriteIsActive", this.mahboobRadio);
+      formData.append("NewestImage", this.jadidBanner);
+      formData.append("NewestIsActive", this.jadidRadio);
+      formData.append("MostVisitImage", this.bazdidBanner);
+      formData.append("MostVisitIsActive", this.bazdidRadio);
+      formData.append("PackageImage", this.packageBanner);
+      formData.append("PackageIsActive", this.packageRadio);
       const setAdsInfo = await this.$axios.post(
         "/api/Admin/AdminManageSiteInfo/Ads",
         formData,
