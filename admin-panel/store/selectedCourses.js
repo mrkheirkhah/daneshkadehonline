@@ -1,5 +1,5 @@
 export const state = () => ({
-    selectedCourses : '',
+    selectedCourses : [],
     useCount:'',
     discountName:'',
     discountPercentage:'',

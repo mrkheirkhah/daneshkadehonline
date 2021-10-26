@@ -151,7 +151,7 @@ export default {
                 verifyCode: this.$route.params.code,
               }
             );
-            console.log(registerData);
+            // console.log(registerData);
             if (registerData.data.tokenString) {
               this.$store.dispatch("login/setRegisterData", registerData);
               this.$router.push("/my/");

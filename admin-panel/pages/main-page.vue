@@ -522,9 +522,7 @@ export default {
       formData.append("AmazingIsActive", this.shegeftRadio);
       formData.append(
         "SelectedAmazingCourses",
-        this.$store.state.selectedCourses.selectedCourses == ""
-          ? []
-          : JSON.stringify(this.$store.state.selectedCourses.selectedCourses)
+        JSON.stringify(this.$store.state.selectedCourses.selectedCourses)
       );
       formData.append("FavoriteImage", this.mahboobBanner);
       formData.append("FavoriteIsActive", this.mahboobRadio);
@@ -616,7 +614,7 @@ export default {
           ) {
             const headerDetailsData = headerDetails.data.data;
             this.buttonName = headerDetailsData.buttonName;
-            this.ButtonLink = headerDetailsData.buttonLink;
+            this.buttonLink = headerDetailsData.buttonLink;
             this.headerDescription = headerDetailsData.description;
             this.headerTitle = headerDetailsData.title;
           }
