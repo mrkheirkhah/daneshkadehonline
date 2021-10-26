@@ -562,7 +562,7 @@ export default {
         formData.append("title", this.headerTitle);
         formData.append("description", this.headerDescription);
         formData.append("buttonName", this.buttonName);
-        formData.append("ButtonLink", this.ButtonLink);
+        formData.append("ButtonLink", this.buttonLink);
         formData.append("vector", this.selectedVector);
         const uploadResp = await this.$axios.post(
           "/api/Admin/AdminManageSiteInfo/UpdateLandingContent",
@@ -582,7 +582,7 @@ export default {
             confirmButtonText: "تایید",
           });
           this.headerId = "";
-          this.ButtonLink="";
+          this.buttonLink = "";
           this.headerTitle = "";
           this.headerDescription = "";
           this.buttonName = "";
@@ -616,7 +616,7 @@ export default {
           ) {
             const headerDetailsData = headerDetails.data.data;
             this.buttonName = headerDetailsData.buttonName;
-            this.ButtonLink=headerDetailsData.buttonLink;
+            this.ButtonLink = headerDetailsData.buttonLink;
             this.headerDescription = headerDetailsData.description;
             this.headerTitle = headerDetailsData.title;
           }

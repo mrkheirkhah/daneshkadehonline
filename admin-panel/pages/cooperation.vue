@@ -166,7 +166,7 @@ export default {
         let formData = new FormData();
         formData.append("id", this.optionId);
         formData.append("title", this.optionTitle);
-        formData.append("icon", this.shortDescription);
+        formData.append("icon", this.selectedVector);
         formData.append("description", this.optionDescription);
         const uploadResp = await this.$axios.put(
           "/api/Admin/AdminCooperation/CooperationOption",
