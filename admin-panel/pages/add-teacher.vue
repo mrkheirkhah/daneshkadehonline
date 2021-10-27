@@ -122,18 +122,19 @@
             </ul>
           </label>
           <label for="" class="form-row-col">
-            <div class="floated-list-container select-multiple">
+            <div class="floated-list-container select-multiple in-panel">
               <input
                 type="text"
                 class="form-input"
                 readonly
                 placeholder="مقاطع تدریس"
+                :value="selectedCourseGroupsNames"
                 @click="toggleDropDowns"
               />
               <ul class="floated-list custom-scrollbar">
                 <li
                   v-for="option in courseGroups"
-                  @click="chooseCourseGroup($event, option.id)"
+                  @click="chooseCourseGroup($event, option.id, option.groupTitle)"
                   :key="option.id"
                 >
                   {{ option.groupTitle }}
@@ -291,7 +292,7 @@ export default {
       selectedDegree: "",
       croppieImage: "",
       cropped: "",
-      selectedNCImage: "",
+      selectedNCImage: undefined,
       phoneNumber: "",
       password: "",
       email: "",
@@ -306,6 +307,8 @@ export default {
       selectedCourseGroups: [],
       aboutTeacher: "",
       profImageName: "",
+      selectedCourseGroupsNames: [],
+      profImageFile: undefined,
     };
   },
   async beforeMount() {
@@ -359,7 +362,7 @@ export default {
       //   this.selectedDegreGroup.push(id);
       // }
     },
-    chooseCourseGroup(event, id) {
+    chooseCourseGroup(event, id, name) {
       if (
         event.target
           .closest(".floated-list-container")
@@ -381,6 +384,15 @@ export default {
         }
       } else {
         this.selectedCourseGroups.push(id);
+      }
+      if (this.selectedCourseGroupsNames.includes(name)) {
+        var index = this.selectedCourseGroupsNames.indexOf(name);
+
+        if (index > -1) {
+          this.selectedCourseGroupsNames.splice(index, 1);
+        }
+      } else {
+        this.selectedCourseGroupsNames.push(name);
       }
     },
     toggleDropdown() {
@@ -409,10 +421,11 @@ export default {
       let options = {
         type: "blob",
         size: { width: 600, height: 600 },
-        format: "jpeg",
+        format: "png",
       };
       this.$refs.croppieRef.result(options, (output) => {
-        this.cropped = new File([output], this.profImageName);
+        this.cropped = output;
+        // console.log(this.cropped);
       });
     },
     selectProfImg() {
@@ -421,17 +434,16 @@ export default {
     uploadNCImg(event) {
       try {
         this.selectedNCImage = event.target.files[0];
+        // console.log(this.selectedNCImage);
       } catch {}
-      // this.createBase64Image(NCImg);
     },
-    // createBase64Image(fileObject) {
-    //   const reader = new FileReader();
-    //   reader.onload = (e) => {
-    //     this.selectedNCImage = e.target.result;
-    //   };
-    //   reader.readAsDataURL(fileObject);
-    // },
     async addTeacher() {
+      if (this.cropped != "") {
+        this.profImageFile = new File([this.cropped], this.profImageName, {
+          type: "image/png",
+        });
+        // console.log(this.profImageFile);
+      }
       if (
         this.phoneNumber != "" &&
         this.nationalCardNumber != "" &&
@@ -441,8 +453,10 @@ export default {
         let formData = new FormData();
         formData.append("PhoneNumber", this.phoneNumber);
         formData.append("EducationId", this.selectedDegreGroup);
-        formData.append("GroupIds", JSON.stringify(this.selectedCourseGroups));
-        formData.append("ProfileImage", this.cropped);
+        for (let i = 0; i < this.selectedCourseGroups.length; i++) {
+          formData.append("GroupIds", this.selectedCourseGroups[i]);
+        }
+        formData.append("ProfileImage", this.profImageFile);
         formData.append("Password", this.password);
         formData.append("Email", this.email);
         formData.append("TeacherName", this.fullName);
@@ -452,28 +466,35 @@ export default {
         formData.append("Description", this.aboutTeacher);
         formData.append("NationalCardNumber", this.nationalCardNumber);
         formData.append("NationalCardImage", this.selectedNCImage);
-        const addTeacherResp = await this.$axios.post(
-          "/api/Admin/AdminManageTeacher/AddTeacher",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
+        // for (var value of formData.values()) {
+        //   console.log(value);
+        // }
+        try {
+          const addTeacherResp = await this.$axios.post(
+            "/api/Admin/AdminManageTeacher/AddTeacher",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${this.$cookies.get("key")}`,
+              },
+            }
+          );
+          if (
+            addTeacherResp.data.statusCode == 200 &&
+            addTeacherResp.data.message == "Success"
+          ) {
+            this.$swal({
+              text: "ثبت شد",
+              icon: "success",
+              showCloseButton: true,
+              confirmButtonText: "تایید",
+            }).then(() => {
+              this.$router.push("/teachers-list");
+            });
           }
-        );
-        if (
-          addTeacherResp.data.statusCode == 200 &&
-          addTeacherResp.data.message == "Success"
-        ) {
-          this.$swal({
-            text: "ثبت شد",
-            icon: "success",
-            showCloseButton: true,
-            confirmButtonText: "تایید",
-          }).then(() => {
-            this.$router.push("/teachers-list");
-          });
+        } catch (e) {
+          console.log(e.response.data);
         }
       } else {
         this.$swal({

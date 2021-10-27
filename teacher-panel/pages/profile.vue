@@ -125,13 +125,14 @@
                   type="text"
                   class="form-input"
                   readonly
+                  :value="selectedCourseGroupsNames"
                   placeholder="انتخاب دروس برای تدریس"
                   @click="toggleDropDowns"
                 />
                 <ul class="floated-list custom-scrollbar">
                   <li
                     v-for="option in courseGroups"
-                    @click="chooseCourseGroup($event, option.id)"
+                    @click="chooseCourseGroup($event, option.id, option.groupTitle)"
                     :class="
                       selectedCourseGroups.length > 0 &&
                       selectedCourseGroups.includes(option.id)
@@ -301,6 +302,8 @@ export default {
       dontNeedImage: [],
       courseGroups: [],
       selectedCourseGroups: [],
+      selectedCourseGroupsNames: [],
+      profImageFile: undefined,
     };
   },
   async beforeMount() {
@@ -364,7 +367,7 @@ export default {
         this.dontNeedImage = id;
       }
     },
-    chooseCourseGroup(event, id) {
+    chooseCourseGroup(event, id, name) {
       if (
         event.target
           .closest(".floated-list-container")
@@ -386,6 +389,15 @@ export default {
         }
       } else {
         this.selectedCourseGroups.push(id);
+      }
+      if (this.selectedCourseGroupsNames.includes(name)) {
+        var index = this.selectedCourseGroupsNames.indexOf(name);
+
+        if (index > -1) {
+          this.selectedCourseGroupsNames.splice(index, 1);
+        }
+      } else {
+        this.selectedCourseGroupsNames.push(name);
       }
     },
     degreName(id) {
@@ -421,10 +433,10 @@ export default {
       let options = {
         type: "blob",
         size: { width: 600, height: 600 },
-        format: "jpeg",
+        format: "png",
       };
       this.$refs.croppieRef.result(options, (output) => {
-        this.cropped =  new File([output], this.profImageName);
+        this.cropped = output;
       });
     },
     selectProfImg() {
@@ -432,12 +444,20 @@ export default {
     },
 
     async editProf() {
+      if (this.cropped != "") {
+        this.profImageFile = new File([this.cropped], this.profImageName, {
+          type: "image/png",
+        });
+        // console.log(this.profImageFile);
+      }
       // console.log(this.cropped);
       let formData = new FormData();
       formData.append("EducationImage", this.selectedDegreGroupImage);
       formData.append("EducationId", this.selectedDegreGroup);
-      formData.append("GroupIds", JSON.stringify(this.selectedCourseGroups));
-      formData.append("ProfileImage", this.cropped);
+      for (let i = 0; i < this.selectedCourseGroups.length; i++) {
+        formData.append("GroupIds", this.selectedCourseGroups[i]);
+      }
+      formData.append("ProfileImage", this.profImageFile);
       formData.append("Email", this.profData.email);
       formData.append("Description ", this.aboutTeacher);
       const editProfResponse = await this.$axios.post(

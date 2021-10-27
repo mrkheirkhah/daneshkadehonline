@@ -39,7 +39,9 @@
             </div>
 
             <span class="hint-text">
-              <a href="" type="button" @click.prevent="showProfHelp"> راهنمای انتخاب عکس پروفایل </a>
+              <a href="" type="button" @click.prevent="showProfHelp">
+                راهنمای انتخاب عکس پروفایل
+              </a>
             </span>
           </div>
           <div class="basic-modal">
@@ -316,6 +318,7 @@ export default {
       croppieImage: "",
       cropped: "",
       phoneNumber: "",
+      profImageFile: undefined,
       fullName: "",
       nationalCardNumber: "",
       visitors: "",
@@ -324,7 +327,7 @@ export default {
       cardNumber: "",
       shebaNumber: "",
       commision: "",
-      profImageName:''
+      profImageName: "",
     };
   },
   async beforeMount() {
@@ -369,16 +372,22 @@ export default {
       let options = {
         type: "blob",
         size: { width: 600, height: 600 },
-        format: "jpeg",
+        format: "png",
       };
       this.$refs.croppieRef.result(options, (output) => {
-        this.cropped  = new File([output], this.profImageName);
+        this.cropped = output;
       });
     },
     selectProfImg() {
       document.querySelector(".profModal").classList.toggle("show");
     },
     async addVisitor() {
+      if (this.cropped != "") {
+        this.profImageFile = new File([this.cropped], this.profImageName, {
+          type: "image/png",
+        });
+        // console.log(this.profImageFile);
+      }
       if (
         this.phoneNumber != "" &&
         this.fullName != "" &&
@@ -386,13 +395,16 @@ export default {
       ) {
         if (this.submitType == "add") {
           let formData = new FormData();
-      formData.append("VisitorName", this.fullName);
-      formData.append("PhoneNumber", this.phoneNumber);
-      formData.append("ProfileImage", this.cropped);
-      formData.append("NationalCardNumber", this.nationalCardNumber);
-      formData.append("CardNumber", this.cardNumber);
-      formData.append("ShebaNumber", this.shebaNumber);
-      formData.append("Commission", this.commision);
+          formData.append("VisitorName", this.fullName);
+          formData.append("PhoneNumber", this.phoneNumber);
+          formData.append("ProfileImage", this.profImageFile);
+          formData.append("NationalCardNumber", this.nationalCardNumber);
+          formData.append("CardNumber", this.cardNumber);
+          formData.append("ShebaNumber", this.shebaNumber);
+          formData.append("Commission", this.commision);
+          for (var value of formData.values()) {
+            console.log(value);
+          }
           const addVisitorResp = await this.$axios.post(
             "/api/Admin/AdminManageVisitor/Visitor",
             formData,
@@ -419,13 +431,13 @@ export default {
           }
         } else if (this.submitType == "edit") {
           let formData = new FormData();
-      formData.append("VisitorName", this.fullName);
-      formData.append("PhoneNumber", this.phoneNumber);
-      formData.append("ProfileImage", this.cropped);
-      formData.append("NationalCardNumber", this.nationalCardNumber);
-      formData.append("CardNumber", this.cardNumber);
-      formData.append("ShebaNumber", this.shebaNumber);
-      formData.append("Commission", this.commision);
+          formData.append("VisitorName", this.fullName);
+          formData.append("PhoneNumber", this.phoneNumber);
+          formData.append("ProfileImage", this.cropped);
+          formData.append("NationalCardNumber", this.nationalCardNumber);
+          formData.append("CardNumber", this.cardNumber);
+          formData.append("ShebaNumber", this.shebaNumber);
+          formData.append("Commission", this.commision);
           const editVisitorResp = await this.$axios.put(
             `/api/Admin/AdminManageVisitor/Visitor?visitorId=${this.editThisId}`,
             formData,

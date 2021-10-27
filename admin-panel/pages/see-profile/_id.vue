@@ -259,38 +259,38 @@
               ></textarea>
             </label>
             <label for="" class="form-row-col">
-              <div class="floated-list-container select-multiple">
+              <div class="floated-list-container select-multiple in-panel">
                 <input
                   type="text"
                   class="form-input"
                   readonly
+                  :value="selectedCourseGroupsNames"
                   placeholder="مقاطع تدریس"
-                  :class="
-                    selectedCourseGroups.length > 0 &&
-                    selectedCourseGroups.includes(option.id)
-                      ? 'selected'
-                      : ''
-                  "
                   @click="toggleDropDowns"
                 />
                 <ul class="floated-list custom-scrollbar">
                   <li
                     v-for="option in courseGroups"
-                    @click="chooseCourseGroup($event, option.id)"
+                    @click="chooseCourseGroup($event, option.id, option.groupTitle)"
                     :key="option.id"
+                    :class="
+                      selectedCourseGroups.length > 0 &&
+                      selectedCourseGroups.includes(option.id)
+                        ? 'selected'
+                        : ''
+                    "
                   >
                     {{ option.groupTitle }}
                   </li>
                 </ul>
               </div>
-            </label>
-            <!-- <input
+              <input
                 type="text"
                 class="form-input has-cover-btn"
                 placeholder="رمز عبور"
                 v-model="password"
-              /> -->
-            <!-- </label> -->
+              />
+            </label>
           </div>
           <div class="form-row">
             <label for="" class="form-row-col">
@@ -431,8 +431,8 @@ export default {
       nationalCardNumber: "",
       password: "",
       phoneNumber: "",
-      nationalCardImageBase64: "",
-      profileImageBase64: "",
+      nationalCardImageBase64: undefined,
+      profileImageBase64: undefined,
       modalPicSrc: "",
       degres: [],
       degreeEducationId: "",
@@ -444,7 +444,10 @@ export default {
       educationId: "",
       profImageName: "",
       courseGroups: "",
-      selectedCourseGroups: "",
+      selectedCourseGroups: [],
+      selectedCourseGroupsNames: [],
+      cropped: "",
+      profImageFile: undefined,
     };
   },
   async beforeMount() {
@@ -476,7 +479,7 @@ export default {
         "/api/Public/ProfileActions/GetAllCourseGroups"
       );
       this.courseGroups = groups.data.data;
-      console.log(getTeacherProfile);
+      // console.log(getTeacherProfile);
       const teacherProfile = getTeacherProfile.data.data;
       // this.degreeEducationId = teacherProfile.degreeEducationId;
       // for (const n of this.degres) {
@@ -530,7 +533,7 @@ export default {
       event.stopPropagation();
       event.target.closest(".floated-list-container").classList.toggle("show");
     },
-    chooseCourseGroup(event, id) {
+    chooseCourseGroup(event, id, name) {
       if (
         event.target
           .closest(".floated-list-container")
@@ -553,6 +556,15 @@ export default {
       } else {
         this.selectedCourseGroups.push(id);
       }
+      if (this.selectedCourseGroupsNames.includes(name)) {
+        var index = this.selectedCourseGroupsNames.indexOf(name);
+
+        if (index > -1) {
+          this.selectedCourseGroupsNames.splice(index, 1);
+        }
+      } else {
+        this.selectedCourseGroupsNames.push(name);
+      }
     },
     croppie(e) {
       var files = e.target.files || e.dataTransfer.files;
@@ -573,33 +585,33 @@ export default {
       let options = {
         type: "blob",
         size: { width: 600, height: 600 },
-        format: "jpeg",
+        format: "png",
       };
       this.$refs.croppieRef.result(options, (output) => {
-        this.profileImageBase64 = new File([output], this.profImageName);
+        this.cropped = output;
       });
     },
     uploadNCImg(event) {
       try {
         this.nationalCardImageBase64 = event.target.files[0];
       } catch {}
-      // this.createBase64Image(NCImg);
     },
-    // createBase64Image(fileObject) {
-    //   const reader = new FileReader();
-    //   reader.onload = (e) => {
-    //     this.nationalCardImageBase64 = e.target.result;
-    //   };
-    //   reader.readAsDataURL(fileObject);
-    // },
     async setTeacherProf(type) {
+      if (this.cropped != "") {
+        this.profImageFile = new File([this.cropped], this.profImageName, {
+          type: "image/png",
+        });
+        // console.log(this.profImageFile);
+      }
       if (type == "accept") {
         let formData = new FormData();
         formData.append("TeacherId", this.$route.params.id);
-        formData.append("EducationId", this.educationId);
-        formData.append("ProfileImage", this.cropped);
+        // formData.append("EducationId", this.educationId);
+        formData.append("ProfileImage", this.profImageFile);
         formData.append("NationalCardImage", this.nationalCardImageBase64);
-        formData.append("GroupIds", JSON.stringify(this.selectedCourseGroups));
+        for (let i = 0; i < this.selectedCourseGroups.length; i++) {
+          formData.append("GroupIds", this.selectedCourseGroups[i]);
+        }
         formData.append("TeacherName", this.fullName);
         formData.append("CardNumber", this.cardNumber);
         formData.append("Address", this.address);
@@ -610,6 +622,9 @@ export default {
         formData.append("Password", this.password);
         formData.append("Description", this.aboutTeacher);
         formData.append("isAccepted", true);
+        // for (var value of formData.values()) {
+        //   console.log(value);
+        // }
         const setStatusResponse = await this.$axios.post(
           "/api/Admin/AdminManageTeacher/SetTeacherProfile",
           formData,

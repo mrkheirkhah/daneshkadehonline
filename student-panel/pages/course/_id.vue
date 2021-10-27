@@ -829,7 +829,7 @@
                     </div>
                   </div>
                 </div> -->
-              <vue-plyr>
+              <vue-plyr v-if="courseEpisodes.length > 0">
                 <video
                   v-if="videoLoading"
                   controls

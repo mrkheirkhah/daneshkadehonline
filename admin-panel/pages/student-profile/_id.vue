@@ -366,7 +366,7 @@ export default {
       let options = {
         type: "base64",
         size: { width: 600, height: 600 },
-        format: "jpeg",
+        format: "png",
       };
       this.$refs.croppieRef.result(options, (output) => {
         this.profileImageBase64 = output;
