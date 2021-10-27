@@ -157,6 +157,19 @@ import skeleton from "@/components/skeleto-creator";
 export default {
   components: { skeleton },
   layout: "mainPages",
+  head() {
+    return {
+      title:
+        "دانشکده آنلاین بزرگترین پلتفرم آزاد آموزشی در ایران | تماس با دانشکده آنلاین",
+      meta: [
+        {
+          hid: "description",
+          content:
+            "- پشتیبانی و پاسخگویی 7 روز هفته و 24 ساعت شبانه روز بدون وقفه - 91305951 -021 | دانشکده آنلاین",
+        },
+      ],
+    };
+  },
   data() {
     return {
       contactAddress: "",

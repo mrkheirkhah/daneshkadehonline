@@ -120,6 +120,16 @@ import mainFooter from "@/components/main-pages/footer";
 export default {
   components: { mainHeader, mainFooter },
   layout: "mainPages",
+  head() {
+    return {
+      title: "همه چیز درباره ما - داستان آغاز ، اهداف و رسالت دانشکده آنلاین",
+      meta: [
+        {
+          hid: "description",
+          content:'هدف ما برطرف کردن نقص و مشکلاتی هست که دیگر تولید کنندگان محتوای آموزشی در ایران آن ها را نادیده گرفته اند - رسالت ما در دسترس قرار دادن با کیفیت ترین آموزش ها با کمترین مبلغ ممکن برای همگان است | دانشکده آنلاین'},
+      ],
+    };
+  },
   data() {
     return {
       aboutData: "",

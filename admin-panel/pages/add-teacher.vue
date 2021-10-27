@@ -145,14 +145,14 @@
         <div class="form-row">
           <label for="" class="form-row-col">
             <textarea
-                name=""
-                id=""
-                cols="22"
-                rows="0"
-                v-model="aboutTeacher"
-                placeholder="درباره مدرس"
-                class="form-input form-textarea"
-              ></textarea>
+              name=""
+              id=""
+              cols="22"
+              rows="0"
+              v-model="aboutTeacher"
+              placeholder="درباره مدرس"
+              class="form-input form-textarea"
+            ></textarea>
           </label>
           <label for="" class="form-row-col"> </label>
         </div>
@@ -304,8 +304,8 @@ export default {
       degreDropText: "",
       courseGroups: "",
       selectedCourseGroups: [],
-      aboutTeacher:'',
-      profImageName:''
+      aboutTeacher: "",
+      profImageName: "",
     };
   },
   async beforeMount() {
@@ -412,16 +412,16 @@ export default {
         format: "jpeg",
       };
       this.$refs.croppieRef.result(options, (output) => {
-        this.cropped =new File([output], this.profImageName);
+        this.cropped = new File([output], this.profImageName);
       });
     },
     selectProfImg() {
       document.querySelector(".profModal").classList.toggle("show");
     },
     uploadNCImg(event) {
-      try{
+      try {
         this.selectedNCImage = event.target.files[0];
-      }catch{}
+      } catch {}
       // this.createBase64Image(NCImg);
     },
     // createBase64Image(fileObject) {
@@ -438,15 +438,15 @@ export default {
         this.fullName != "" &&
         this.password != ""
       ) {
-          let formData = new FormData();
+        let formData = new FormData();
         formData.append("PhoneNumber", this.phoneNumber);
         formData.append("EducationId", this.selectedDegreGroup);
         formData.append("GroupIds", JSON.stringify(this.selectedCourseGroups));
         formData.append("ProfileImage", this.cropped);
-        formData.append("Password ", this.password);
+        formData.append("Password", this.password);
         formData.append("Email", this.email);
         formData.append("TeacherName", this.fullName);
-         formData.append("ShebaNumber", this.shebaNumber);
+        formData.append("ShebaNumber", this.shebaNumber);
         formData.append("CardNumber", this.cardNumber);
         formData.append("Address", this.address);
         formData.append("Description", this.aboutTeacher);

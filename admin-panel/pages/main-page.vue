@@ -389,15 +389,15 @@ export default {
 
       // ads
       ShegeftBannerName: "",
-      ShegeftBanner: "",
+      ShegeftBanner: null,
       mahboobBannerName: "",
-      mahboobBanner: "",
+      mahboobBanner: null,
       bazdidBannerName: "",
-      bazdidBanner: "",
+      bazdidBanner: null,
       jadidBannerName: "",
-      jadidBanner: "",
+      jadidBanner: null,
       packageBannerName: "",
-      packageBanner: "",
+      packageBanner: null,
     };
   },
   mounted() {
@@ -550,6 +550,16 @@ export default {
           confirmButtonText: "تایید",
         });
         this.getSiteAds();
+        this.ShegeftBannerName = "";
+        this.ShegeftBanner = null;
+        this.mahboobBannerName = "";
+        this.mahboobBanner = null;
+        this.bazdidBannerName = "";
+        this.bazdidBanner = null;
+        this.jadidBannerName = "";
+        this.jadidBanner = null;
+        this.packageBannerName = "";
+        this.packageBanner = null;
         this.$store.commit("selectedCourses/CLEAR_SELECTED");
       }
     },
@@ -594,6 +604,7 @@ export default {
           confirmButtonText: "تایید",
         });
       }
+      null;
     },
   },
   watch: {

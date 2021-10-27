@@ -357,6 +357,7 @@ export default {
             showCloseButton: true,
             confirmButtonText: "تایید",
           });
+          this.membersDetail();
           this.resetData();
         }
       } else {

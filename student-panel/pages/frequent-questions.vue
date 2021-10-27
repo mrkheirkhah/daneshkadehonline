@@ -136,6 +136,18 @@ import skeleton from "@/components/skeleto-creator";
 export default {
   components: { skeleton },
   layout: "mainPages",
+  head() {
+    return {
+      title: "شروع آموزش - راهنمای کامل شرکت در دوره های دانشکده انلاین",
+      meta: [
+        {
+          hid: "description",
+          content:
+            "دانشکده آنلاین چطور کار میکند ؟ چطور باید در دوره شرکت کنم ؟ اشتراک ها چند روز هستند ؟ پاسخ به تمامی سوالات شما عزیزان | دانشکده انلاین",
+        },
+      ],
+    };
+  },
   data() {
     return {
       pageData: "",

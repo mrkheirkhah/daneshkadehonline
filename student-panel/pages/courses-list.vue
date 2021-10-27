@@ -321,6 +321,18 @@ import skeleton from "@/components/skeleto-creator";
 export default {
   components: { skeleton },
   layout: "mainPages",
+  head() {
+    return {
+      title: "کامل ترین مجموعه آموزش آنلاین بر پایه اشتراک هفتگی | دانشکده آنلاین",
+      meta: [
+        {
+          hid: "description",
+          content:
+            "مجموعه ای کامل از بروز ترین آموزش ها و با کیفیت ترین محتوا در ایران ، آموزش های برنامه نویسی ، ارز دیجیتال و بازار های مالی ، یادگیری زبان های خارجی به صورت حرفه ایی و تخصصی بر پایه اشتراک هفتگی | دانشکده آنلاین",
+        },
+      ],
+    };
+  },
   data() {
     return {
       courseItems: "",
