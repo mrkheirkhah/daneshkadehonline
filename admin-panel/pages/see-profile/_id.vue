@@ -389,20 +389,19 @@
         </header>
         <form action="#" class="specialties">
           <ul>
-            <li v-for="degre in teacherDegres" :key="degre.id">
+            <li>
               <span class="info">
                 <img
-                  :src="'data:image/png;base64,' + degre.educationBase64"
+                  v-if="educationImageBase64 != ''"
+                  :src="'data:image/png;base64,' + educationImageBase64"
                   tabindex="-1"
                   alt="عکس تخصص"
                 />
-                <span>{{ degre.educationName }}</span>
+                <span>{{ selectedEducationName }}</span>
               </span>
-              <span class="options" v-if="degre.isAccepted == false">
-                <button class="reject" @click.prevent="denyDegre(degre.id)">حذف</button>
-                <button class="confirm" @click.prevent="acceptDegre(degre.id)">
-                  تائید
-                </button>
+              <span class="options" v-if="educationIsAccepted == false">
+                <button class="reject" @click.prevent="degreStatus(false)">حذف</button>
+                <button class="confirm" @click.prevent="degreStatus(true)">تائید</button>
               </span>
               <span v-else> تایید شده !</span>
             </li>
@@ -448,6 +447,9 @@ export default {
       selectedCourseGroupsNames: [],
       cropped: "",
       profImageFile: undefined,
+      selectedEducationName: "",
+      educationImageBase64: "",
+      educationIsAccepted: "",
     };
   },
   async beforeMount() {
@@ -459,6 +461,7 @@ export default {
         },
       }
     );
+    // console.log(degre);
     for (const n of degre.data.data) {
       this.degres.push({ title: n.title, id: n.id });
     }
@@ -479,20 +482,21 @@ export default {
         "/api/Public/ProfileActions/GetAllCourseGroups"
       );
       this.courseGroups = groups.data.data;
-      // console.log(getTeacherProfile);
+      console.log(getTeacherProfile);
       const teacherProfile = getTeacherProfile.data.data;
-      // this.degreeEducationId = teacherProfile.degreeEducationId;
-      // for (const n of this.degres) {
-      //   if (teacherProfile.degreeEducationId === n.id) {
-      //     this.degre = n.title;
-      //   }
-      // }
+      this.educationId = teacherProfile.educationId;
+      this.educationIsAccepted = teacherProfile.educationIsAccepted;
+      this.educationImageBase64 = teacherProfile.educationImageBase64;
+      for (const n of this.degres) {
+        if (teacherProfile.educationId === n.id) {
+          this.selectedEducationName = n.title;
+        }
+      }
       this.selectedCourseGroups = teacherProfile.groupIds;
       this.aboutTeacher = getTeacherProfile.data.data.description;
       this.address = teacherProfile.address;
       this.cardNumber = teacherProfile.cardNumber;
       this.email = teacherProfile.email;
-      this.educationId = teacherProfile.educationId;
       this.nationalCardNumber = teacherProfile.nationalCardNumber;
       this.phoneNumber = teacherProfile.phoneNumber;
       this.shebaNumber = teacherProfile.shebaNumber;
@@ -606,7 +610,7 @@ export default {
       if (type == "accept") {
         let formData = new FormData();
         formData.append("TeacherId", this.$route.params.id);
-        // formData.append("EducationId", this.educationId);
+        formData.append("EducationId", this.educationId);
         formData.append("ProfileImage", this.profImageFile);
         formData.append("NationalCardImage", this.nationalCardImageBase64);
         for (let i = 0; i < this.selectedCourseGroups.length; i++) {
@@ -673,9 +677,9 @@ export default {
         });
       }
     },
-    async acceptDegre(id) {
+    async degreStatus(type) {
       const acceptDegreResp = await this.$axios.get(
-        `/api/Admin/AdminManageTeacher/TeacherEducationAccept/${id}`,
+        `/api/Admin/AdminManageTeacher/ChangeAcceptEducation/${this.$route.params.id}?isAccepted=${type}`,
         {
           headers: {
             Authorization: `Bearer ${this.$cookies.get("key")}`,
@@ -685,22 +689,6 @@ export default {
       if (
         acceptDegreResp.data.statusCode == 200 &&
         acceptDegreResp.data.message == "Success"
-      ) {
-        this.getTeacherDegres();
-      }
-    },
-    async denyDegre(id) {
-      const denyDegreResp = await this.$axios.get(
-        `/api/Admin/AdminManageTeacher/RemoveTeacherEducation/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
-        }
-      );
-      if (
-        denyDegreResp.data.statusCode == 200 &&
-        denyDegreResp.data.message == "Success"
       ) {
         this.getTeacherDegres();
       }
