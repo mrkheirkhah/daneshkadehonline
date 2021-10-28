@@ -260,9 +260,9 @@
                 <li
                   v-for="option in subTwoGroup"
                   :key="option.index"
-                  @click="chooseSubTwoGroup"
+                  @click="chooseSubTwoGroup($event, option.id)"
                 >
-                  {{ option.title }}
+                  {{ option.groupTitle }}
                 </li>
               </ul>
             </label>

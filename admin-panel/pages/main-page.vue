@@ -389,15 +389,15 @@ export default {
 
       // ads
       ShegeftBannerName: "",
-      ShegeftBanner: null,
+      ShegeftBanner: undefined,
       mahboobBannerName: "",
-      mahboobBanner: null,
+      mahboobBanner: undefined,
       bazdidBannerName: "",
-      bazdidBanner: null,
+      bazdidBanner: undefined,
       jadidBannerName: "",
-      jadidBanner: null,
+      jadidBanner: undefined,
       packageBannerName: "",
-      packageBanner: null,
+      packageBanner: undefined,
     };
   },
   mounted() {
@@ -520,10 +520,18 @@ export default {
       let formData = new FormData();
       formData.append("AmazingImage", this.ShegeftBanner);
       formData.append("AmazingIsActive", this.shegeftRadio);
-      formData.append(
-        "SelectedAmazingCourses",
-        JSON.stringify(this.$store.state.selectedCourses.selectedCourses)
-      );
+      if (this.$store.state.selectedCourses.selectedCourses.length > 0) {
+        for (
+          let i = 0;
+          i < this.$store.state.selectedCourses.selectedCourses.length;
+          i++
+        ) {
+          formData.append(
+            "SelectedAmazingCourses",
+            this.$store.state.selectedCourses.selectedCourses[i]
+          );
+        }
+      }
       formData.append("FavoriteImage", this.mahboobBanner);
       formData.append("FavoriteIsActive", this.mahboobRadio);
       formData.append("NewestImage", this.jadidBanner);
@@ -551,15 +559,15 @@ export default {
         });
         this.getSiteAds();
         this.ShegeftBannerName = "";
-        this.ShegeftBanner = null;
+        this.ShegeftBanner = undefined;
         this.mahboobBannerName = "";
-        this.mahboobBanner = null;
+        this.mahboobBanner = undefined;
         this.bazdidBannerName = "";
-        this.bazdidBanner = null;
+        this.bazdidBanner = undefined;
         this.jadidBannerName = "";
-        this.jadidBanner = null;
+        this.jadidBanner = undefined;
         this.packageBannerName = "";
-        this.packageBanner = null;
+        this.packageBanner = undefined;
         this.$store.commit("selectedCourses/CLEAR_SELECTED");
       }
     },

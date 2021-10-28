@@ -30,7 +30,7 @@
               type="tell"
               class="form-input"
               v-model="phoneNumber"
-              placeholder="شماره موبایل"
+              placeholder="*شماره موبایل"
               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
               maxlength="11"
               autocomplete="off"
@@ -92,7 +92,7 @@
             <input
               type="password"
               class="form-input"
-              placeholder="رمز عبور"
+              placeholder="*رمز عبور"
               v-model="password"
               autocomplete="off"
             />
@@ -181,7 +181,7 @@
             <input
               type="text"
               class="form-input"
-              placeholder="نام و نام خانوادگی"
+              placeholder="*نام و نام خانوادگی"
               v-model="fullName"
             />
           </label>
@@ -212,7 +212,7 @@
             <input
               type="number"
               class="form-input has-cover-btn"
-              placeholder="کد ملی"
+              placeholder="*کد ملی"
               v-model="nationalCardNumber"
             />
           </label>
@@ -442,7 +442,6 @@ export default {
         this.profImageFile = new File([this.cropped], this.profImageName, {
           type: "image/png",
         });
-        // console.log(this.profImageFile);
       }
       if (
         this.phoneNumber != "" &&
