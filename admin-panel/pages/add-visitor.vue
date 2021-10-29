@@ -354,17 +354,30 @@ export default {
       this.visitors = visitors.data.data;
     },
     croppie(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.profImageName = e.target.files[0].name;
-      var reader = new FileReader();
-      reader.onload = (e) => {
-        this.$refs.croppieRef.bind({
-          url: e.target.result,
-        });
-      };
+      try {
+        if (e.target.files[0].type != "image/png") {
+          this.$swal({
+            text: "لطفا عکس با فرمت png انتخاب کنید!",
+            icon: "error",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          });
+        } else {
+          var files = e.target.files || e.dataTransfer.files;
+          if (!files.length) return;
+          this.profImageName = e.target.files[0].name;
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            this.$refs.croppieRef.bind({
+              url: e.target.result,
+            });
+          };
 
-      reader.readAsDataURL(files[0]);
+          reader.readAsDataURL(files[0]);
+        }
+      } catch {
+        return;
+      }
     },
     crop() {
       // Options can be updated.

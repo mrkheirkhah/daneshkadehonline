@@ -144,53 +144,70 @@ export default {
     async uploadVideo() {
       var formData = new FormData();
       var imagefile = document.querySelector("#upload-course-parts");
-      if (this.videoTitle == "" || this.videoTime == "" || this.episodeName == "") {
+      if (imagefile.files[0].type != "video/mp4") {
         this.$swal({
-          text: "اطلاعات ناقص است",
+          text: "لطفا ویدیو با فرمت mp4 انتخاب کنید!",
           icon: "error",
           showCloseButton: true,
           confirmButtonText: "ادامه",
         });
+        this.episodeName = "";
       } else {
-        formData.append("courseId", this.$route.params.id);
-        formData.append("EpisodeTitle", this.videoTitle);
-        formData.append("EpisodeTime", this.videoTime);
-        formData.append("EpisodeVideo", imagefile.files[0]);
-        formData.append("IsFree", this.isFree);
-        const uploadResponse = await this.$axios.post(
-          "/api/Teacher/TeacherCourse/AddCourseEpisode",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
-            onUploadProgress: function (progressEvent) {
-              this.uploadPercentage = parseInt(
-                Math.round((progressEvent.loaded / progressEvent.total) * 100)
-              );
-            }.bind(this),
-          }
-        );
-        if (
-          uploadResponse.data.statusCode == 200 &&
-          uploadResponse.data.message == "Success"
-        ) {
+        if (this.videoTitle == "" || this.videoTime == "" || this.episodeName == "") {
           this.$swal({
-            text: "آپلود شد!",
-            icon: "success",
+            text: "اطلاعات ناقص است",
+            icon: "error",
             showCloseButton: true,
             confirmButtonText: "ادامه",
-          }).then(() => {
-            this.episodId = "";
-            this.videoTitle = "";
-            this.videoTime = "";
-            this.uploadedPart = "";
-            this.episodeName = "";
-            this.isFree = false;
-            this.uploadPercentage = "";
-            this.getVideos();
           });
+        } else {
+          formData.append("courseId", this.$route.params.id);
+          formData.append("EpisodeTitle", this.videoTitle);
+          formData.append("EpisodeTime", this.videoTime);
+          formData.append("EpisodeVideo", imagefile.files[0]);
+          formData.append("IsFree", this.isFree);
+          const uploadResponse = await this.$axios.post(
+            "/api/Teacher/TeacherCourse/AddCourseEpisode",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${this.$cookies.get("key")}`,
+              },
+              onUploadProgress: function (progressEvent) {
+                this.uploadPercentage = parseInt(
+                  Math.round((progressEvent.loaded / progressEvent.total) * 100)
+                );
+              }.bind(this),
+            }
+          );
+          if (
+            uploadResponse.data.statusCode == 200 &&
+            uploadResponse.data.message == "Success"
+          ) {
+            this.$swal({
+              text: "آپلود شد!",
+              icon: "success",
+              showCloseButton: true,
+              confirmButtonText: "ادامه",
+            }).then(() => {
+              this.episodId = "";
+              this.videoTitle = "";
+              this.videoTime = "";
+              this.uploadedPart = "";
+              this.episodeName = "";
+              this.isFree = false;
+              this.uploadPercentage = "";
+              this.getVideos();
+            });
+          } else if (uploadResponse.data.statusCode == 400) {
+            this.$swal({
+              text: "اطلاعات وارد شده صحیح نیست",
+              icon: "error",
+              showCloseButton: true,
+              confirmButtonText: "ادامه",
+            });
+          }
         }
       }
     },
@@ -225,60 +242,70 @@ export default {
     async submitEditEpisode() {
       var formData = new FormData();
       var imagefile = document.querySelector("#upload-course-parts");
-      if (this.videoTitle == "" || this.videoTime == "") {
+      if (imagefile.files[0].type != "video/mp4") {
         this.$swal({
-          text: "اطلاعات ناقص است",
+          text: "لطفا ویدیو با فرمت mp4 انتخاب کنید!",
           icon: "error",
           showCloseButton: true,
           confirmButtonText: "ادامه",
         });
+        this.episodeName = "";
       } else {
-        formData.append("episodeId", this.episodId);
-        formData.append("EpisodeTitle", this.videoTitle);
-        formData.append("EpisodeTime", this.videoTime);
-        formData.append("EpisodeVideo", imagefile.files[0]);
-        formData.append("IsFree", this.isFree);
-        const editEpisodeResponse = await this.$axios.post(
-          `/api/Teacher/TeacherCourse/EditCourseEpisode`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
-            onUploadProgress: function (progressEvent) {
-              this.uploadPercentage = parseInt(
-                Math.round((progressEvent.loaded / progressEvent.total) * 100)
-              );
-            }.bind(this),
-          }
-        );
-        if (
-          editEpisodeResponse.data.statusCode == 200 &&
-          editEpisodeResponse.data.message == "Success"
-        ) {
+        if (this.videoTitle == "" || this.videoTime == "") {
           this.$swal({
-            text: "آپلود شد!",
-            icon: "success",
-            showCloseButton: true,
-            confirmButtonText: "ادامه",
-          }).then(() => {
-            this.getVideos();
-            this.episodId = "";
-            this.videoTitle = "";
-            this.videoTime = "";
-            this.uploadedPart = "";
-            this.uploadPercentage = "";
-            this.edit = false;
-            this.isFree = false;
-          });
-        } else {
-          this.$swal({
-            text: "مشکلی رخ داده است!لطفا بعدا دوباره تلاش کنید",
+            text: "اطلاعات ناقص است",
             icon: "error",
             showCloseButton: true,
             confirmButtonText: "ادامه",
           });
+        } else {
+          formData.append("episodeId", this.episodId);
+          formData.append("EpisodeTitle", this.videoTitle);
+          formData.append("EpisodeTime", this.videoTime);
+          formData.append("EpisodeVideo", imagefile.files[0]);
+          formData.append("IsFree", this.isFree);
+          const editEpisodeResponse = await this.$axios.post(
+            `/api/Teacher/TeacherCourse/EditCourseEpisode`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${this.$cookies.get("key")}`,
+              },
+              onUploadProgress: function (progressEvent) {
+                this.uploadPercentage = parseInt(
+                  Math.round((progressEvent.loaded / progressEvent.total) * 100)
+                );
+              }.bind(this),
+            }
+          );
+          if (
+            editEpisodeResponse.data.statusCode == 200 &&
+            editEpisodeResponse.data.message == "Success"
+          ) {
+            this.$swal({
+              text: "آپلود شد!",
+              icon: "success",
+              showCloseButton: true,
+              confirmButtonText: "ادامه",
+            }).then(() => {
+              this.getVideos();
+              this.episodId = "";
+              this.videoTitle = "";
+              this.videoTime = "";
+              this.uploadedPart = "";
+              this.uploadPercentage = "";
+              this.edit = false;
+              this.isFree = false;
+            });
+          } else if (editEpisodeResponse.data.statusCode == 400) {
+            this.$swal({
+              text: "اطلاعات وارد شده صحیح نیست",
+              icon: "error",
+              showCloseButton: true,
+              confirmButtonText: "ادامه",
+            });
+          }
         }
       }
     },

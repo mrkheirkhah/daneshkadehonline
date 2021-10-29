@@ -594,7 +594,7 @@ export default {
       selectedCourseGroups: [],
       selectedDegreGroupImage: "",
       selectedCourseGroupsNames: [],
-      profImageFile:undefined
+      profImageFile: undefined,
     };
   },
   methods: {
@@ -656,17 +656,30 @@ export default {
       }
     },
     croppie(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.tempProfImage = e.target.files[0].name;
-      var reader = new FileReader();
-      reader.onload = (e) => {
-        this.$refs.croppieRef.bind({
-          url: e.target.result,
-        });
-      };
-      reader.readAsDataURL(files[0]);
-      this.selectProfImg();
+      try {
+        if (e.target.files[0].type != "image/png") {
+          this.$swal({
+            text: "لطفا عکس با فرمت png انتخاب کنید!",
+            icon: "error",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          });
+        } else {
+          var files = e.target.files || e.dataTransfer.files;
+          if (!files.length) return;
+          this.tempProfImage = e.target.files[0].name;
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            this.$refs.croppieRef.bind({
+              url: e.target.result,
+            });
+          };
+          reader.readAsDataURL(files[0]);
+          this.selectProfImg();
+        }
+      } catch {
+        return;
+      }
     },
     crop() {
       // Options can be updated.

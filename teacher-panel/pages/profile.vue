@@ -414,18 +414,31 @@ export default {
       } catch {}
     },
     croppie(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      this.profImageName = e.target.files[0].name;
-      if (!files.length) return;
+      try {
+        if (e.target.files[0].type != "image/png") {
+          this.$swal({
+            text: "لطفا عکس با فرمت png انتخاب کنید!",
+            icon: "error",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          });
+        } else {
+          var files = e.target.files || e.dataTransfer.files;
+          this.profImageName = e.target.files[0].name;
+          if (!files.length) return;
 
-      var reader = new FileReader();
-      reader.onload = (e) => {
-        this.$refs.croppieRef.bind({
-          url: e.target.result,
-        });
-      };
-      reader.readAsDataURL(files[0]);
-      this.selectProfImg();
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            this.$refs.croppieRef.bind({
+              url: e.target.result,
+            });
+          };
+          reader.readAsDataURL(files[0]);
+          this.selectProfImg();
+        }
+      } catch {
+        return;
+      }
     },
     crop() {
       // Options can be updated.
