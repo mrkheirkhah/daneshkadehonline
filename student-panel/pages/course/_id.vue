@@ -832,7 +832,6 @@
               <vue-plyr v-if="courseEpisodes.length > 0">
                 <video
                   controls
-                  :key="componentKey"
                   crossorigin
                   playsinline
                   :data-poster="
@@ -840,7 +839,7 @@
                     courseDetail.imageName
                   "
                 >
-                  <source id="videoSrc" src="" type="video/mp4" />
+                  <source id="videoSrc" src="/Countdown.mp4" type="video/mp4" />
                 </video>
               </vue-plyr>
               <!-- </client-only> -->
@@ -1975,10 +1974,10 @@ export default {
       }
     },
     seeVideo(id) {
+      // this.componentKey += 1;
       this.seeThisVideo = id;
       var player = document.querySelector("#videoSrc");
       player.src = "https://api.daneshkadeonline.ir/Course/Video/" + id;
-      this.componentKey += 1;
       var videoPlayer = document.querySelector("video");
       videoPlayer.load();
     },
