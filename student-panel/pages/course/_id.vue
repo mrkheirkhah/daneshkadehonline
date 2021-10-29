@@ -848,6 +848,7 @@
                   class="course-part"
                   v-for="episode in courseEpisodes"
                   :key="courseEpisodes.indexOf(episode)"
+                  style="cursor: pointer"
                   @click="
                     episode.isFree || item1 == 1
                       ? seeVideo(episode.episodeId)
