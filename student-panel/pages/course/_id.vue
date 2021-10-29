@@ -831,8 +831,8 @@
                 </div> -->
               <vue-plyr v-if="courseEpisodes.length > 0">
                 <video
-                  v-if="videoLoading"
                   controls
+                  :key="componentKey"
                   crossorigin
                   playsinline
                   :data-poster="
@@ -1608,6 +1608,7 @@ export default {
       studentIsLogin: false,
       videoEpisode: "6",
       videoLoading: true,
+      componentKey: 0,
       // comment
       commentName: "",
       commentEmail: "",
@@ -1974,13 +1975,12 @@ export default {
       }
     },
     seeVideo(id) {
-      this.videoLoading = false;
       this.seeThisVideo = id;
       var player = document.querySelector("#videoSrc");
       player.src = "https://api.daneshkadeonline.ir/Course/Video/" + id;
-      this.videoLoading = true;
-      // var videoPlayer = document.querySelector("video");
-      // videoPlayer.load();
+      this.componentKey += 1;
+      var videoPlayer = document.querySelector("video");
+      videoPlayer.load();
     },
     async downloadAttachAudio(id) {
       var audioresp = await this.$axios.get(

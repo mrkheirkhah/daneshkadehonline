@@ -30,7 +30,7 @@
               type="tell"
               class="form-input"
               v-model="phoneNumber"
-              placeholder="*شماره موبایل"
+              placeholder="شماره موبایل*"
               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
               maxlength="11"
               autocomplete="off"
@@ -44,7 +44,8 @@
           <div class="form-row-col darken-color">
             <div class="separator pseudo-form-input">
               <input type="file" id="upload-profile-image" accept="image/*" />
-              <span>بارگذاری تصویر پروفایل</span>
+              <span v-if="profImageName == ''">بارگذاری تصویر پروفایل</span>
+              <span v-else>{{ profImageName }}</span>
               <span>
                 <label
                   data-related-file="upload-profile-image"
@@ -92,7 +93,7 @@
             <input
               type="password"
               class="form-input"
-              placeholder="*رمز عبور"
+              placeholder="رمز عبور*"
               v-model="password"
               autocomplete="off"
             />
@@ -181,7 +182,7 @@
             <input
               type="text"
               class="form-input"
-              placeholder="*نام و نام خانوادگی"
+              placeholder="نام و نام خانوادگی*"
               v-model="fullName"
             />
           </label>
@@ -212,7 +213,7 @@
             <input
               type="number"
               class="form-input has-cover-btn"
-              placeholder="*کد ملی"
+              placeholder="کد ملی*"
               v-model="nationalCardNumber"
             />
           </label>
@@ -403,17 +404,30 @@ export default {
       event.target.closest(".floated-list-container").classList.toggle("show");
     },
     croppie(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.profImageName = e.target.files[0].name;
-      var reader = new FileReader();
-      reader.onload = (e) => {
-        this.$refs.croppieRef.bind({
-          url: e.target.result,
-        });
-      };
+      try {
+        if (e.target.files[0].type != "image/png") {
+          this.$swal({
+            text: "لطفا عکس با فرمت png انتخاب کنید!",
+            icon: "error",
+            showCloseButton: true,
+            confirmButtonText: "تایید",
+          });
+        } else {
+          var files = e.target.files || e.dataTransfer.files;
+          if (!files.length) return;
+          this.profImageName = e.target.files[0].name;
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            this.$refs.croppieRef.bind({
+              url: e.target.result,
+            });
+          };
 
-      reader.readAsDataURL(files[0]);
+          reader.readAsDataURL(files[0]);
+        }
+      } catch {
+        return;
+      }
     },
     crop() {
       // Options can be updated.
@@ -425,7 +439,6 @@ export default {
       };
       this.$refs.croppieRef.result(options, (output) => {
         this.cropped = output;
-        // console.log(this.cropped);
       });
     },
     selectProfImg() {
@@ -434,7 +447,6 @@ export default {
     uploadNCImg(event) {
       try {
         this.selectedNCImage = event.target.files[0];
-        // console.log(this.selectedNCImage);
       } catch {}
     },
     async addTeacher() {

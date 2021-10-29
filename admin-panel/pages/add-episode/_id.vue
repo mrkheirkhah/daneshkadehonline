@@ -187,55 +187,71 @@ export default {
     async uploadVideo() {
       let formData = new FormData();
       const imagefile = document.querySelector("#upload-course-parts");
-
-      if (this.videoTitle == "" || this.videoTime == "" || this.videoPartName == "") {
+      if (imagefile.files[0].type != "video/mp4") {
         this.$swal({
-          text: "اطلاعات ناقص است",
+          text: "لطفا ویدیو با فرمت mp4 انتخاب کنید!",
           icon: "error",
           showCloseButton: true,
           confirmButtonText: "ادامه",
         });
+        this.videoPartName = "";
       } else {
-        formData.append("CourseId", this.$route.params.id);
-        formData.append("EpisodeTitle", this.videoTitle);
-        formData.append("EpisodeTime", this.videoTime);
-        formData.append("EpisodeVideo", imagefile.files[0]);
-        formData.append("IsFree", this.isFree);
-
-        const uploadResponse = await this.$axios.post(
-          "/api/Admin/AdminCourse/AddCourseEpisode",
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-              "Content-Type": "multipart/form-data",
-            },
-            onUploadProgress: function (progressEvent) {
-              this.uploadPercentage = parseInt(
-                Math.round((progressEvent.loaded / progressEvent.total) * 100)
-              );
-            }.bind(this),
-          }
-        );
-        if (
-          uploadResponse.data.statusCode == 200 &&
-          uploadResponse.data.message == "Success"
-        ) {
+        if (this.videoTitle == "" || this.videoTime == "" || this.videoPartName == "") {
           this.$swal({
-            text: "آپلود شد!",
-            icon: "success",
+            text: "اطلاعات ناقص است",
+            icon: "error",
             showCloseButton: true,
             confirmButtonText: "ادامه",
-          }).then(() => {
-            this.getVideos();
-            this.videoPartName = "";
-            this.episodId = "";
-            this.videoTitle = "";
-            this.videoTime = "";
-            this.uploadedPart = "";
-            this.uploadPercentage = "";
-            this.isFree = false;
           });
+        } else {
+          formData.append("CourseId", this.$route.params.id);
+          formData.append("EpisodeTitle", this.videoTitle);
+          formData.append("EpisodeTime", this.videoTime);
+          formData.append("EpisodeVideo", imagefile.files[0]);
+          formData.append("IsFree", this.isFree);
+
+          const uploadResponse = await this.$axios.post(
+            "/api/Admin/AdminCourse/AddCourseEpisode",
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${this.$cookies.get("key")}`,
+                "Content-Type": "multipart/form-data",
+              },
+              onUploadProgress: function (progressEvent) {
+                this.uploadPercentage = parseInt(
+                  Math.round((progressEvent.loaded / progressEvent.total) * 100)
+                );
+              }.bind(this),
+            }
+          );
+          if (
+            uploadResponse.data.statusCode == 200 &&
+            uploadResponse.data.message == "Success"
+          ) {
+            this.$swal({
+              text: "آپلود شد!",
+              icon: "success",
+              showCloseButton: true,
+              confirmButtonText: "ادامه",
+            }).then(() => {
+              this.getVideos();
+              this.videoPartName = "";
+              this.episodId = "";
+              this.videoTitle = "";
+              this.videoTime = "";
+              this.uploadedPart = "";
+              this.uploadPercentage = "";
+              this.isFree = false;
+            });
+          } else if (uploadResponse.data.statusCode == 400) {
+            this.$swal({
+              text: "اطلاعات وارد شده صحیح نیست",
+              icon: "error",
+              showCloseButton: true,
+              confirmButtonText: "ادامه",
+            });
+          }
         }
       }
     },
@@ -270,6 +286,7 @@ export default {
     async submitEditEpisode() {
       var formData = new FormData();
       var imagefile = document.querySelector("#upload-course-parts");
+
       if (this.videoTitle == "" || this.videoTime == "") {
         this.$swal({
           text: "اطلاعات ناقص است",
