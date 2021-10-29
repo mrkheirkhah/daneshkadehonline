@@ -832,6 +832,7 @@
               <vue-plyr v-if="courseEpisodes.length > 0">
                 <video
                   controls
+                  :key="componentKey"
                   crossorigin
                   playsinline
                   :data-poster="
@@ -839,7 +840,7 @@
                     courseDetail.imageName
                   "
                 >
-                  <source id="videoSrc" src="/Countdown.mp4" type="video/mp4" />
+                  <source id="videoSrc" :src="episodeVideoSrc" type="video/mp4" />
                 </video>
               </vue-plyr>
               <!-- </client-only> -->
@@ -1609,6 +1610,7 @@ export default {
       videoEpisode: "6",
       videoLoading: true,
       componentKey: 0,
+      episodeVideoSrc: "",
       // comment
       commentName: "",
       commentEmail: "",
@@ -1975,12 +1977,13 @@ export default {
       }
     },
     seeVideo(id) {
-      // this.componentKey += 1;
+      this.componentKey += 1;
       this.seeThisVideo = id;
-      var player = document.querySelector("#videoSrc");
-      player.src = "https://api.daneshkadeonline.ir/Course/Video/" + id;
-      var videoPlayer = document.querySelector("video");
-      videoPlayer.load();
+      // var player = document.querySelector("#videoSrc");
+      this.episodeVideoSrc = "https://api.daneshkadeonline.ir/Course/Video/" + id;
+      // player.src = "https://api.daneshkadeonline.ir/Course/Video/" + id;
+      // var videoPlayer = document.querySelector("video");
+      // videoPlayer.load();
     },
     async downloadAttachAudio(id) {
       var audioresp = await this.$axios.get(
