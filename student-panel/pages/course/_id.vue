@@ -829,24 +829,21 @@
                     </div>
                   </div>
                 </div> -->
-              <vue-plyr v-if="courseEpisodes.length > 0">
-                <video
-                  controls
-                  crossorigin
-                  playsinline
-                  :data-poster="
-                    'https://api.daneshkadeonline.ir/Images/Public/Course/' +
-                    courseDetail.imageName
-                  "
-                >
-                  <source
-                    id="videoSrc"
-                    :key="componentKey"
-                    :src="episodeVideoSrc"
-                    type="video/mp4"
-                  />
-                </video>
-              </vue-plyr>
+              <div v-if="videoLoading">
+                <vue-plyr v-if="courseEpisodes.length > 0">
+                  <video
+                    controls
+                    crossorigin
+                    playsinline
+                    :data-poster="
+                      'https://api.daneshkadeonline.ir/Images/Public/Course/' +
+                      courseDetail.imageName
+                    "
+                  >
+                    <source id="videoSrc" :src="episodeVideoSrc" type="video/mp4" />
+                  </video>
+                </vue-plyr>
+              </div>
               <!-- </client-only> -->
               <div class="course-parts">
                 <button
@@ -1982,9 +1979,14 @@ export default {
     },
     seeVideo(id) {
       this.seeThisVideo = id;
+      this.videoLoading = false;
       // var player = document.querySelector("#videoSrc");
       this.episodeVideoSrc = "https://api.daneshkadeonline.ir/Course/Video/" + id;
-      this.componentKey += 1;
+      this.$nextTick(() => {
+        // Add the component back in
+        this.videoLoading = true;
+      });
+      // this.componentKey += 1;
       // player.src = "https://api.daneshkadeonline.ir/Course/Video/" + id;
       // var videoPlayer = document.querySelector("video");
       // videoPlayer.load();

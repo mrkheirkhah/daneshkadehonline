@@ -310,6 +310,7 @@ export default {
       profImageName: "",
       selectedCourseGroupsNames: [],
       profImageFile: undefined,
+      profileType: "",
     };
   },
   async beforeMount() {
@@ -405,9 +406,10 @@ export default {
     },
     croppie(e) {
       try {
-        if (e.target.files[0].type != "image/png") {
+        var pattern = /image-*/;
+        if (!e.target.files[0].type.match(pattern)) {
           this.$swal({
-            text: "لطفا عکس با فرمت png انتخاب کنید!",
+            text: "لطفا عکس درست انتخاب کنید!",
             icon: "error",
             showCloseButton: true,
             confirmButtonText: "تایید",
@@ -416,6 +418,7 @@ export default {
           var files = e.target.files || e.dataTransfer.files;
           if (!files.length) return;
           this.profImageName = e.target.files[0].name;
+          this.profileType = e.target.files[0].type;
           var reader = new FileReader();
           reader.onload = (e) => {
             this.$refs.croppieRef.bind({
@@ -430,12 +433,12 @@ export default {
       }
     },
     crop() {
-      // Options can be updated.
-      // Current option will return a base64 version of the uploaded image with a size of 600px X 450px.
+      const lastDot = this.profileType.lastIndexOf("/");
+      const ext = this.profileType.substring(lastDot + 1);
       let options = {
         type: "blob",
         size: { width: 600, height: 600 },
-        format: "png",
+        format: ext,
       };
       this.$refs.croppieRef.result(options, (output) => {
         this.cropped = output;
@@ -452,7 +455,7 @@ export default {
     async addTeacher() {
       if (this.cropped != "") {
         this.profImageFile = new File([this.cropped], this.profImageName, {
-          type: "image/png",
+          type: this.profileType,
         });
       }
       if (
