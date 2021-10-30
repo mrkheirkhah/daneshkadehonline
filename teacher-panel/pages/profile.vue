@@ -282,6 +282,11 @@ export default {
   layout: "dashboardLay",
   middleware: "userIsNotLog",
   components: { dropdownInp, skeleton },
+  head() {
+    return {
+      title: "تنظیمات پروفایل",
+    };
+  },
   data() {
     return {
       cropped: null,

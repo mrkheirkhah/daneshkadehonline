@@ -74,6 +74,11 @@ export default {
   layout: "dashboard",
   middleware: "userIsNotLog",
   components: { sendByModal },
+  head() {
+    return {
+      title: "تغییر رمز عبور",
+    };
+  },
   data() {
     return {
       showSendLink: false,

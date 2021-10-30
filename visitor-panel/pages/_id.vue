@@ -437,6 +437,11 @@ export default {
   layout: "dashboardLay",
   middleware: "block",
   components: { barChart },
+  head() {
+    return {
+      title: "پنل ویزیتور",
+    };
+  },
   data() {
     return {
       buttonsData: "",
@@ -485,7 +490,6 @@ export default {
         const [homeData, chartDataApi, visitorBlock] = await Promise.all([
           this.getHomeData(),
           this.$axios.get(`/api/Visitor/VisitorHome/GetChart/${this.$route.params.id}/0`),
-          
         ]);
         let labels = [];
         let counts = [];

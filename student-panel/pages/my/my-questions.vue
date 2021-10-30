@@ -118,7 +118,7 @@
             <span class="question-state" v-else-if="question.status == 'Closed'">
               <nuxt-link
                 class="view-answer"
-                :to="'/my/question-response/'+question.questionId"
+                :to="'/my/question-response/' + question.questionId"
                 v-if="question.responseCount > 0"
               >
                 مشاهده پاسخ
@@ -428,6 +428,11 @@ export default {
   components: { skeleton },
   layout: "dashboard",
   middleware: "userIsNotLog",
+  head() {
+    return {
+      title: "لیست سوالات",
+    };
+  },
   data() {
     return {
       loading: false,

@@ -146,6 +146,11 @@ export default {
   layout: "dashboardLay",
   middleware: "userIsNotLog",
   components: { transactionsTableSkeleton },
+  head() {
+    return {
+      title: "تراکنش ها",
+    };
+  },
   data() {
     return {
       loading: true,

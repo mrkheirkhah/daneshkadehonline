@@ -140,6 +140,11 @@ export default {
   layout: "dashboardLay",
   components: { skeleton },
   middleware: "userIsNotLog",
+  head() {
+    return {
+      title: "برداشت از حساب",
+    };
+  },
   data() {
     return {
       loading: true,
@@ -184,7 +189,7 @@ export default {
       this.withdrawReq = Number(this.walletAmount);
     },
     async witdraw() {
-      if (this.withdrawReq <= Number(this.walletAmount)) {
+      if (Number(this.withdrawReq) <= Number(this.walletAmount)) {
         const withdrawResp = await this.$axios.post(
           `/api/Teacher/TeacherSettlementRequest/AddSettlementRequest?requestAmount=${withdrawReq}`
         );

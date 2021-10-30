@@ -162,6 +162,11 @@ export default {
   components: { skeleton },
   layout: "dashboard",
   middleware: "userIsNotLog",
+  head() {
+    return {
+      title: "دانلود دوره ها",
+    };
+  },
   data() {
     return {
       loading: true,

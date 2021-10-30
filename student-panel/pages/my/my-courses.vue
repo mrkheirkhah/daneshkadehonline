@@ -166,6 +166,11 @@ export default {
   components: { skeleton },
   layout: "dashboard",
   middleware: "userIsNotLog",
+  head() {
+    return {
+      title: "لیست دوره ها",
+    };
+  },
   data() {
     return {
       loading: true,

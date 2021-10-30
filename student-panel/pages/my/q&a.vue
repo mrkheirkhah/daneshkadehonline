@@ -235,6 +235,11 @@
 export default {
   layout: "dashboard",
   middleware: "userIsNotLog",
+  head() {
+    return {
+      title: "ایجاد پرسش",
+    };
+  },
   data() {
     return {
       courseDrop: "",

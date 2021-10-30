@@ -137,7 +137,7 @@ export default {
   middleware: "userIsLog",
   head() {
     return {
-      title: "register",
+      title: "ثبت نام",
     };
   },
   data() {

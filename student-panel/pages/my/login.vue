@@ -72,7 +72,7 @@ export default {
   },
   head() {
     return {
-      title: "login with number",
+      title: "ورود / ثبت نام",
       script: [
         {
           src: "https://trk.tablighdrive.com/pixel/init.action.js",

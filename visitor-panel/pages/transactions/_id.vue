@@ -35,6 +35,11 @@
 <script>
 export default {
   layout: "dashboardLay",
+  head() {
+    return {
+      title: "تراکنش ها",
+    };
+  },
   data() {
     return {
       transactions: "",

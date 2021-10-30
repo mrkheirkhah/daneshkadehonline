@@ -51,6 +51,11 @@
 <script>
 export default {
   layout: "dashboardLay",
+  head() {
+    return {
+      title: "برداشت از حساب",
+    };
+  },
   data() {
     return {
       wallet: "",

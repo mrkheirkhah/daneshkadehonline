@@ -189,6 +189,11 @@ export default {
   layout: "dashboardLay",
   middleware: "userIsNotLog",
   components: { barChart, skeleton, asideItemSkeleton },
+  head() {
+    return {
+      title: "پنل مدرس",
+    };
+  },
   data() {
     return {
       boxDetails: [],

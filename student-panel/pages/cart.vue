@@ -128,6 +128,11 @@
 export default {
   layout: "mainPages",
   middleware: "mainPage",
+  head() {
+    return {
+      title: "سبد خرید",
+    };
+  },
   data() {
     return {
       orders: "",

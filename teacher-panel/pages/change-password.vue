@@ -74,7 +74,7 @@ export default {
   layout: "dashboardLay",
   head() {
     return {
-      title: "Change Password",
+      title: "تغییر رمز عبور",
     };
   },
   data() {

@@ -277,6 +277,11 @@ export default {
   layout: "dashboardLay",
   middleware: "userIsNotLog",
   components: { skeleton },
+  head() {
+    return {
+      title: "ثبت کد تخفیف",
+    };
+  },
   data() {
     return {
       loading: true,

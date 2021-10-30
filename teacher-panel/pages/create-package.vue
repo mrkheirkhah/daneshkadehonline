@@ -234,6 +234,11 @@ export default {
   layout: "dashboardLay",
   middleware: "userIsNotLog",
   components: { skeleton },
+  head() {
+    return {
+      title: "درخواست پکیج",
+    };
+  },
   data() {
     return {
       degree: [],
@@ -324,7 +329,7 @@ export default {
             sectionsCount: n.sectionsCount,
             suggestionPrice: n.suggestionPrice,
             isAccepted: n.isAccepted,
-            reqDate: new Date(n.createDate).toLocaleDateString('fa-ir'),
+            reqDate: new Date(n.createDate).toLocaleDateString("fa-ir"),
           });
         }
       }

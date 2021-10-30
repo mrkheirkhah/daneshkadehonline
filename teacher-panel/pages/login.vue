@@ -76,7 +76,7 @@ export default {
   },
   head() {
     return {
-      title: "login",
+      title: "ثبت نام/ورود",
     };
   },
   methods: {

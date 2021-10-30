@@ -493,6 +493,11 @@ export default {
       }
     },
   },
+  head() {
+    return {
+      title: "دوره ها",
+    };
+  },
   data() {
     return {
       showAddPart: 0,

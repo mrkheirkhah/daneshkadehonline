@@ -37,6 +37,11 @@
 <script>
 export default {
   layout: "dashboardLay",
+  head() {
+    return {
+      title: "لیست درخواست تسویه",
+    };
+  },
   data() {
     return {
       settlements: "",

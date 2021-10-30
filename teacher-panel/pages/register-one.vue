@@ -565,6 +565,11 @@ export default {
     }
     // this.$intro().start();
   },
+  head() {
+    return {
+      title: "تکمیل پروفایل",
+    };
+  },
   data() {
     return {
       phoneNumber: "",

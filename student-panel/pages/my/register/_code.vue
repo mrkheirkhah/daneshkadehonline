@@ -106,7 +106,7 @@ export default {
   middleware: "userIsLog",
   head() {
     return {
-      title: "register",
+      title: "ثبت نام",
       script: [
         {
           src: "https://trk.tablighdrive.com/pixel/init.action.js",

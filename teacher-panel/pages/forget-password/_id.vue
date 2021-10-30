@@ -49,7 +49,7 @@ export default {
   },
   head() {
     return {
-      title: "Forget password",
+      title: "بازیابی رمز عبور",
     };
   },
   data() {

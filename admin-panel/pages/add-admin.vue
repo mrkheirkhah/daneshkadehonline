@@ -200,7 +200,7 @@ export default {
       password: "",
       adminName: "",
       email: "",
-      selectedRole: "",
+      selectedRole: null,
       roleDrop: "",
       submitType: "add",
       editThisId: "",
@@ -224,7 +224,7 @@ export default {
       this.password = "";
       this.adminName = "";
       this.email = "";
-      this.selectedRole = "";
+      this.selectedRole = null;
       this.roleDrop = "";
       this.editThisId = "";
       this.submitType = "add";
@@ -253,7 +253,7 @@ export default {
         this.newAdminPhotoBase64 != "" &&
         this.adminName.trim() != "" &&
         this.adminPhone != "" &&
-        this.selectedRole != "" &&
+        this.selectedRole != null &&
         this.nationalCardNumber != "" &&
         this.password != ""
       ) {

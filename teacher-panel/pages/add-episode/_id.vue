@@ -116,6 +116,11 @@
 export default {
   layout: "dashboardLay",
   middleware: "userIsNotLog",
+  head() {
+    return {
+      title: "افزودن قسمت ها",
+    };
+  },
   data() {
     return {
       videoTime: "",

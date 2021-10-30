@@ -367,6 +367,11 @@ export default {
   layout: "dashboardLay",
   middleware: "userIsNotLog",
   components: { skeleton, PersonMsgSkeleton },
+  head() {
+    return {
+      title: "اعلانات و سوالات",
+    };
+  },
   data() {
     return {
       showMsg: true,

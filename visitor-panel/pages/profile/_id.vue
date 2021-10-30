@@ -64,6 +64,11 @@ export default {
       profData: "",
     };
   },
+  head() {
+    return {
+      title: "پروفایل",
+    };
+  },
   async mounted() {
     if (this.$route.params.id == undefined) {
       // this.$router.push("/add-visitor");

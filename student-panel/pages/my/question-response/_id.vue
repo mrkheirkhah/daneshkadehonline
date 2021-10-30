@@ -308,6 +308,11 @@
 export default {
   layout: "dashboard",
   middleware: "userIsNotLog",
+  head() {
+    return {
+      title: "پرسش و پاسخ",
+    };
+  },
   data() {
     return {
       answers: "",

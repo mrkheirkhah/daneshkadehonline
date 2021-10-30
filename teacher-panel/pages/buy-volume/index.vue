@@ -81,6 +81,11 @@ export default {
   components: {
     skeleton,
   },
+  head() {
+    return {
+      title: "خرید حجم",
+    };
+  },
   data() {
     return {
       volumes: [],
@@ -88,7 +93,7 @@ export default {
     };
   },
   async mounted() {
-    if (Object.keys(this.$route.query).length!= 0) {
+    if (Object.keys(this.$route.query).length != 0) {
       const datac = await this.$axios.get(
         `/api/Payment/VerifyPaymentVolume?MID=${this.$route.query["MID"]}&RefNum=${this.$route.query["RefNum"]}&ResNum=${this.$route.query["ResNum"]}&State=${this.$route.query["State"]}&TraceNo=${this.$route.query["TraceNo"]}&Amount=${this.$route.query["Amount"]}&Rrn=${this.$route.query["Rrn"]}&SecurePan=${this.$route.query["SecurePan"]}&Status=${this.$route.query["Status"]}&Token=${this.$route.query["Token"]}&HashedCardNumber=${this.$route.query["HashedCardNumber"]}`,
         {
