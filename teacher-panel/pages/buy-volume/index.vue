@@ -94,8 +94,21 @@ export default {
   },
   async mounted() {
     if (Object.keys(this.$route.query).length != 0) {
-      const datac = await this.$axios.get(
-        `/api/Payment/VerifyPaymentVolume?MID=${this.$route.query["MID"]}&RefNum=${this.$route.query["RefNum"]}&ResNum=${this.$route.query["ResNum"]}&State=${this.$route.query["State"]}&TraceNo=${this.$route.query["TraceNo"]}&Amount=${this.$route.query["Amount"]}&Rrn=${this.$route.query["Rrn"]}&SecurePan=${this.$route.query["SecurePan"]}&Status=${this.$route.query["Status"]}&Token=${this.$route.query["Token"]}&HashedCardNumber=${this.$route.query["HashedCardNumber"]}`,
+      const datac = await this.$axios.post(
+        "/api/Payment/VerifyPaymentVolume",
+        {
+          mid: this.$route.query["MID"],
+          refNum: this.$route.query["RefNum"],
+          resNum: this.$route.query["ResNum"],
+          state: this.$route.query["State"],
+          traceNo: this.$route.query["TraceNo"],
+          amount: Number(this.$route.query["Amount"]),
+          rrn: this.$route.query["Rrn"],
+          securePan: this.$route.query["SecurePan"],
+          status: this.$route.query["Status"],
+          token: this.$route.query["Token"],
+          hashedCardNumber: this.$route.query["HashedCardNumber"],
+        },
         {
           headers: {
             Authorization: `Bearer ${this.$cookies.get("key")}`,

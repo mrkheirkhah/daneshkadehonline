@@ -389,7 +389,6 @@ export default {
   },
   methods: {
     goToPage(event) {
-      console.log(this.goTo);
       this.goTo = event.target.innerHTML;
     },
     seeCourse(id) {

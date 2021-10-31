@@ -218,7 +218,6 @@ export default {
     };
   },
   async mounted() {
-    this.getOrders();
     const groups = await this.$axios.get("/api/Public/ProfileActions/GetAllCourseGroups");
     this.groups = groups.data.data;
 
@@ -264,6 +263,9 @@ export default {
         this.studentIsLogin = false;
         this.$cookies.remove("refreshToken");
       }
+    }
+    if (this.studentIsLogin) {
+      this.getOrders();
     }
   },
   methods: {

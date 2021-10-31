@@ -1371,18 +1371,65 @@
                 </div>
               </div>
 
-              <footer class="indicators mt-4">
-                <a href="#" class="prev"
+              <footer
+                class="indicators mt-4"
+                v-if="questionFilters != '' && questionFilters.endPage != 0"
+              >
+                <a
+                  href=""
+                  type="button"
+                  class="prev"
+                  v-if="questionFilters.endPage > 1 && questionFilters.activePage != 1"
+                  @click.prevent="Number(goTo) > 1 ? (goTo = Number(goTo) - 1) : {}"
                   ><img
                     src="@/static/images/main-page-images/chevron-bottom.svg"
                     title="قبلی"
                     alt="قبلی"
                 /></a>
-                <a href="#" class="persian-number active">1</a>
-                <a href="#" class="persian-number">2</a>
-                <span>...</span>
-                <a href="#" class="persian-number">5</a>
-                <a href="#" class="next"
+                <a
+                  href=""
+                  type="button"
+                  class="persian-number"
+                  v-if="questionFilters.activePage > 1"
+                  @click.prevent="goToPage"
+                  >{{ Number(questionFilters.activePage) - 1 }}</a
+                >
+                <a href="" type="button" class="persian-number active">{{
+                  questionFilters.activePage
+                }}</a>
+                <a
+                  href=""
+                  type="button"
+                  @click.prevent="goToPage"
+                  class="persian-number"
+                  v-if="Number(questionFilters.activePage) + 1 < questionFilters.endPage"
+                  >{{ Number(questionFilters.activePage) + 1 }}</a
+                >
+                <span
+                  v-if="
+                    questionFilters.endPage > 4 &&
+                    Number(questionFilters.activePage) + 1 < questionFilters.endPage
+                  "
+                  >...</span
+                >
+                <a
+                  href=""
+                  type="button"
+                  class="persian-number"
+                  @click.prevent="goToPage"
+                  v-if="questionFilters.activePage != questionFilters.endPage"
+                  >{{ questionFilters.endPage }}</a
+                >
+                <a
+                  href=""
+                  type="button"
+                  class="next"
+                  v-if="questionFilters.endPage > 1"
+                  @click.prevent="
+                    Number(goTo) < questionFilters.endPage
+                      ? (goTo = Number(goTo) + 1)
+                      : {}
+                  "
                   ><img
                     src="@/static/images/main-page-images/chevron-bottom.svg"
                     title="بعدی"
@@ -1618,12 +1665,15 @@ export default {
       newCourses: "",
       courseEpisodes: "",
       commentGroups: [],
-      messageGroups: [],
       studentIsLogin: false,
       videoEpisode: "6",
       videoLoading: true,
       componentKey: 0,
       episodeVideoSrc: "",
+      // questions
+      messageGroups: [],
+      questionFilters: "",
+      goTo: "",
       // comment
       commentName: "",
       commentEmail: "",
@@ -1673,8 +1723,10 @@ export default {
         .split(",");
       this.courseDetail = course.data.data.detail;
       this.courseDescription =
-        course.data.data.detail.description.substring(0, 800) +
-        "<a href='' type='button' class='see-more'>... بیشتر<a>";
+        course.data.data.detail.description.length > 800
+          ? course.data.data.detail.description.substring(0, 800) +
+            "<a href='' type='button' class='see-more'>... بیشتر<a>"
+          : course.data.data.detail.description;
       this.detailBox = course.data.data.detailBox;
       this.teacherBox = course.data.data.teacherBox;
       this.relatedCourses = course.data.data.relatedCourses;
@@ -1788,6 +1840,7 @@ export default {
       var questions = await this.$axios.get(
         `/api/Course/GetQuestions?courseId=${this.$route.params.id}`
       );
+      this.questionFilters = questions.data.data.filters;
       for (var eachMessage of questions.data.data.questionItems) {
         if (eachMessage.parentId == null) {
           var group = [];
@@ -1803,6 +1856,9 @@ export default {
           }
         }
       }
+    },
+    goToPage(event) {
+      this.goTo = event.target.innerHTML;
     },
     async IsUserInCourse() {
       var userInCourseResp = await this.$axios.get(
@@ -2152,7 +2208,33 @@ export default {
       }
     },
   },
-  watch: {},
+  watch: {
+    goTo: {
+      async handler() {
+        this.messageGroups = [];
+        var questions = await this.$axios.get(
+          `/api/Course/GetQuestions?courseId=${this.$route.params.id}&pageId=${this.goTo}`
+        );
+        this.questionFilters = questions.data.data.filters;
+        for (var eachMessage of questions.data.data.questionItems) {
+          if (eachMessage.parentId == null) {
+            var group = [];
+            group.push(eachMessage);
+            this.messageGroups.push(group);
+          } else {
+            for (var i of this.messageGroups) {
+              for (var j of i) {
+                if (eachMessage.parentId == j.questionId) {
+                  i.push(eachMessage);
+                }
+              }
+            }
+          }
+        }
+      },
+      deep: true,
+    },
+  },
 };
 </script>
 <style lang="scss">

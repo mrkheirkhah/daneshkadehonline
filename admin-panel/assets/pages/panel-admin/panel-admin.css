@@ -1451,6 +1451,45 @@ form .form-row-col.guide-section {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+form .form-row-col.guide-section .episode-status.red {
+  color: #e13535;
+}
+
+form .form-row-col.guide-section .episode-status.green {
+  color: #06D6A0;
+}
+
+form .form-row-col.guide-section .episode-status.yellow {
+  color: #FFB703;
+}
+
+form .form-row-col.guide-section .episode-status-btn button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+form .form-row-col.guide-section .episode-status-btn button.accept {
+  color: #06D6A0;
+}
+
+form .form-row-col.guide-section .episode-status-btn button.accept:hover {
+  color: #0ba87e;
+}
+
+form .form-row-col.guide-section .episode-status-btn button.decline {
+  color: #e13535;
+}
+
+form .form-row-col.guide-section .episode-status-btn button.decline:hover {
+  color: #c52c2c;
 }
 
 form .form-row-col.guide-section .guide-text {
@@ -2136,6 +2175,7 @@ ul.floated-list.in-panel li:hover {
 .floated-list-container.in-panel {
   position: relative;
   cursor: pointer;
+  padding-left: 10px;
 }
 
 .floated-list-container.in-panel > input {

@@ -34,7 +34,7 @@
             </li>
           </ul>
         </div>
-        <div class="col" v-if="status == false">
+        <div class="col" v-if="status == false" style="height: 50vh">
           <h1 class="red-text">خرید ناموفق</h1>
         </div>
       </div>
@@ -54,16 +54,32 @@ export default {
   layout: "mainPages",
   middleware: "mainPage",
   mounted() {
-    console.log(this.$route.query);
-    this.checkdata()
+    // console.log(this.$route.query);
+    this.checkdata();
   },
   methods: {
     async checkdata() {
-      const datac = await this.$axios.get(`/api/Payment/VerifyPaymentOrder?MID=${this.$route.query['MID']}&RefNum=${this.$route.query['RefNum']}&ResNum=${this.$route.query['ResNum']}&State=${this.$route.query['State']}&TraceNo=${this.$route.query['TraceNo']}&Amount=${this.$route.query['Amount']}&Rrn=${this.$route.query['Rrn']}&SecurePan=${this.$route.query['SecurePan']}&Status=${this.$route.query['Status']}&Token=${this.$route.query['Token']}&HashedCardNumber=${this.$route.query['HashedCardNumber']}`, {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get("key")}`,
+      const datac = await this.$axios.post(
+        "/api/Payment/VerifyPaymentOrder",
+        {
+          mid: this.$route.query["MID"],
+          refNum: this.$route.query["RefNum"],
+          resNum: this.$route.query["ResNum"],
+          state: this.$route.query["State"],
+          traceNo: this.$route.query["TraceNo"],
+          amount: Number(this.$route.query["Amount"]),
+          rrn: this.$route.query["Rrn"],
+          securePan: this.$route.query["SecurePan"],
+          status: this.$route.query["Status"],
+          token: this.$route.query["Token"],
+          hashedCardNumber: this.$route.query["HashedCardNumber"],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("key")}`,
+          },
         }
-      });
+      );
       if (datac.data.isSuccess == true) {
         this.status = true;
         this.factor = datac.data;
@@ -72,13 +88,15 @@ export default {
         this.factor = null;
       }
       console.log(datac);
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style lang="scss">
+@import "@/assets/styles/pages/cart.scss";
+@import "@/assets/styles/pages/cart-suc.scss";
+@import "@/assets/swal-style.scss";
 .red-text {
   color: #e13535 !important;
 }
-@import "@/assets/swal-style.scss";
 </style>

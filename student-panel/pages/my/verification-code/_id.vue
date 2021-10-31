@@ -248,7 +248,7 @@ export default {
           loginResponse.data.message == "Success"
         ) {
           this.$store.dispatch("login/setLoginDetails", loginResponse);
-          this.$router.push("/cart");
+          this.$router.push("/");
         } else {
           this.$swal({
             text: "اطلاعات نامعتبر",
