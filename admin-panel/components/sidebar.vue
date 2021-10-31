@@ -35,7 +35,11 @@
           ></line>
         </svg>
         <div class="panel-item-container top custom-scrollbar">
-          <nuxt-link to="/teachers-list" class="panel-item">
+          <nuxt-link
+            to="/teachers-list"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin' || role == 'Supprot'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +68,11 @@
               لیست معلمان
             </div>
           </nuxt-link>
-          <nuxt-link to="/students-list" class="panel-item">
+          <nuxt-link
+            to="/students-list"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin' || role == 'Supprot'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +101,11 @@
               لیست دانشجو ها
             </div>
           </nuxt-link>
-          <nuxt-link to="/" class="panel-item">
+          <nuxt-link
+            to="/"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +133,11 @@
               صفحه اصلی
             </div>
           </nuxt-link>
-          <nuxt-link to="/main-page" class="panel-item">
+          <nuxt-link
+            to="/main-page"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +165,11 @@
               صفحه اصلی سایت
             </div>
           </nuxt-link>
-          <nuxt-link to="/all-transactions" class="panel-item">
+          <nuxt-link
+            to="/all-transactions"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -177,7 +197,11 @@
               لیست تراکنش ها
             </div>
           </nuxt-link>
-          <nuxt-link to="/discount-code" class="panel-item">
+          <nuxt-link
+            to="/discount-code"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -205,7 +229,11 @@
               کد تخفیف
             </div>
           </nuxt-link>
-          <nuxt-link to="/main-footer" class="panel-item">
+          <nuxt-link
+            to="/main-footer"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -233,7 +261,11 @@
               فوتر سایت
             </div>
           </nuxt-link>
-          <nuxt-link to="/cooperation" class="panel-item">
+          <nuxt-link
+            to="/cooperation"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -447,7 +479,11 @@
               </li>
             </ul>
           </div> -->
-          <nuxt-link to="/add-course/add" class="panel-item">
+          <nuxt-link
+            to="/add-course/add"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -467,7 +503,11 @@
               افزودن دوره
             </div>
           </nuxt-link>
-          <nuxt-link to="/news-sort" class="panel-item">
+          <nuxt-link
+            to="/news-sort"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -487,7 +527,11 @@
               دسته بندی اخبار
             </div>
           </nuxt-link>
-          <nuxt-link to="/sort" class="panel-item">
+          <nuxt-link
+            to="/sort"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -508,7 +552,11 @@
             </div>
           </nuxt-link>
 
-          <nuxt-link to="/contact-us" class="panel-item">
+          <nuxt-link
+            to="/contact-us"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -528,7 +576,11 @@
               تماس با ما
             </div>
           </nuxt-link>
-          <nuxt-link to="/about-us" class="panel-item">
+          <nuxt-link
+            to="/about-us"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -548,7 +600,7 @@
               درباره ما
             </div>
           </nuxt-link>
-          <nuxt-link to="/add-admin" class="panel-item">
+          <nuxt-link to="/add-admin" class="panel-item" v-if="role == 'SuperAdmin'">
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -568,7 +620,7 @@
               ثبت ادمین
             </div>
           </nuxt-link>
-          <nuxt-link to="/manage-news" class="panel-item">
+          <nuxt-link to="/manage-news" class="panel-item" v-if="role != 'Support'">
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -588,7 +640,11 @@
               مدیریت اخبار
             </div>
           </nuxt-link>
-          <nuxt-link to="/FrequentlyQuestion" class="panel-item">
+          <nuxt-link
+            to="/FrequentlyQuestion"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -608,7 +664,11 @@
               پرسش های متداول
             </div>
           </nuxt-link>
-          <nuxt-link to="/packages-list" class="panel-item">
+          <nuxt-link
+            to="/packages-list"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -627,7 +687,11 @@
               </svg>
               لیست درخواست پکیج
             </div> </nuxt-link
-          ><nuxt-link to="/settlement-req" class="panel-item">
+          ><nuxt-link
+            to="/settlement-req"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -647,7 +711,11 @@
               درخواست تسویه مدرس
             </div>
           </nuxt-link>
-          <nuxt-link to="/settlement-req-visitor" class="panel-item">
+          <nuxt-link
+            to="/settlement-req-visitor"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -667,7 +735,11 @@
               درخواست تسویه ویزیتور
             </div>
           </nuxt-link>
-          <nuxt-link to="/courses-list" class="panel-item">
+          <nuxt-link
+            to="/courses-list"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 id="coin"
@@ -694,7 +766,11 @@
               لیست دوره ها
             </div>
           </nuxt-link>
-          <nuxt-link to="/add-teacher" class="panel-item">
+          <nuxt-link
+            to="/add-teacher"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin' || role == 'Supprot'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -754,7 +830,11 @@
               افزودن مدرس
             </div>
           </nuxt-link>
-          <nuxt-link to="/add-visitor" class="panel-item">
+          <nuxt-link
+            to="/add-visitor"
+            class="panel-item"
+            v-if="role == 'SuperAdmin' || role == 'Admin'"
+          >
             <div class="sidebar-links">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -826,6 +906,7 @@ export default {
       name: "",
       profImage: "",
       loading: true,
+      role: "",
     };
   },
   async mounted() {
@@ -849,12 +930,14 @@ export default {
       .catch((e) => {
         console.log(e);
       });
+    // console.log(getData);
     if (getData.data.statusCode == "200") {
       const name = getData.data.data.adminName;
       const phone = getData.data.data.phoneNumber;
       this.name = name;
       this.profImage = getData.data.data.profileImageName;
       this.loading = false;
+      this.role = getData.data.data.role;
     }
     // }
   },

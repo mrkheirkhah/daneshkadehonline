@@ -506,6 +506,16 @@ export default {
             }).then(() => {
               this.$router.push("/teachers-list");
             });
+          } else if (
+            addTeacherResp.data.statusCode == 400 &&
+            addTeacherResp.data.message == "ExistPhoneNumber"
+          ) {
+            this.$swal({
+              text: "مدرس با این شماره تلفن وجود دارد",
+              icon: "error",
+              showCloseButton: true,
+              confirmButtonText: "تایید",
+            });
           }
         } catch (e) {
           console.log(e.response.data);

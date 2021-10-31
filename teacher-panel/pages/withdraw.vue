@@ -195,7 +195,13 @@ export default {
         Number(this.withdrawReq) > 0
       ) {
         const withdrawResp = await this.$axios.post(
-          `/api/Teacher/TeacherSettlementRequest/AddSettlementRequest?requestAmount=${this.withdrawReq}`
+          `/api/Teacher/TeacherSettlementRequest/AddSettlementRequest?requestAmount=${this.withdrawReq}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${this.$cookies.get("key")}`,
+            },
+          }
         );
         if (
           withdrawResp.data.statusCode == 200 &&

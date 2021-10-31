@@ -832,8 +832,20 @@
               <div v-if="videoLoading">
                 <vue-plyr v-if="courseEpisodes.length > 0">
                   <video
+                    v-if="showLogomotion"
+                    @ended="showVideo"
+                    :data-poster="
+                      'https://api.daneshkadeonline.ir/Images/Public/Course/' +
+                      courseDetail.imageName
+                    "
+                  >
+                    <source src="/logomotion.mp4" type="video/mp4" />
+                  </video>
+                  <video
+                    v-else
                     controls
                     crossorigin
+                    id="mainVideoPlayer"
                     playsinline
                     :data-poster="
                       'https://api.daneshkadeonline.ir/Images/Public/Course/' +
@@ -1635,6 +1647,7 @@ export default {
 
       seeThisVideo: "",
       courseDescription: "",
+      showLogomotion: false,
     };
   },
   async beforeMount() {
@@ -1977,19 +1990,28 @@ export default {
         return false;
       }
     },
-    seeVideo(id) {
-      this.seeThisVideo = id;
+    async showVideo() {
       this.videoLoading = false;
-      // var player = document.querySelector("#videoSrc");
-      this.episodeVideoSrc = "https://api.daneshkadeonline.ir/Course/Video/" + id;
-      this.$nextTick(() => {
+      this.showLogomotion = false;
+      await this.$nextTick(() => {
         // Add the component back in
         this.videoLoading = true;
       });
-      // this.componentKey += 1;
-      // player.src = "https://api.daneshkadeonline.ir/Course/Video/" + id;
-      // var videoPlayer = document.querySelector("video");
-      // videoPlayer.load();
+      await this.$nextTick(() => {
+        var videoPlayer = document.querySelector("#mainVideoPlayer");
+        if (videoPlayer) {
+          videoPlayer.play();
+        }
+      });
+    },
+    seeVideo(id) {
+      this.showLogomotion = true;
+      this.seeThisVideo = id;
+      this.videoLoading = false;
+      this.episodeVideoSrc = "https://api.daneshkadeonline.ir/Course/Video/" + id;
+      this.$nextTick(() => {
+        this.videoLoading = true;
+      });
     },
     async downloadAttachAudio(id) {
       var audioresp = await this.$axios.get(

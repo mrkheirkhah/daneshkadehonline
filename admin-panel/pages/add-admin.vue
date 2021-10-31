@@ -327,7 +327,7 @@ export default {
       if (
         this.adminName.trim() != "" &&
         this.adminPhone != "" &&
-        this.selectedRole != "" &&
+        this.selectedRole != null &&
         this.nationalCardNumber != ""
       ) {
         let formData = new FormData();
