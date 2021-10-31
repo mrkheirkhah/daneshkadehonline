@@ -90,7 +90,7 @@ export default {
       }
     },
     async witdraw() {
-      if (this.withdrawReq <= this.wallet) {
+      if (this.withdrawReq != "" &&Number(this.withdrawReq) <= Number(this.wallet)&& Number(this.withdrawReq) > 0) {
         const withdrawResp = await this.$axios.post(
           `/api/Visitor/VisitorSettlementRequest/AddSettlementRequest?pageLink=${this.$route.params.id}&requestAmount=${this.withdrawReq}`
         );

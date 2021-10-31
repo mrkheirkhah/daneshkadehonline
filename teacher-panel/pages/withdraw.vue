@@ -189,9 +189,13 @@ export default {
       this.withdrawReq = Number(this.walletAmount);
     },
     async witdraw() {
-      if (Number(this.withdrawReq) <= Number(this.walletAmount)) {
+      if (
+        this.withdrawReq != "" &&
+        Number(this.withdrawReq) <= Number(this.walletAmount) &&
+        Number(this.withdrawReq) > 0
+      ) {
         const withdrawResp = await this.$axios.post(
-          `/api/Teacher/TeacherSettlementRequest/AddSettlementRequest?requestAmount=${withdrawReq}`
+          `/api/Teacher/TeacherSettlementRequest/AddSettlementRequest?requestAmount=${this.withdrawReq}`
         );
         if (
           withdrawResp.data.statusCode == 200 &&
