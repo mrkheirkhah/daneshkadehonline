@@ -457,7 +457,7 @@
                 </g>
               </g>
             </svg>
-            تراکنش ها
+            تاریخچه فاکتور ها
           </div>
         </nuxt-link>
         <!-- <nuxt-link class="panel-item" to="/">

@@ -35,14 +35,22 @@
                   >{{ Number(item.price).toLocaleString() }}
                   <span class="currency">تومان</span></span
                 >
-                <button class="close-btn" @click.prevent="deleteOrder(item.detailId)">
+                <button
+                  class="close-btn"
+                  @click.prevent="deleteOrder(item.detailId)"
+                  !showHistory
+                >
                   حذف
                 </button>
               </div>
             </div>
           </div>
           <div class="col-12 col-lg-3 mt-3 mt-lg-0">
-            <div class="discount-code-box" :class="noCode ? 'red' : ''">
+            <div
+              class="discount-code-box"
+              :class="noCode ? 'red' : ''"
+              v-if="!showHistory"
+            >
               <input
                 type="text"
                 placeholder="کد تخفیف"
@@ -51,7 +59,7 @@
               />
               <button class="apply" @click.prevent="submitDiscount">اعمال</button>
             </div>
-            <p class="wrong-text" v-if="noCode">کد تخفیف را وارد کنید</p>
+            <p class="wrong-text" v-if="noCode && !showHistory">کد تخفیف را وارد کنید</p>
             <div class="factor">
               <ul class="list">
                 <template v-if="loading">
@@ -98,7 +106,7 @@
                   </li>
                 </template>
               </ul>
-              <footer>
+              <footer v-if="!showHistory">
                 <form action="https://sep.shaparak.ir/OnlinePG/OnlinePG" method="post">
                   <input type="hidden" name="Token" v-bind:value="Tokenforpay" />
                   <input
@@ -140,10 +148,21 @@ export default {
       Tokenforpay: "",
       noCode: false,
       loading: true,
+      showHistory: false,
     };
   },
   mounted() {
-    this.getOrders();
+    if (Object.keys(this.$route.query).length != 0) {
+      if (this.$route.query.id != undefined) {
+        this.showHistory = true;
+        this.getOrederHistory();
+      } else {
+        this.$router.replace({ query: null });
+        this.getOrders();
+      }
+    } else {
+      this.getOrders();
+    }
   },
   methods: {
     async getOrders() {
@@ -162,6 +181,21 @@ export default {
         }
       );
       this.Tokenforpay = pay.data.data;
+      if (order.data.statusCode == 200 && order.data.message == "Success") {
+        this.orders = order.data.data;
+      }
+      this.loading = false;
+    },
+    async getOrederHistory() {
+      this.loading = true;
+      const order = await this.$axios.get(
+        `/api/Student/StudentOrder/GetOrder/${this.$route.query.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("key")}`,
+          },
+        }
+      );
       if (order.data.statusCode == 200 && order.data.message == "Success") {
         this.orders = order.data.data;
       }

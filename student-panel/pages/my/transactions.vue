@@ -9,7 +9,7 @@
           height="30px"
           borderRadius="5px"
         />
-        <span v-else> تراکنش ها </span>
+        <span v-else> تاریخچه فاکتور ها </span>
       </h3>
     </div>
     <section class="box-content custom-scrollbar" id="transactions-table">
@@ -21,12 +21,12 @@
         </template>
         <template v-else>
           <!-- <span class="transaction-type">نوع</span> -->
-          <span>جزئیات</span>
+          <span>تعداد دوره</span>
           <span>تاریخ </span>
           <span>ساعت</span>
-          <span>قیمت (تومان)</span>
           <span>کد پیگیری</span>
           <span>وضعیت</span>
+          <span>مشاهده</span>
         </template>
       </header>
       <template v-if="loading">
@@ -41,19 +41,23 @@
           <!-- <span class="transaction-type">{{
             transaction.type == "Deposite" ? "واریز" : "برداشت"
           }}</span> -->
-          <span class="transaction-detail">{{ transaction.title }}</span>
+          <span class="transaction-detail">{{ transaction.courseCount }}</span>
           <span class="persian-number">{{
-            new Date(transaction.createDate).toLocaleDateString("fa-IR")
+            new Date(transaction.payDate).toLocaleDateString("fa-IR")
           }}</span>
           <span class="persian-number">{{
-            new Date(transaction.createDate).toLocaleTimeString("fa-IR")
+            new Date(transaction.payDate).toLocaleTimeString("fa-IR")
           }}</span>
-          <span class="persian-number">{{ transaction.amount }}</span>
           <span class="persian-number">{{ transaction.trackingCode }}</span>
           <span class="transaction-state successfull" v-if="transaction.isPay == true"
             >موفقیت آمیز</span
           >
           <span class="transaction-state failed" v-else>ناموفق</span>
+          <nuxt-link
+            :to="{ path: '/cart', query: { id: transaction.id } }"
+            class="transaction-state failed"
+            >مشاهده</nuxt-link
+          >
         </div>
       </template>
 
@@ -66,7 +70,7 @@
           height="30px"
           borderRadius="5px"
         />
-        <a href="" type="button" @click.prevent="seeAll" v-else> مشاهده همه تراکنش ها </a>
+        <a href="" type="button" @click.prevent="seeAll" v-else> مشاهده همه فاکتور ها </a>
       </footer>
     </section>
   </div>
@@ -94,11 +98,14 @@ export default {
       const footer = (document.querySelector(".table-footer").style.display = "none");
     },
     async getWallets() {
-      const myWallet = await this.$axios.get("/api/Student/StudentWallet/GetWallets", {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get("key")}`,
-        },
-      });
+      const myWallet = await this.$axios.get(
+        "/api/Student/StudentOrder/GetOrdersHistory",
+        {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("key")}`,
+          },
+        }
+      );
       if (myWallet.data.statusCode == 200 && myWallet.data.message == "Success") {
         this.myWallet = myWallet.data.data;
         this.loading = false;
