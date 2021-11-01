@@ -105,7 +105,7 @@ export default {
           amount: Number(this.$route.query["Amount"]),
           rrn: this.$route.query["Rrn"],
           securePan: this.$route.query["SecurePan"],
-          status: this.$route.query["Status"],
+          status: Number(this.$route.query["Status"]),
           token: this.$route.query["Token"],
           hashedCardNumber: this.$route.query["HashedCardNumber"],
         },
@@ -119,6 +119,15 @@ export default {
         this.$swal({
           text: "پرداخت انجام شد",
           icon: "success",
+          showCloseButton: true,
+          confirmButtonText: "تایید",
+        }).then(() => {
+          this.$router.replace({ query: null });
+        });
+      }else{
+        this.$swal({
+          text: "پرداخت ناموفق",
+          icon: "error",
           showCloseButton: true,
           confirmButtonText: "تایید",
         }).then(() => {
