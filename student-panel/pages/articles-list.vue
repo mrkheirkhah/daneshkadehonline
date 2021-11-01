@@ -53,6 +53,7 @@
                         v-for="group in groups"
                         :key="group.id"
                         v-if="group.parentId == null"
+                        style="cursor: pointer"
                       >
                         <div
                           :class="group.newsGroups == null ? '' : 'test'"
