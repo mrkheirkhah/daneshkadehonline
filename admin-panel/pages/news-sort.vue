@@ -6,135 +6,6 @@
       </header>
 
       <form action="">
-        <!-- <div class="section-title">
-          <svg
-            class="dashed-line"
-            width="100%"
-            height="15"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <line
-              stroke-dasharray="10, 5"
-              x1="0"
-              y1="10"
-              x2="100%"
-              y2="10"
-              style="stroke: rgb(112, 112, 112)"
-            ></line>
-          </svg>
-          <p class="section-title-text">افزودن مدرک (تخصص)</p>
-        </div> -->
-        <!-- <div class="form-row">
-          <label for="" class="form-row-col">
-            <input
-              type="text"
-              class="form-input"
-              v-model="degreText"
-              placeholder="نام تخصص"
-            />
-          </label>
-
-          <label class="form-row-col guide-section">
-            <label for="is-degree-mandatory" class="checkbox-label">
-              <span class="checkbox-container">
-                <input
-                  type="checkbox"
-                  name=""
-                  class="form-checkbox"
-                  id="is-degree-mandatory"
-                  v-model="degreImageRequired"
-                />
-                <img
-                  src="@/static/icons/check-mark.svg"
-                  class="check-mark"
-                  alt="check-icon"
-                />
-              </span>
-              عکس مدرک اجباری است
-            </label>
-          </label>
-        </div>
-        <button class="form-btn success" @click.prevent="editDegre">تائید</button>
-        <div class="panel-table specialty-list">
-          <div class="box-header">
-            <h3>لیست تخصص ها</h3>
-          </div>
-          <section class="box-content custom-scrollbar" id="degreTable">
-            <header class="table-row table-header">
-              <span>نام تخصص</span>
-              <span>تعداد مدرس</span>
-              <span>نیاز به عکس</span>
-              <span>ویرایش</span>
-              <span>حذف</span>
-            </header>
-
-            <div class="table-row" v-for="degre in degres" :key="degre.id">
-              <span>{{ degre.title }}</span>
-              <span class="persian-number">{{ degre.teacherCount }}</span>
-              <span class="edit" v-if="degre.isRequiredImage == true"> دارد </span>
-              <span class="delete" v-else> ندارد </span>
-              <span class="edit">
-                <button @click.prevent="getEditDegre(degre.id)">ویرایش</button>
-              </span>
-              <span class="delete">
-                <button @click.prevent="deleteDegre(degre.id)">حذف</button>
-              </span>
-            </div>
-
-            <footer class="table-degre-footer">
-              <hr />
-              <a href="" type="button" @click.prevent="seeAllDegre"> مشاهده همه </a>
-            </footer>
-          </section>
-        </div> -->
-
-        <!-- <div class="form-row">
-          <label for="" class="form-row-col">
-            <input type="text" class="form-input has-cover-btn" placeholder="نام دسته" />
-            <button type="button" class="cover-btn">تائید</button>
-          </label>
-          <label for="" class="form-row-col"> </label>
-        </div> -->
-        <!-- <div class="form-row">
-          <label
-            for=""
-            class="form-row-col in-panel floated-list-container"
-            @click="toggleDropdown"
-          >
-            <input
-              type="text"
-              readonly
-              class="form-input"
-              :value="selectOne"
-              placeholder="سلکت اول"
-            />
-            <ul class="floated-list custom-scrollbar">
-              <li
-                v-for="degre in degres"
-                :key="degre.id"
-                @click="setSelectOne($event, degre.id)"
-              >
-                {{ degre.title }}
-              </li>
-
-              <li @click="setSelectOneNew($event)">آیتم جدید</li>
-            </ul>
-          </label>
-          <label for="" class="form-row-col">
-            <input
-              type="text"
-              class="form-input"
-              v-model="degreText"
-              placeholder="متن جایگزین"
-            />
-          </label>
-        </div>
-        <div class="form-row">
-          <button class="form-btn success" @click.prevent="editDegre">تائید</button>
-          <button class="form-btn red-color" @click.prevent="deleteDegre">حذف</button>
-        </div> -->
-
         <div class="section-title">
           <svg
             class="dashed-line"
@@ -371,14 +242,9 @@ export default {
   middleware: "userIsNotLog",
   data() {
     return {
-      selectOne: "",
-      selectOneId: "",
       selectTwo: "",
       selectThree: "",
       selectFour: "",
-      degres: "",
-      degreText: "",
-      addNewDegre: true,
 
       // groups
       groups: "",
@@ -402,7 +268,7 @@ export default {
     };
   },
   async mounted() {
-    await Promise.all([this.getGroups(), this.getDegre()]);
+    this.getGroups()
   },
   methods: {
     seeAll() {
@@ -421,35 +287,9 @@ export default {
       const footer = (document.querySelector(".table-twoSub-footer").style.display =
         "none");
     },
-    seeAllDegre() {
-      const table = document.getElementById("degreTable");
-      table.style.overflowY = "scroll";
-      const footer = (document.querySelector(".table-degre-footer").style.display =
-        "none");
-    },
-    async getDegre() {
-      const degre = await this.$axios.get("/api/Admin/AdminGroup/GetDegreeEducations", {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get("key")}`,
-        },
-      });
-      // console.log(degre);
-      if ((degre.data.statusCode == 200) & (degre.data.message == "Success")) {
-        this.degres = degre.data.data;
-      }
-    },
     toggleDropdown() {
       event.stopPropagation();
       event.target.closest(".floated-list-container").classList.toggle("show");
-    },
-    setSelectOne(event, id) {
-      this.addNewDegre = false;
-      this.selectOneId = id;
-      this.selectOne = event.target.innerHTML.trim();
-    },
-    setSelectOneNew(event) {
-      this.selectOne = event.target.innerHTML.trim();
-      this.addNewDegre = true;
     },
     async setSelectTwo(event, id) {
       this.selectTwo = event.target.innerHTML.trim();
@@ -587,67 +427,9 @@ export default {
           Authorization: `Bearer ${this.$cookies.get("key")}`,
         },
       });
-      console.log(groupsResp);
+      // console.log(groupsResp);
       if (groupsResp.data.statusCode == 200 && groupsResp.data.message == "Success") {
         this.groups = groupsResp.data.data;
-      }
-    },
-    async getEditDegre(id) {
-      this.addNewDegre = false;
-      this.editThisIdDegre = id;
-      const editDegreResp = await this.$axios.get(
-        `/api/Admin/AdminGroup/DegreeEducation/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
-        }
-      );
-      // console.log(editDegreResp);
-      if (
-        editDegreResp.data.statusCode == 200 &&
-        editDegreResp.data.message == "Success"
-      ) {
-        this.degreImageRequired = editDegreResp.data.data.isRequiredImage;
-        this.degreText = editDegreResp.data.data.title;
-      }
-    },
-    async editDegre() {
-      if (this.addNewDegre == false) {
-        const editResp = await this.$axios.put(
-          `/api/Admin/AdminGroup/DegreeEducation?eduId=${this.editThisIdDegre}&educationTitle=${this.degreText}&isRequiredImage=${this.degreImageRequired}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
-          }
-        );
-        if (editResp.data.statusCode == 200 && editResp.data.message == "Success") {
-          this.getDegre();
-          this.degreText = "";
-          this.selectOne = "";
-          this.selectOneId = "";
-          this.degreImageRequired = false;
-          this.addNewDegre = true;
-        }
-      } else {
-        const addResp = await this.$axios.post(
-          `/api/Admin/AdminGroup/DegreeEducation?educationTitle=${this.degreText}&isRequiredImage=${this.degreImageRequired}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
-          }
-        );
-        if (addResp.data.statusCode == 200 && addResp.data.message == "Success") {
-          this.getDegre();
-          this.degreText = "";
-          this.selectOne = "";
-          this.selectOneId = "";
-          this.degreImageRequired = false;
-        }
       }
     },
     editGroup(id, title) {
@@ -700,22 +482,6 @@ export default {
         this.getGroups();
         this.seeSubGroupData = "";
         this.seeTwoSubGroupData = "";
-      }
-    },
-    async deleteDegre(id) {
-      const deleteResp = await this.$axios.delete(
-        `/api/Admin/AdminGroup/DegreeEducation/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
-        }
-      );
-      if (deleteResp.data.statusCode == 200 && deleteResp.data.message == "Success") {
-        this.getDegre();
-        this.degreText = "";
-        this.selectOne = "";
-        this.selectOneId = "";
       }
     },
   },
