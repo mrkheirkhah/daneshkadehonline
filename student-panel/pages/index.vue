@@ -513,9 +513,7 @@
               alt="آموزش آنلاین"
             />
             <h3 class="title blue">آموزش آنلاین</h3>
-            <p class="feature-detail">
-              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-            </p>
+            <p class="feature-detail">ترافیک نیم بها ، اشتراک هفتگی ، ارزان و به صرفه</p>
           </div>
           <div class="col-lg-3 col-md-4 col-10 my-4 my-md-0 feature">
             <img
@@ -523,9 +521,7 @@
               alt="یادگیری آسان"
             />
             <h3 class="title red">یادگیری آسان</h3>
-            <p class="feature-detail">
-              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-            </p>
+            <p class="feature-detail">بدون محدودیت زمان و مکان در هر کجا</p>
           </div>
           <div class="col-lg-3 col-md-4 col-10 my-4 my-md-0 feature">
             <img
@@ -533,9 +529,7 @@
               alt="پیشرفت راحت"
             />
             <h3 class="title gold">پیشرفت راحت</h3>
-            <p class="feature-detail">
-              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-            </p>
+            <p class="feature-detail">یادگیری راحت بدون محدودیت</p>
           </div>
         </div>
 

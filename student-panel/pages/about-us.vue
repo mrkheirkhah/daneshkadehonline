@@ -68,32 +68,32 @@
                     alt="عکس مدیر"
                   />
                   <div class="overlay">
-                    <div class="social-media">
-                      <a :href="member.facebook" target="blank">
+                    <div class="social-media" >
+                      <a :href="member.facebook" target="blank" v-if="member.facebook!=null">
                         <img
                           src="@/static/images/main-page-images/facebook-social.png"
                           alt="فیسبوک"
                         />
                       </a>
-                      <a :href="member.linkedin" target="blank">
+                      <a :href="member.linkedin" target="blank" v-if="member.linkedin!=null">
                         <img
                           src="@/static/images/main-page-images/linkedin-social.png"
                           alt="لینکدین"
                         />
                       </a>
-                      <a :href="member.instagram" target="blank">
+                      <a :href="member.instagram" target="blank" v-if="member.instagram!=null">
                         <img
                           src="@/static/images/main-page-images/instagram-social.png"
                           alt="اینستاگرام"
                         />
                       </a>
-                      <a :href="member.telegram" target="blank">
+                      <a :href="member.telegram" target="blank" v-if="member.telegram!=null">
                         <img
                           src="@/static/images/main-page-images/telegram-social.png"
                           alt="تلگرام"
                         />
                       </a>
-                      <a :href="member.twiter" target="blank">
+                      <a :href="member.twiter" target="blank" v-if="member.twiter!=null">
                         <img
                           src="@/static/images/main-page-images/twitter-social.png"
                           alt="توئیتر"
@@ -171,7 +171,7 @@ export default {
   methods: {
     async getTeamMembers() {
       const teamMembers = await this.$axios.get("/api/Home/GetTeamMembers");
-      console.log(teamMembers);
+      // console.log(teamMembers);
       this.teamMembers = teamMembers.data.data;
     },
     async getAboutData() {

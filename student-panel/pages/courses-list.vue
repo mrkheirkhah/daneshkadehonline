@@ -96,7 +96,7 @@
                               </ul>
                             </li>
                           </template>
-                          <li v-if="group.courseGroups == null">
+                          <li v-if="group.courseGroups == null" style="cursor: pointer">
                             {{ group.groupTitle }}
                           </li>
                         </ul>

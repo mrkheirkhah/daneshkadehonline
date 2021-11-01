@@ -334,7 +334,7 @@ export default {
         formData.append("twitter", this.twiterLink);
         formData.append("linkedIn", this.linkdinLink);
         formData.append("facebook", this.facebookLink);
-        formData.append("instagram", this.instagram);
+        formData.append("instagram", this.instagramLink);
         formData.append("telegram", this.telegramLink);
         formData.append("image", this.memberImageBase64);
         const addMemberResp = await this.$axios.post(
@@ -377,7 +377,7 @@ export default {
         formData.append("twitter", this.twiterLink);
         formData.append("linkedIn", this.linkdinLink);
         formData.append("facebook", this.facebookLink);
-        formData.append("instagram", this.instagram);
+        formData.append("instagram", this.instagramLink);
         formData.append("telegram", this.telegramLink);
         formData.append("image", this.memberImageBase64);
         const addMemberResp = await this.$axios.put(

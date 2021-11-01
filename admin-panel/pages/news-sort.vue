@@ -219,14 +219,16 @@
         </header>
         <div
           class="table-row"
-          v-for="subGroup in seeTwoSubGroupData"
-          :key="subGroup.groupId"
+          v-for="subTwoGroup in seeTwoSubGroupData"
+          :key="subTwoGroup.groupId"
         >
-          <span>{{ subGroup.groupTitle }}</span>
-          <span class="persian-number">{{ subGroup.newsCount }}</span>
-          <span class="persian-number">{{ subGroup.subCount }}</span>
-          <span @click="editGroup(subGroup.groupId, subGroup.groupTitle)">ویرایش</span>
-          <span @click="deleteGroup(subGroup.groupId)">حذف</span>
+          <span>{{ subTwoGroup.groupTitle }}</span>
+          <span class="persian-number">{{ subTwoGroup.newsCount }}</span>
+          <span class="persian-number">{{ subTwoGroup.subCount }}</span>
+          <span @click="editGroup(subTwoGroup.groupId, subTwoGroup.groupTitle)"
+            >ویرایش</span
+          >
+          <span @click="deleteGroup(subTwoGroup.groupId)">حذف</span>
         </div>
         <footer class="table-twoSub-footer">
           <hr />
@@ -268,7 +270,7 @@ export default {
     };
   },
   async mounted() {
-    this.getGroups()
+    this.getGroups();
   },
   methods: {
     seeAll() {
@@ -470,19 +472,36 @@ export default {
       }
     },
     async deleteGroup(id) {
-      const deleteResp = await this.$axios.delete(
-        `/api/Admin/AdminGroup/NewsGroup/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+      this.$swal({
+        text: "از حذف دسته اطمینان دارید؟",
+        icon: "warning",
+        showCloseButton: true,
+        showCancelButton: true,
+        confirmButtonText: "بله",
+        cancelButtonText: "خیر",
+      }).then(async (clickedBut) => {
+        if (clickedBut.isConfirmed) {
+          const deleteResp = await this.$axios.delete(
+            `/api/Admin/AdminGroup/NewsGroup/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${this.$cookies.get("key")}`,
+              },
+            }
+          );
+          if (deleteResp.data.statusCode == 200 && deleteResp.data.message == "Success") {
+            this.$swal({
+              text: "با موفقیت حذف شد",
+              icon: "success",
+              showCloseButton: true,
+              confirmButtonText: "تایید",
+            });
+            this.getGroups();
+            this.seeSubGroupData = "";
+            this.seeTwoSubGroupData = "";
+          }
         }
-      );
-      if (deleteResp.data.statusCode == 200 && deleteResp.data.message == "Success") {
-        this.getGroups();
-        this.seeSubGroupData = "";
-        this.seeTwoSubGroupData = "";
-      }
+      });
     },
   },
 };

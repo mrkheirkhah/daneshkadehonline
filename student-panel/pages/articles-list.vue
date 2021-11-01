@@ -92,7 +92,7 @@
                               </ul>
                             </li>
                           </template>
-                          <li v-if="group.newsGroups == null">
+                          <li v-if="group.newsGroups == null" style="cursor: pointer">
                             {{ group.groupTitle }}
                           </li>
                         </ul>
@@ -272,16 +272,17 @@ import skeleton from "@/components/skeleto-creator";
 export default {
   components: { skeleton },
   layout: "mainPages",
-  head(){
-    return{
-      title:'جدید ترین اخبار تکنولوژی و کسبوکار و آموزشی | دانشکده آنلاین',
-      meta:[
+  head() {
+    return {
+      title: "جدید ترین اخبار تکنولوژی و کسبوکار و آموزشی | دانشکده آنلاین",
+      meta: [
         {
-        hid: 'description',
-        content: 'بروز ترین اخبار ایران و جهان در زمینه های تکنولوژی ، کسب مهارت و کسبو کار در کنار مهمترین اخبار در حوزه آموزش هر روزه برای شما جمع آوری و منتشر میشود | دانشکده آنلاین'
-      }
-      ]  
-    }
+          hid: "description",
+          content:
+            "بروز ترین اخبار ایران و جهان در زمینه های تکنولوژی ، کسب مهارت و کسبو کار در کنار مهمترین اخبار در حوزه آموزش هر روزه برای شما جمع آوری و منتشر میشود | دانشکده آنلاین",
+        },
+      ],
+    };
   },
   data() {
     return {
