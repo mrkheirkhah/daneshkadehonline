@@ -26,7 +26,10 @@
         <div class="row px-0 px-lg-2 px-xl-5 mx-xxl-4 mx-lg-2 mx-0">
           <div class="col-12 col-lg-3">
             <aside>
-              <div class="custom-accordion assortment open">
+              <div
+                class="custom-accordion assortment open"
+                v-if="$route.query.groupId == undefined"
+              >
                 <header class="accordion-header" @click="toggleAccordeon">
                   <h5>دسته بندی</h5>
                   <img
@@ -455,7 +458,7 @@ export default {
             }
           }
         }
-        if (this.$route.query.courseGroupId != undefined) {
+        if (this.$route.query.groupId != undefined) {
           const groups = await this.$axios.get(
             `/api/Public/ProfileActions/GetCourseGroups/${this.$route.query.groupId}`
           );
