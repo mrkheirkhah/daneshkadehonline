@@ -43,12 +43,12 @@
                       :key="subGroup.id"
                     >
                       <nuxt-link
-                        :to="'/courses-list?filter=' + subGroup.id"
+                        :to="'/courses-list?courseGroupId=' + subGroup.id"
                         class="cell-link parent"
                         >{{ subGroup.groupTitle }}</nuxt-link
                       >
                       <nuxt-link
-                        :to="'/courses-list?filter=' + subTwo.id"
+                        :to="'/courses-list?courseGroupId=' + subTwo.id"
                         class="cell-link"
                         v-for="subTwo in subGroup.courseGroups"
                         :key="subTwo.id"
@@ -81,7 +81,7 @@
                           <ul class="category-sub">
                             <li v-for="subTwo in subGroup.courseGroups" :key="subTwo.id">
                               <nuxt-link
-                                :to="'/courses-list?filter=' + subTwo.id"
+                                :to="'/courses-list?courseGroupId=' + subTwo.id"
                                 class="link"
                                 >{{ subTwo.groupTitle }}</nuxt-link
                               >
@@ -90,7 +90,7 @@
                         </li>
                         <li v-else :key="subGroup.id">
                           <nuxt-link
-                            :to="'/courses-list?filter=' + subGroup.id"
+                            :to="'/courses-list?courseGroupId=' + subGroup.id"
                             class="link"
                             >{{ subGroup.groupTitle }}</nuxt-link
                           >
@@ -345,15 +345,18 @@ export default {
     },
     hoverCategory() {
       document.querySelector(".mega-menu-shadow").style.display = "block";
+      document.querySelector(".courses-header-link").classList.add("show");
     },
     hoverCategoryoff() {
       document.querySelector(".mega-menu-shadow").style.display = "none";
+      document.querySelector(".courses-header-link").classList.remove("show");
     },
   },
   watch: {
     $route: {
       handler() {
         const check = document.querySelector("#school-header-checkbox");
+        this.hoverCategoryoff();
         check.checked = false;
       },
       deep: true,

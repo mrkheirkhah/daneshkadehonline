@@ -28,10 +28,7 @@
         <div class="row px-0 px-lg-2 px-xl-5 mx-xxl-4 mx-lg-2 mx-0">
           <div class="col-12 col-lg-3">
             <aside>
-              <div
-                class="custom-accordion assortment open"
-                v-if="$route.query.courseGroupId == undefined"
-              >
+              <div class="custom-accordion assortment open">
                 <header class="accordion-header" @click="toggleAccordeon">
                   <h5>دسته بندی</h5>
                   <img
