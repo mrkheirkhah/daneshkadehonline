@@ -69,6 +69,7 @@
                               :class="subGroup.newsGroups == null ? '' : 'has-list'"
                               @click="filterThisPage(subGroup.id, $event)"
                               :key="subGroup.id"
+                              style="cursor: pointer"
                             >
                               <div
                                 :class="subGroup.newsGroups == null ? '' : 'test'"
@@ -86,6 +87,7 @@
                                   <li
                                     :key="subTwoGroup.id"
                                     @click="filterThisPage(subTwoGroup.id, $event)"
+                                    style="cursor: pointer"
                                   >
                                     {{ subTwoGroup.groupTitle }}
                                   </li>
@@ -301,30 +303,31 @@ export default {
     const groups = await this.$axios.get("/api/Public/ProfileActions/GetAllNewsGroups");
     // console.log(groups);
     this.groups = groups.data.data;
-    if (this.$route.query.filter != undefined) {
+    if (this.$route.query.groupId != undefined) {
       const groups = await this.$axios.get(
-        `/api/Public/ProfileActions/GetNewsGroups/${this.$route.query.filter}`
+        `/api/Public/ProfileActions/GetNewsGroups/${this.$route.query.groupId}`
       );
       this.headerGroups = groups.data.data;
     }
-    if (this.$route.query.filter != undefined) {
-      const news = await this.$axios.get(
-        `/api/News/Index?groupId=${this.$route.query.filter}`
-      );
+    if (Object.keys(this.$route.query).length != 0) {
+      let query = "";
+      for (const i in this.$route.query) {
+        query = query + i + "=" + this.$route.query[i] + "&";
+      }
+      query = query.slice(0, -1);
+      const news = await this.$axios.get(`/api/News/Index?${query}`);
       if (news.data.statusCode == 200 && news.data.message == "Success") {
         this.newsItems = news.data.data.newsItems;
         this.filter = news.data.data.filter;
         this.newsCount = news.data.data.newsCount;
       }
     } else {
-      if (this.$store.state.search.newsItems != "") {
+      if (this.$store.state.search.courseItems != "") {
         this.newsItems = this.$store.state.search.newsItems;
         this.filter = this.$store.state.search.newsFilter;
-
         this.newsCount = this.$store.state.search.newsCount;
       } else {
         const news = await this.$axios.get("/api/News/Index");
-        // console.log(news);
         if (news.data.statusCode == 200 && news.data.message == "Success") {
           this.newsItems = news.data.data.newsItems;
           this.filter = news.data.data.filter;
@@ -332,12 +335,46 @@ export default {
         }
       }
     }
+    // if (this.$route.query.filter != undefined) {
+    //   const news = await this.$axios.get(
+    //     `/api/News/Index?groupId=${this.$route.query.filter}`
+    //   );
+    //   if (news.data.statusCode == 200 && news.data.message == "Success") {
+    //     this.newsItems = news.data.data.newsItems;
+    //     this.filter = news.data.data.filter;
+    //     this.newsCount = news.data.data.newsCount;
+    //   }
+    // } else {
+    //   if (this.$store.state.search.newsItems != "") {
+    //     this.newsItems = this.$store.state.search.newsItems;
+    //     this.filter = this.$store.state.search.newsFilter;
+
+    //     this.newsCount = this.$store.state.search.newsCount;
+    //   } else {
+    //     const news = await this.$axios.get("/api/News/Index");
+    //     // console.log(news);
+    //     if (news.data.statusCode == 200 && news.data.message == "Success") {
+    //       this.newsItems = news.data.data.newsItems;
+    //       this.filter = news.data.data.filter;
+    //       this.newsCount = news.data.data.newsCount;
+    //     }
+    //   }
+    // }
     this.loading = false;
   },
   methods: {
     filterThisPage(id, event) {
       event.stopPropagation();
-      this.$router.push("/articles-list?filter=" + id);
+      // console.log(this.$route);
+      if (Object.keys(this.$route.query).length != 0) {
+        if (this.$route.query.groupId == undefined) {
+          this.$router.push(this.$route.fullPath + "&groupId=" + id);
+        } else {
+          this.$router.replace({ query: { ...this.$route.query, groupId: id } });
+        }
+      } else {
+        this.$router.push(this.$route.fullPath + "?groupId=" + id);
+      }
     },
     goToPage(event) {
       this.goTo = event.target.innerHTML;
@@ -356,12 +393,14 @@ export default {
       });
       this.orderById = id;
       event.target.closest("li").classList.add("active");
-      const news = await this.$axios.get(`/api/News/Index?orderBy=${id}`);
-      if (news.data.statusCode == 200 && news.data.message == "Success") {
-        this.newsItems = news.data.data.newsItems;
-        this.filter = news.data.data.filter;
-
-        this.newsCount = news.data.data.newsCount;
+      if (Object.keys(this.$route.query).length != 0) {
+        if (this.$route.query.orderBy == undefined) {
+          this.$router.push(this.$route.fullPath + "&orderBy=" + id);
+        } else {
+          this.$router.replace({ query: { ...this.$route.query, orderBy: id } });
+        }
+      } else {
+        this.$router.push(this.$route.fullPath + "?orderBy=" + id);
       }
     },
   },
@@ -376,31 +415,56 @@ export default {
     },
     goTo: {
       async handler() {
-        const news = await this.$axios.get(
-          `/api/News/Index?pageId=${this.goTo}&orderBy=${this.orderById}`
-        );
-        if (news.data.statusCode == 200 && news.data.message == "Success") {
-          this.newsItems = news.data.data.newsItems;
-          this.filter = news.data.data.filter;
-          this.newsCount = news.data.data.newsCount;
+        if (Object.keys(this.$route.query).length != 0) {
+          if (this.$route.query.pageId == undefined) {
+            this.$router.push(this.$route.fullPath + "&pageId=" + this.goTo);
+          } else {
+            this.$router.replace({ query: { ...this.$route.query, pageId: this.goTo } });
+          }
+        } else {
+          this.$router.push(this.$route.fullPath + "?pageId=" + this.goTo);
         }
       },
       deep: true,
     },
     "$route.query": {
       async handler() {
-        const news = await this.$axios.get(
-          `/api/News/Index?groupId=${this.$route.query.filter}`
-        );
-        if (news.data.statusCode == 200 && news.data.message == "Success") {
-          this.newsItems = news.data.data.newsItems;
-          this.filter = news.data.data.filter;
-          this.newsCount = news.data.data.newsCount;
+        if (Object.keys(this.$route.query).length != 0) {
+          let query = "";
+          for (const i in this.$route.query) {
+            query = query + i + "=" + this.$route.query[i] + "&";
+          }
+          query = query.slice(0, -1);
+          const news = await this.$axios.get(`/api/News/Index?${query}`);
+          if (news.data.statusCode == 200 && news.data.message == "Success") {
+            this.courseItems = news.data.data.courseItems;
+            this.filter = news.data.data.filter;
+            this.studentCount = news.data.data.studentCount;
+          }
+        } else {
+          if (this.$store.state.search.courseItems != "") {
+            this.courseItems = this.$store.state.search.courseItems;
+            this.filter = this.$store.state.search.filter;
+            this.studentCount = this.$store.state.search.studentCount;
+          } else {
+            const news = await this.$axios.get("/api/News/Index");
+            if (news.data.statusCode == 200 && news.data.message == "Success") {
+              this.courseItems = news.data.data.courseItems;
+              this.filter = news.data.data.filter;
+              this.studentCount = news.data.data.studentCount;
+            }
+          }
         }
-        const groups = await this.$axios.get(
-          `/api/Public/ProfileActions/GetNewsGroups/${this.$route.query.filter}`
-        );
-        this.headerGroups = groups.data.data;
+        if (this.$route.query.courseGroupId != undefined) {
+          const groups = await this.$axios.get(
+            `/api/Public/ProfileActions/GetCourseGroups/${this.$route.query.groupId}`
+          );
+          if (groups.data.data.length > 5) {
+            this.headerGroups = groups.data.data.slice(0, 5);
+          } else {
+            this.headerGroups = groups.data.data;
+          }
+        }
       },
       deep: true,
     },

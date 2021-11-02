@@ -73,6 +73,7 @@
                               :class="subGroup.courseGroups == null ? '' : 'has-list'"
                               @click="filterThisPage(subGroup.id, $event)"
                               :key="subGroup.id"
+                              style="cursor: pointer"
                             >
                               <div
                                 :class="subGroup.courseGroups == null ? '' : 'test'"
@@ -90,6 +91,7 @@
                                   <li
                                     :key="subTwoGroup.id"
                                     @click="filterThisPage(subTwoGroup.id, $event)"
+                                    style="cursor: pointer"
                                   >
                                     {{ subTwoGroup.groupTitle }}
                                   </li>
@@ -350,9 +352,9 @@ export default {
   async mounted() {
     const groups = await this.$axios.get("/api/Public/ProfileActions/GetAllCourseGroups");
     this.groups = groups.data.data;
-    if (this.$route.query.filter != undefined) {
+    if (this.$route.query.courseGroupId != undefined) {
       const groups = await this.$axios.get(
-        `/api/Public/ProfileActions/GetCourseGroups/${this.$route.query.filter}`
+        `/api/Public/ProfileActions/GetCourseGroups/${this.$route.query.courseGroupId}`
       );
       if (groups.data.data.length > 5) {
         this.headerGroups = groups.data.data.slice(0, 5);
