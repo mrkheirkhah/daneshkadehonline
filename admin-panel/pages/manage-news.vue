@@ -730,9 +730,7 @@ export default {
               text: "ثبت شد",
               icon: "success",
               showCloseButton: true,
-              showCancelButton: true,
-              confirmButtonText: "بله",
-              cancelButtonText: "خیر",
+              confirmButtonText: "تایید",
             });
             this.resetData();
             this.getNewsData();
@@ -746,6 +744,7 @@ export default {
           });
         }
       } else if (this.submitType == "edit") {
+        let formData = new FormData();
         formData.append("newsId", this.editThis);
         formData.append("title", this.newsTitle);
         formData.append("shortDescription", this.shortDescription);
@@ -772,9 +771,7 @@ export default {
           this.$swal({
             text: "ثبت شد",
             icon: "success",
-            showCancelButton: true,
-            confirmButtonText: "بله",
-            cancelButtonText: "خیر",
+            confirmButtonText: "تایید",
             showCloseButton: true,
           });
           this.resetData();
@@ -894,7 +891,7 @@ export default {
           showCloseButton: true,
           confirmButtonText: "تایید",
         });
-        this.getNewsComments();
+        this.getNewsData();
       }
     },
     replayComment(id, name) {
