@@ -10,7 +10,7 @@
         />
       </span>
       <span class="header-skeleton-left">
-        <span>
+        <!-- <span>
           <skeleton
             class="skeleton left-section"
             width="30px"
@@ -23,7 +23,7 @@
             height="20px"
             borderRadius="5px"
           />
-        </span>
+        </span> -->
         <span>
           <skeleton
             class="skeleton left-section"
@@ -141,7 +141,7 @@
           <div class="hover-box news">
             <div class="hover-box__header">
               <span> اخبار </span>
-              <span class="persian-number">12</span>
+              <span class="persian-number"></span>
             </div>
             <div class="hover-box__content">
               <div class="items-container">
@@ -264,61 +264,6 @@
             </div>
             <div class="hover-box__footer">
               <a href="https://mag.daneshkadeonline.ir/" target="_blank">مشاهده همه</a>
-            </div>
-          </div>
-        </button>
-        <button href="#" class="notifications-btn dashboard-btn bell">
-          <span class="unread-notification-count persian-number">12</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="21.515"
-            height="25.818"
-            viewBox="0 0 21.515 25.818"
-          >
-            <g id="bell" transform="translate(-1.076)">
-              <path
-                id="Path_90"
-                data-name="Path 90"
-                class="cls-1"
-                d="M158.7,420.841a4.038,4.038,0,0,1-4.034-4.034.807.807,0,1,1,1.614,0,2.42,2.42,0,0,0,4.841,0,.807.807,0,1,1,1.614,0A4.038,4.038,0,0,1,158.7,420.841Zm0,0"
-                transform="translate(-146.869 -395.023)"
-                fill="#212121"
-              />
-              <path
-                id="Path_91"
-                data-name="Path 91"
-                class="cls-1"
-                d="M40.965,83.364H23.215a1.883,1.883,0,0,1-1.224-3.313,7.21,7.21,0,0,0,2.569-5.521v-3a7.53,7.53,0,0,1,15.061,0v3a7.208,7.208,0,0,0,2.558,5.513,1.882,1.882,0,0,1-1.213,3.321ZM32.09,65.614a5.923,5.923,0,0,0-5.917,5.917v3a8.817,8.817,0,0,1-3.13,6.745.268.268,0,0,0-.1.207.272.272,0,0,0,.269.269h17.75a.272.272,0,0,0,.269-.269.265.265,0,0,0-.095-.2,8.819,8.819,0,0,1-3.133-6.747v-3A5.923,5.923,0,0,0,32.09,65.614Zm0,0"
-                transform="translate(-20.256 -60.773)"
-                fill="#212121"
-              />
-              <path
-                id="Path_92"
-                data-name="Path 92"
-                class="cls-1"
-                d="M219.475,4.841a.807.807,0,0,1-.807-.807V.807a.807.807,0,1,1,1.614,0V4.034A.807.807,0,0,1,219.475,4.841Zm0,0"
-                transform="translate(-207.641)"
-                fill="#212121"
-              />
-            </g>
-          </svg>
-          <a href="#"> اعلان ها </a>
-          <div class="hover-box notification">
-            <div class="hover-box__header">
-              <span> اطلاعیه </span>
-              <span>12</span>
-            </div>
-            <div class="hover-box__content">
-              <div class="items-container">
-                <p class="item">هاست شما در حال اتمام است برای تمدید اقدام کنید</p>
-                <p class="item">امکانات جدید</p>
-                <p class="item">جشنواره، کلی امکانات باور نکردنی اضافه شده</p>
-                <p class="item">امکانات جدید</p>
-                <p class="item">جشنواره، کلی امکانات باور نکردنی اضافه شده</p>
-              </div>
-            </div>
-            <div class="hover-box__footer">
-              <a href="#">مشاهده همه</a>
             </div>
           </div>
         </button>
