@@ -21,6 +21,7 @@
         overflow-y: scroll;
         direction: ltr;
         .category-item {
+            direction: rtl;
             color: $main-dark-text-color;
             font-size: 15px;
             font-weight: $font-weight-medium;
@@ -36,7 +37,7 @@
                 left: 14px;
                 font-size: 22px;
                 top: 50%;
-                transform: translateY(-50%) rotate(0turn);
+                transform: translateY(-50%) rotate(0.5turn);
             }
 
             &>a {

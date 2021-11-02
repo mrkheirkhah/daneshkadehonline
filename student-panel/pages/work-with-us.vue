@@ -28,7 +28,7 @@
       </header>
       <h1 class="landing-page-title">
         برای ثبت نام
-        <a href="#" class="highlight">کلیک</a>
+        <a href="https://panel.daneshkadeonline.ir/" class="highlight">کلیک</a>
         کنید
       </h1>
     </div>

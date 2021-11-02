@@ -214,6 +214,7 @@ export default {
             confirmButtonText: "تایید",
           });
           this.withdrawReq = "";
+          this.getSettlements();
         }
       } else {
         this.$swal({

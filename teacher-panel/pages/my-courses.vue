@@ -428,44 +428,17 @@
               <a href="#" class="guide-text"> راهنمای انتخاب عکس مناسب </a>
             </label>
           </div>
-          <!-- <div class="form-row">
-            <div for="" class="form-row-col darken-color">
-              <div class="separator pseudo-form-input">
-                <input type="file" id="upload-course-parts" />
-                <span>بارگذاری قسمت های دوره</span>
-                <span>
-                  <label for="upload-course-parts" class="cover-btn">انتخاب</label>
-                </span>
-              </div>
-            </div>
-            <label for="" class="form-row-col guide-section">
-              <a href="#" class="guide-text"> راهنمای انتخاب عکس مناسب </a>
-            </label>
-          </div>
-          <hr />
-          <div class="course-parts-container custom-scrollbar">
-            <div class="form-row">
-              <div class="form-row-col">
-                <div class="separator pseudo-form-input">
-                  <span>قسمت اول (نام فایل)</span>
-                  <span>
-                    <button class="cover-btn delete" type="button">حذف</button>
-                    <button class="cover-btn" type="button">مشاهده</button>
-                  </span>
-                </div>
-              </div>
-              <label for="" class="form-row-col guide-section">
-                <span class="guide-text gray"> پیش نمایش دوره ( رایگان ) </span>
-              </label>
-            </div>
-            <uploaded-parts part="1" name="قسمت دوم (نام فایل)" />
-            <uploaded-parts part="2" name="قسمت سوم (نام فایل)" />
-            <uploaded-parts part="3" name="قسمت چهارم (نام فایل)" />
-            <uploaded-parts part="4" name="قسمت پنجم (نام فایل)" />
-           </div> -->
           <button class="form-btn success" @click.prevent="uploadCourse">
             ثبت و نهایی کردن
           </button>
+          <div class="options-buttons" v-if="SubmitType == 'edit'">
+            <button class="form-btn" @click.prevent="banCourse('Completed')">
+              کامل کردن دوره
+            </button>
+            <button class="form-btn" @click.prevent="banCourse('InProgress')">
+              درحال پخش کردن دوره
+            </button>
+          </div>
         </template>
       </form>
     </div>

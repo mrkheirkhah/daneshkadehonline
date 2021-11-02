@@ -23,13 +23,13 @@
 }
 @media screen and (max-width: $big-mobile-responsive) {
 
-        .options-buttons {
-            margin: 35px 0 55px;
-            button {
-                width: 48%;
-                flex-grow: 1;
-            }
-        
+    .options-buttons {
+        margin: 35px 0 55px;
+        button {
+            width: 48%;
+            flex-grow: 1;
+        }
+    
     }
 }
 @media screen and (max-width: $mobile-responsive) {
