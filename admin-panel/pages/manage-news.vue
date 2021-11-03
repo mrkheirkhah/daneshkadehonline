@@ -34,11 +34,17 @@
             />
           </label>
           <label for="" class="form-row-col">
-            <input
+            <!-- <input
               type="text"
               class="form-input"
               v-model="newsLink"
               placeholder="آدرس لینک کوتاه"
+            /> -->
+            <input
+              type="number"
+              class="form-input"
+              v-model="readTime"
+              placeholder="تایم مطالعه (عدد)"
             />
           </label>
         </div>
@@ -54,14 +60,14 @@
             ></textarea>
           </label>
           <label for="" class="form-row-col">
-            <label for="" class="form-row-col">
-              <input
+            <!-- <label for="" class="form-row-col"> -->
+            <!-- <input
                 type="number"
                 class="form-input"
                 v-model="readTime"
                 placeholder="تایم مطالعه (عدد)"
-              />
-            </label>
+              /> -->
+            <!-- </label> -->
             <div for="" class="form-row-col darken-color">
               <div class="separator pseudo-form-input">
                 <input

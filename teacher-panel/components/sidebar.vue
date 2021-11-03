@@ -67,45 +67,55 @@
         </div>
       </div>
       <div v-else class="panel-item-container top custom-scrollbar">
-        <nuxt-link class="panel-item" to="/" v-intro="'The first content of tooltip'">
+        <nuxt-link
+          class="panel-item"
+          to="/"
+          v-intro="
+            'پروفایل کاربری شامل اطلاعات کامل و به منظور هویت شما در پلتفرم دانشکده آنلاین میباشد و تکمیل تمام فیلد های آن لازم است تا پروفایل شما فعال بشود .'
+          "
+        >
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"
               v-html="require('@/static/panel-teacher-icons/user.svg?raw')"
             />
-            پروفایل کاربری
+            پروفایل
+          </div>
+        </nuxt-link>
+        <nuxt-link
+          class="panel-item"
+          to="/my-courses"
+          v-intro="'در این صفحه میتوانید اشتراک آموزشی خود را ایجاد کنید .'"
+        >
+          <div class="sidebar-links">
+            <div
+              class="sidebar-links-icon"
+              v-html="require('@/static/panel-teacher-icons/brush-icon.svg?raw')"
+            />
+            ایجاد اشتراک آموزشی
           </div>
         </nuxt-link>
         <nuxt-link
           class="panel-item"
           to="/create-package"
-          v-intro="'The second content of tooltip'"
+          v-intro="
+            'برای ایجاد یک پکیج و بارگذاری فایل های آن ، ابتدا باید درخواست ثبت پکیج ثبت کنید و کامل توضیح دهید که پکیج آموزشی شما در چه زمینه است و چه قیمتی را برای آن درنظر دارید .'
+          "
         >
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"
               v-html="require('@/static/panel-teacher-icons/user.svg?raw')"
             />
-            ثبت پکیج
-          </div>
-        </nuxt-link>
-        <nuxt-link
-          class="panel-item"
-          to="/buy-volume"
-          v-intro="'The third content of tooltip'"
-        >
-          <div class="sidebar-links">
-            <div
-              class="sidebar-links-icon"
-              v-html="require('@/static/panel-teacher-icons/headphone.svg?raw')"
-            />
-            خرید حجم اضافه
+            ثبت پکیج آموزشی
           </div>
         </nuxt-link>
         <nuxt-link
           class="panel-item"
           to="/discount-code"
-          v-intro="'The fourth content of tooltip'"
+          v-intro="
+            'در این قسمت شما میتوانید برای دوره های خود کد تخفیف اختصاصی ایجاد کنید و به صلاح دید خود از آن استفاده کنید .'
+          "
         >
           <div class="sidebar-links">
             <!-- most be change icon -->
@@ -113,7 +123,50 @@
               class="sidebar-links-icon"
               v-html="require('@/static/panel-teacher-icons/headphone.svg?raw')"
             />
-            ثبت تخفیف
+            ایجاد کد تخفیف
+          </div>
+        </nuxt-link>
+        <nuxt-link
+          class="panel-item"
+          to="/buy-volume"
+          v-intro="
+            'درصورت نیاز به حجم بیشتر به منظور ذخیره ویدیو ها در اشتراک ، میتوانید فضای حجمی بیشتر خریداری کنید (فضای حجمی فقط برای اشتراک ها میباشد)'
+          "
+        >
+          <div class="sidebar-links">
+            <div
+              class="sidebar-links-icon"
+              v-html="require('@/static/panel-teacher-icons/headphone.svg?raw')"
+            />
+            خرید حجم
+          </div>
+        </nuxt-link>
+        <nuxt-link
+          class="panel-item"
+          to="/withdraw"
+          v-intro="
+            'در این قسمت میتوانید درخواست برداشت از درآمد خود را ثبت کنید تا مبلغ برای شما واریز گردد'
+          "
+        >
+          <div class="sidebar-links">
+            <div
+              class="sidebar-links-icon"
+              v-html="require('@/static/panel-teacher-icons/diagram-icon.svg?raw')"
+            />
+            برداشت از کیف پول
+          </div>
+        </nuxt-link>
+        <nuxt-link
+          class="panel-item"
+          to="/transactions"
+          v-intro="'در این قسمت میتوانید گزارش های مربوط به تراکنش ها را مشاهده کنید .'"
+        >
+          <div class="sidebar-links">
+            <div
+              class="sidebar-links-icon"
+              v-html="require('@/static/panel-teacher-icons/coin-icon.svg?raw')"
+            />
+            گزارشات مالی
           </div>
         </nuxt-link>
         <nuxt-link class="panel-item" to="/messages">
@@ -207,15 +260,7 @@
             </li>
           </ul>
         </div> -->
-        <nuxt-link class="panel-item" to="/my-courses">
-          <div class="sidebar-links">
-            <div
-              class="sidebar-links-icon"
-              v-html="require('@/static/panel-teacher-icons/brush-icon.svg?raw')"
-            />
-            دوره های من
-          </div>
-        </nuxt-link>
+
         <!-- <nuxt-link class="panel-item" to="/documents">
           <div class="sidebar-links">
             <div
@@ -225,24 +270,6 @@
             مدارک محرمانه
           </div>
         </nuxt-link> -->
-        <nuxt-link class="panel-item" to="/transactions">
-          <div class="sidebar-links">
-            <div
-              class="sidebar-links-icon"
-              v-html="require('@/static/panel-teacher-icons/coin-icon.svg?raw')"
-            />
-            تراکنش ها
-          </div>
-        </nuxt-link>
-        <nuxt-link class="panel-item" to="/withdraw">
-          <div class="sidebar-links">
-            <div
-              class="sidebar-links-icon"
-              v-html="require('@/static/panel-teacher-icons/diagram-icon.svg?raw')"
-            />
-            برداشت از کیف پول
-          </div>
-        </nuxt-link>
       </div>
     </div>
     <!-- bottom sidebar -->
@@ -266,7 +293,11 @@
         </div>
       </div>
       <div v-else class="panel-item-container custom-scrollbar">
-        <nuxt-link class="panel-item" to="/profile">
+        <nuxt-link
+          class="panel-item"
+          to="/profile"
+          v-intro="'در این صفحه میتوانید اطلاعات پروفایل خود را ویرایش کنید .'"
+        >
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"
@@ -275,7 +306,13 @@
             تنظیمات
           </div>
         </nuxt-link>
-        <nuxt-link class="panel-item" to="/support">
+        <nuxt-link
+          class="panel-item"
+          to="/support"
+          v-intro="
+            'در صورت نیاز به راهنمایی بیشتر میتوانید برای دریافت پشتیبانی تیکت ثبت کنید .'
+          "
+        >
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"

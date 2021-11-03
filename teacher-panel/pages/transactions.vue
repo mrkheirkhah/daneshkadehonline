@@ -9,27 +9,25 @@
         <template v-else>
           <header class="table-row table-header">
             <span>نوع</span>
-            <span>نام دوره</span>
+            <span>توضیحات</span>
             <span>تاریخ</span>
             <span>ساعت</span>
             <span>قیمت (تومان)</span>
             <span>کد پیگیری</span>
-            <span class="card-number header"
-              >شماره کارت
-              <label
-                for="transaction-search-btn"
-                class="transaction-search-box"
-                tabindex="0"
-              >
-                <input
-                  type="search"
-                  placeholder="جستجو کنید"
-                  class="transaction-search-btn"
-                  id="transaction-search-btn"
-                />
-                <img src="@/static/panel-teacher-icons/search-icon.svg" alt="آیکون سرچ" />
-              </label>
-            </span>
+            <label
+              for="transaction-search-btn"
+              class="transaction-search-box"
+              tabindex="0"
+            >
+              <input
+                type="search"
+                placeholder="جستجو کنید"
+                class="transaction-search-btn"
+                id="transaction-search-btn"
+              />
+              <img src="@/static/panel-teacher-icons/search-icon.svg" alt="آیکون سرچ" />
+            </label>
+            <!-- <span class="card-number header"> </span> -->
           </header>
           <div
             class="table-row"
@@ -37,11 +35,11 @@
             v-for="transaction in transactionsData"
             :key="transaction.id"
           >
-            <span class="transaction-type withdraw" v-if="transaction.type == 2"
-              >برداشت</span
+            <span class="transaction-type settle" v-if="transaction.type == 'BuyCourse'"
+              >خرید دوره</span
             >
-            <span class="transaction-type settle" v-if="transaction.type == 1"
-              >واریز</span
+            <span class="transaction-type withdraw" v-if="transaction.type == 'BuyVolume'"
+              >خرید حجم</span
             >
             <span class="transaction-detail">
               <small>{{ transaction.title }}</small>
@@ -52,9 +50,8 @@
             <span class="persian-number">{{
               new Date(transaction.createDate).toTimeString().slice(0, 5)
             }}</span>
-            <span class="persian-number">{{ transaction.amount }}</span>
+            <span class="persian-number">{{ transaction.originalPrice }}</span>
             <span class="persian-number">{{ transaction.trackingCode }}</span>
-            <span class="card-number persian-number">{{ transaction.cardNumber }}</span>
           </div>
 
           <footer class="table-footer">
@@ -89,10 +86,9 @@
       </div>
       <div class="detail-box">
         <p class="text">
-          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از
-          طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که
-          لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود
-          ابزارهای کاربردی می باشد، کتابهای زیادی در شصت.
+          در این صفحه میتوانید به تمام تراکنش های واریز و برداشت خود دسترسی داشته باشید و
+          یا حتی با استفاده از فیلتر ، تراکنش های مربوط به تاریخ مشخصی را دریافت کنید -
+          همچنین میتوانید در صورت نیاز خروجی اکسل از لیست تراکنشات دانلود کنید .
         </p>
       </div>
       <div class="section-title">
@@ -164,6 +160,7 @@ export default {
       },
     });
     if (transactions.data.statusCode == 200 && transactions.data.message == "Success") {
+      console.log(transactions);
       this.transactionsData = transactions.data.data;
       this.loading = false;
     }

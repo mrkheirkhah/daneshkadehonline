@@ -76,10 +76,13 @@
                 />
               </template>
               <template v-else>
-                <a :href="
-                      'https://www.linkedin.com/sharing/share-offsite/?url=https://www.daneshkadeonline.ir' +
-                      $route.fullPath
-                    " target="_blank">
+                <a
+                  :href="
+                    'https://www.linkedin.com/sharing/share-offsite/?url=https://www.daneshkadeonline.ir' +
+                    $route.fullPath
+                  "
+                  target="_blank"
+                >
                   <svg
                     class="linkedin"
                     xmlns="http://www.w3.org/2000/svg"
@@ -134,7 +137,8 @@
                   :href="
                     'https://twitter.com/intent/tweet?url=https://www.daneshkadeonline.ir' +
                     $route.fullPath
-                  " target="_blank"
+                  "
+                  target="_blank"
                 >
                   <svg
                     class="twitter"
@@ -187,17 +191,6 @@
           </div>
         </aside>
         <main class="news-content col-12 col-lg-10">
-          <!-- <header>
-            <h3>یک عنوان تستی</h3>
-            <p class="intro-detail">
-              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از
-              طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که
-              لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف
-              بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و
-              آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت
-              بیشتری را برای
-            </p>
-          </header> -->
           <template v-if="loading">
             <skeleton class="skeleton" width="70%" height="20px" borderRadius="5px" />
             <br />
@@ -209,7 +202,7 @@
           </template>
           <template v-else>
             <div class="part">
-              <h4 class="part-title">{{ newsDetail.title }}</h4>
+              <h2 class="part-title">{{ newsDetail.title }}</h2>
               <p class="part-detail">{{ newsDetail.shortDescription }}</p>
             </div>
 

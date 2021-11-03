@@ -145,6 +145,17 @@
             .part {
                 border-top: 1px dashed #ececec;
                 margin: 20px 0 5px;
+                .part-title {
+                    // font-size: 18px;
+    
+                    // position: relative;
+                    // top: -23px;
+                    // background-color: #fff;
+                    padding: 5px 2px 15px 2px;
+                    color: #1E232C;
+                    // width: fit-content;
+                    font-weight: $font-weight-bold;
+                }
             }
 
             .table-of-content {

@@ -196,7 +196,9 @@
 
                 <span class="course-teacher">
                   تاریخ:
-                  <span class="teacher-name persian-number">14 مهر 1400</span>
+                  <span class="teacher-name persian-number">{{
+                    new Date(item.createDate).toLocaleDateString("fa-IR")
+                  }}</span>
                 </span>
                 <span class="course-viewers">
                   بیننده
