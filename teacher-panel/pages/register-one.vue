@@ -174,7 +174,7 @@
           <div class="form-row">
             <label for="" class="form-row-col">
               <input
-                type="tell"
+                type="tel"
                 class="form-input"
                 :value="phoneNumber"
                 placeholder="شماره موبایل"

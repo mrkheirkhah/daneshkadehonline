@@ -53,11 +53,13 @@
             >موفقیت آمیز</span
           >
           <span class="transaction-state failed" v-else>ناموفق</span>
-          <nuxt-link
-            :to="{ path: '/cart', query: { id: transaction.id } }"
-            class="transaction-state failed"
-            >مشاهده</nuxt-link
-          >
+          <span>
+            <nuxt-link
+              :to="{ path: '/cart', query: { id: transaction.id } }"
+              class="transaction-state failed"
+              >مشاهده</nuxt-link
+            >
+          </span>
         </div>
       </template>
 

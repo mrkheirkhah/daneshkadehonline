@@ -70,7 +70,7 @@
         </label> -->
         <label for="" class="form-row-col">
           <input
-            type="tell"
+            type="tel"
             class="form-input"
             v-model="phoneNumber"
             placeholder="شماره موبایل"

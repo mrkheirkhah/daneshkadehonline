@@ -369,18 +369,22 @@ export default {
           audioChunks.push(event.data);
         });
         document.addEventListener("mouseup", () => {
-          clearInterval(this.timerInterval);
-          mediaRecorder.stop();
-          stream
-            .getTracks() // get all tracks from the MediaStream
-            .forEach((track) => track.stop());
+          try {
+            clearInterval(this.timerInterval);
+            mediaRecorder.stop();
+            stream
+              .getTracks() // get all tracks from the MediaStream
+              .forEach((track) => track.stop());
+          } catch {}
         });
         document.addEventListener("touchend", () => {
-          clearInterval(this.timerInterval);
-          mediaRecorder.stop();
-          stream
-            .getTracks() // get all tracks from the MediaStream
-            .forEach((track) => track.stop());
+          try {
+            clearInterval(this.timerInterval);
+            mediaRecorder.stop();
+            stream
+              .getTracks() // get all tracks from the MediaStream
+              .forEach((track) => track.stop());
+          } catch {}
         });
         mediaRecorder.addEventListener("stop", () => {
           const audioBlob = new Blob(audioChunks);

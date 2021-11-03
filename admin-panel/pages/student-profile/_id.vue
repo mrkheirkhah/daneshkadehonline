@@ -184,7 +184,7 @@
             </label>
             <label for="" class="form-row-col">
               <input
-                type="number"
+                type="tel"
                 class="form-input has-cover-btn"
                 placeholder="شماره موبایل"
                 v-model="phoneNumber"

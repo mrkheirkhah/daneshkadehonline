@@ -61,6 +61,6 @@ export default function({$axios,store,app}){
                 // app.router.push('/my/login')
             })
         }
-        return Promise.reject(error)
+        return Promise.reject(err)
     })
 }

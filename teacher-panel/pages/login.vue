@@ -10,7 +10,7 @@
           <label for="mobile-number" class="input-label">
             <input
               v-model="phoneNumber"
-              type="number"
+              type="tel"
               name=""
               :class="wrongNumber ? 'red' : ''"
               id="mobile-number"

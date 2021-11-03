@@ -161,7 +161,7 @@
           <div class="form-row">
             <label for="" class="form-row-col">
               <input
-                type="tell"
+                type="tel"
                 class="form-input"
                 placeholder="شماره موبایل"
                 disabled
@@ -249,8 +249,8 @@ export default {
           charset: "utf-8",
         },
         {
-          src: 'https://trk.tablighdrive.com/pixel/submit.action.js'
-        }
+          src: "https://trk.tablighdrive.com/pixel/submit.action.js",
+        },
       ],
     };
   },

@@ -154,14 +154,14 @@
             </div>
             <div class="hover-box__content">
               <div class="items-container">
-                <nuxt-link
-                  :to="'https://daneshkadeonline.ir/news/' + anyNews.newsId"
+                <a
+                  :href="'https://daneshkadeonline.ir/news/' + anyNews.newsId"
                   class="item"
                   v-for="anyNews in news"
                   :key="anyNews.newsId"
                 >
                   {{ anyNews.title }}
-                </nuxt-link>
+                </a>
               </div>
             </div>
             <div class="hover-box__footer">

@@ -326,10 +326,10 @@ export default {
   },
   methods: {
     async getMags() {
-      const mags = await this.$axios.get(
-        "https://mag.daneshkadeonline.ir/wp-json/wp/v2/posts?per_page=5"
-      );
-      this.mags = mags.data;
+      // const mags = await this.$axios.get(
+      //   "https://mag.daneshkadeonline.ir/wp-json/wp/v2/posts"
+      // );
+      // this.mags = mags.data;
     },
     async getNews() {
       const alerts = await this.$axios.get("/api/News/Index");

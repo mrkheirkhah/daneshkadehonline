@@ -238,7 +238,7 @@
         <div class="form-row">
           <label for="" class="form-row-col">
             <input
-              type="tell"
+              type="tel"
               class="form-input"
               placeholder="شماره موبایل معلم"
               v-model="teacherPhoneNumber"

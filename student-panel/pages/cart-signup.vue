@@ -9,7 +9,7 @@
                 <input type="text" v-model="name" placeholder="نام و نام خانوادگی" />
               </div>
               <div class="form-row-col">
-                <input type="tell" v-model="phoneNumber" placeholder="شماره موبایل" />
+                <input type="tel" v-model="phoneNumber" placeholder="شماره موبایل" />
               </div>
             </div>
             <div class="form-row" v-else>
