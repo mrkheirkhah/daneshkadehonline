@@ -454,6 +454,7 @@ export default {
             {
               ticks: {
                 beginAtZero: true,
+                fontFamily: "IRANSansX",
               },
               gridLines: {
                 display: true,
@@ -462,6 +463,9 @@ export default {
           ],
           xAxes: [
             {
+              ticks: {
+                fontFamily: "IRANSansX",
+              },
               gridLines: {
                 display: false,
               },

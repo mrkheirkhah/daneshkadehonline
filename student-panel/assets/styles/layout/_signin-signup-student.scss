@@ -31,7 +31,13 @@
 
     &-content {
         color: $main-dark-text-color;
-
+        .wrong-text{
+            position: absolute;
+            display: block;
+            width: 100%;
+            font-size: 10px;
+            color: $active-color;
+        }
         .form-box {
             width: 100%;
             border-radius: 24px;
@@ -90,7 +96,9 @@
                     color: #8F96A2;
                     text-align: right;
                 }
-
+                &.red{
+                    border-color: $active-color;
+                }
                 &:focus {
                     outline-color: $active-color;
                 }

@@ -162,7 +162,7 @@
           <p class="section-title-text">معرفی دوره</p>
         </div>
         <div>
-          <ckeditorNuxt v-model="content" />
+          <ckeditorNuxt v-model="content" :config="editorConfig" />
         </div>
         <div id="teacher-course-editor" class="froala-editor"></div>
         <br />
@@ -334,13 +334,19 @@
           </div>
         </div>
         <div class="options-buttons">
-          <button class="form-btn red-color" v-if="isEdit" @click.prevent="deleteCourse">
+          <button
+            class="form-btn red-color"
+            v-if="isEdit"
+            @click.prevent="deleteCourse"
+            :disabled="isSendingDelete"
+          >
             حذف دوره
           </button>
           <button
             class="form-btn"
             v-if="isEdit && status == 'Stopped'"
             @click.prevent="banCourse('false')"
+            :disabled="isSendingBan"
           >
             رفع مسدودیت
           </button>
@@ -348,19 +354,31 @@
             class="form-btn red-color"
             v-if="isEdit"
             @click.prevent="banCourse('Stopped')"
+            :disabled="isSendingBan"
           >
             مسدود کردن دوره
           </button>
-          <button class="form-btn" v-if="isEdit" @click.prevent="banCourse('Completed')">
+          <button
+            class="form-btn"
+            v-if="isEdit"
+            @click.prevent="banCourse('Completed')"
+            :disabled="isSendingBan"
+          >
             کامل کردن دوره
           </button>
-          <button class="form-btn" v-if="isEdit" @click.prevent="banCourse('InProgress')">
+          <button
+            class="form-btn"
+            v-if="isEdit"
+            @click.prevent="banCourse('InProgress')"
+            :disabled="isSendingBan"
+          >
             درحال پخش کردن دوره
           </button>
           <button
             class="form-btn green-color"
             v-if="isEdit"
             @click.prevent="changeAcceptCourse('true')"
+            :disabled="isSendingAccept"
           >
             تائید ویرایشات
           </button>
@@ -368,11 +386,17 @@
             class="form-btn red-color"
             v-if="isEdit"
             @click.prevent="changeAcceptCourse('false')"
+            :disabled="isSendingAccept"
           >
             رد دوره
           </button>
         </div>
-        <button class="form-btn success" @click.prevent="addCourse" v-if="!isSee">
+        <button
+          class="form-btn success"
+          @click.prevent="addCourse"
+          v-if="!isSee"
+          :disabled="isSending"
+        >
           ثبت و نهایی کردن
         </button>
       </form>
@@ -423,6 +447,13 @@ export default {
       nameUnderPhone: "",
       submitType: this.$route.params.type,
       priceUnderSuggestionPrice: 0,
+      editorConfig: {
+        language: "fa",
+      },
+      isSending: false,
+      isSendingDelete: false,
+      isSendingAccept: false,
+      isSendingBan: false,
     };
   },
   computed: {
@@ -605,6 +636,7 @@ export default {
       });
     },
     async addCourse() {
+      this.isSending = true;
       if (
         this.topicsString != "" &&
         this.content != "" &&
@@ -723,8 +755,10 @@ export default {
           confirmButtonText: "تایید",
         });
       }
+      this.isSending = false;
     },
     async banCourse(action) {
+      this.isSendingBan = true;
       this.$swal({
         text:
           action == "Stopped"
@@ -769,8 +803,10 @@ export default {
         } else {
         }
       });
+      this.isSendingBan = false;
     },
     async deleteCourse() {
+      this.isSendingDelete = true;
       this.$swal({
         text: "از حذف کردن دوره اطمینان دارید؟",
         icon: "warning",
@@ -811,8 +847,10 @@ export default {
         } else {
         }
       });
+      this.isSendingDelete = false;
     },
     async changeAcceptCourse(status) {
+      this.isSendingAccept = true;
       this.$swal({
         text:
           status == "true"
@@ -856,6 +894,7 @@ export default {
         } else {
         }
       });
+      this.isSendingAccept = false;
     },
   },
   watch: {

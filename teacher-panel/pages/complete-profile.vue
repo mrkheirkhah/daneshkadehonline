@@ -326,10 +326,14 @@
                 cols="22"
                 rows="0"
                 v-model="aboutTeacher"
+                :class="wrongAbout ? 'red' : ''"
                 placeholder="درباره مدرس"
                 class="form-input form-textarea"
               >
               </textarea>
+              <p class="wrong-text" style="bottom: 0px" v-if="wrongAbout">
+                پر کردن این بخش اجباری است
+              </p>
             </div>
             <label for="" class="form-row-col">
               <!-- <input
@@ -380,22 +384,32 @@
             </label>
             <label for="" class="form-row-col">
               <input
-                type="number"
+                type="text"
                 class="form-input"
+                :class="wrongShebaNumber ? 'red' : ''"
                 placeholder="شماره شبا"
+                @keyup="justNumber"
                 v-model="shebaNumber"
               />
+              <p class="wrong-text" style="top: 69px" v-if="wrongShebaNumber">
+                شماره شبا صحیح نمیباشد
+              </p>
               <label for="" class="cover-btn">IR</label>
             </label>
           </div>
           <div class="form-row">
             <label for="" class="form-row-col">
               <input
-                type="number"
+                type="text"
                 class="form-input"
                 placeholder="شماره کارت"
+                :class="wrongCardNumber ? 'red' : ''"
                 v-model="cardNumber"
+                @keyup="addDashes"
               />
+              <p class="wrong-text" style="top: 69px" v-if="wrongCardNumber">
+                شماره کارت صحیح نمیباشد
+              </p>
             </label>
             <label for="" class="form-row-col">
               <input
@@ -428,7 +442,11 @@
               </label>
             </div>
           </div>
-          <button class="form-btn success" @click.prevent="complateProfile">
+          <button
+            class="form-btn success"
+            @click.prevent="complateProfile"
+            :disabled="isSending"
+          >
             ثبت و نهایی کردن
           </button>
         </template>
@@ -484,7 +502,7 @@
 import skeleton from "@/components/skeleton-components/skeletonCreator";
 export default {
   layout: "dashboardLay",
-  // middleware: "newMember",
+  middleware: "newMember",
   components: { skeleton },
   async mounted() {
     let [getProfData, getDocData, getdegre, getGroups] = await Promise.all([
@@ -524,8 +542,11 @@ export default {
       getDocData.data.data.shebaNumber !== null
         ? (this.shebaNumber = getDocData.data.data.shebaNumber)
         : {};
-      getDocData.data.data.cardNumber !== null
-        ? (this.cardNumber = getDocData.data.data.cardNumber)
+      getDocData.data.data.cardNumber !== null &&
+      getDocData.data.data.cardNumber.length > 0
+        ? (this.cardNumber = getDocData.data.data.cardNumber
+            .match(new RegExp(".{1,4}", "g"))
+            .join("-"))
         : {};
       getDocData.data.data.address !== null
         ? (this.address = getDocData.data.data.address)
@@ -533,7 +554,7 @@ export default {
       // profile data
       this.selectedCourseGroups = getProfData.data.data.groupIds;
       this.selectedDegreGroup = getProfData.data.data.educationId;
-      for (const i in this.degree) {
+      for (const i of this.degree) {
         if (this.selectedDegreGroup == i.id) {
           this.drop = i.title;
         }
@@ -597,10 +618,14 @@ export default {
       referralCodeIsNull: "",
       courseGroups: "",
       selectedCourseGroups: [],
-      selectedDegreGroupImage: "",
+      selectedDegreGroupImage: undefined,
       selectedCourseGroupsNames: [],
       profImageFile: undefined,
       profileType: "",
+      wrongCardNumber: false,
+      wrongShebaNumber: false,
+      wrongAbout: false,
+      isSending: false,
     };
   },
   methods: {
@@ -627,6 +652,21 @@ export default {
         this.needImage = "";
         this.dontNeedImage = id;
       }
+    },
+    addDashes() {
+      if (this.cardNumber.length <= 19) {
+        this.cardNumber = this.cardNumber.replace(/[^0-9]/g, "");
+        this.cardNumber = this.cardNumber.split("-").join(""); // remove hyphens
+        if (this.cardNumber.length > 0) {
+          this.cardNumber = this.cardNumber.match(new RegExp(".{1,4}", "g")).join("-");
+        }
+      } else {
+        this.cardNumber = this.cardNumber.substring(0, 19);
+      }
+    },
+    justNumber() {
+      this.shebaNumber = this.shebaNumber.replace(/[^0-9]/g, "");
+      this.shebaNumber = this.shebaNumber.split("-").join(""); // remove hyphens
     },
     chooseCourseGroup(event, id, name) {
       if (
@@ -747,58 +787,77 @@ export default {
         this.profImageFile = new File([this.cropped], this.profImageName, {
           type: this.profileType,
         });
-        // console.log(this.profImageFile);
       }
-      let formData = new FormData();
-      formData.append("EducationImage", this.selectedDegreGroupImage);
-      formData.append("EducationId", this.selectedDegreGroup);
-      for (let i = 0; i < this.selectedCourseGroups.length; i++) {
-        formData.append("GroupIds", this.selectedCourseGroups[i]);
+      if (this.cardNumber.length > 0 && this.cardNumber.length != 19) {
+        this.wrongCardNumber = true;
       }
-      formData.append("ProfileImage", this.profImageFile);
-      formData.append("Email", this.email);
-      formData.append("Description", this.aboutTeacher);
-      formData.append("ReferralCode", this.reffererCode);
-
-      let formDataDoc = new FormData();
-      formDataDoc.append("ShebaNumber", this.shebaNumber);
-      formDataDoc.append("CardNumber", this.cardNumber);
-      formDataDoc.append("Address", this.address);
-      formDataDoc.append("NationalCardImage", this.selectedNTImage);
-      {
-        let [profData, docData] = await Promise.all([
-          this.$axios.post("/api/Teacher/TeacherProfile/CompleteProfile", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
-          }),
-
-          this.$axios.post("/api/Teacher/TeacherDocument/Document", formDataDoc, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
-          }),
-        ]);
-        if (profData.data.statusCode == 200 && docData.data.statusCode == 200) {
-          this.$swal({
-            text: "تغییرات ثبت شد.منتظر تایید ادمین ها بمانید",
-            icon: "success",
-            showCloseButton: true,
-            confirmButtonText: "تایید",
-          });
-        } else if (
-          profData.data.statusCode == 400 &&
-          profData.data.message == "ReferralCodeNotFound"
-        ) {
-          this.$swal({
-            text: "کد معرف اشتباه می باشد",
-            icon: "error",
-            showCloseButton: true,
-            confirmButtonText: "تایید",
-          });
+      if (this.shebaNumber.length > 0 && this.shebaNumber.length != 24) {
+        this.wrongShebaNumber = true;
+      }
+      if (this.aboutTeacher == "") {
+        this.wrongAbout = true;
+      } else if (
+        (this.shebaNumber.length == 0 || this.shebaNumber.length == 24) &&
+        (this.cardNumber.length == 0 || this.cardNumber.length == 19) &&
+        this.aboutTeacher != ""
+      ) {
+        this.isSending = true;
+        this.wrongCardNumber = false;
+        this.wrongShebaNumber = false;
+        this.wrongAbout = false;
+        let formData = new FormData();
+        const cardNumber = this.cardNumber.replace(/-/g, "");
+        formData.append("EducationImage", this.selectedDegreGroupImage);
+        formData.append("EducationId", this.selectedDegreGroup);
+        for (let i = 0; i < this.selectedCourseGroups.length; i++) {
+          formData.append("GroupIds", this.selectedCourseGroups[i]);
         }
+        formData.append("ProfileImage", this.profImageFile);
+        formData.append("Email", this.email);
+        formData.append("Description", this.aboutTeacher);
+        formData.append("ReferralCode", this.reffererCode);
+
+        let formDataDoc = new FormData();
+        formDataDoc.append("ShebaNumber", this.shebaNumber);
+        formDataDoc.append("CardNumber", cardNumber);
+        formDataDoc.append("Address", this.address);
+        formDataDoc.append("NationalCardImage", this.selectedNTImage);
+        {
+          let [profData, docData] = await Promise.all([
+            this.$axios.post("/api/Teacher/TeacherProfile/CompleteProfile", formData, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${this.$cookies.get("key")}`,
+              },
+            }),
+
+            this.$axios.post("/api/Teacher/TeacherDocument/Document", formDataDoc, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${this.$cookies.get("key")}`,
+              },
+            }),
+          ]);
+          if (profData.data.statusCode == 200 && docData.data.statusCode == 200) {
+            this.$swal({
+              text: "تغییرات ثبت شد.منتظر تایید ادمین ها بمانید",
+              icon: "success",
+              showCloseButton: true,
+              confirmButtonText: "تایید",
+            });
+          } else if (
+            profData.data.statusCode == 400 &&
+            profData.data.message == "ReferralCodeNotFound"
+          ) {
+            this.$swal({
+              text: "کد معرف اشتباه می باشد",
+              icon: "error",
+              showCloseButton: true,
+              confirmButtonText: "تایید",
+            });
+          }
+        }
+        this.isSending = false;
       }
     },
   },
@@ -809,6 +868,27 @@ export default {
           if (n.title === this.drop) {
             this.selectedDegree = n.id;
           }
+        }
+      },
+      deep: true,
+    },
+    cardNumber: {
+      handler() {
+        if (this.cardNumber.length != 19) {
+          this.wrongCardNumber = true;
+        } else {
+          this.wrongCardNumber = false;
+        }
+      },
+      deep: true,
+    },
+    shebaNumber: {
+      handler() {
+        if (this.shebaNumber.length < 24) {
+          this.wrongShebaNumber = true;
+        } else {
+          this.shebaNumber = this.shebaNumber.substring(0, 24);
+          this.wrongShebaNumber = false;
         }
       },
       deep: true,

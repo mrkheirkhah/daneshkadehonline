@@ -8,16 +8,18 @@
           </header>
           <h1 class="title">کد تایید</h1>
           <h3 class="hint-text" v-if="$route.params.id == 'login'">
-            کد تایید را وارد کنید &#40;<span class="teacher-mobile persian-number">{{
+            کد تایید برای شماره موبایل
+            <span class="teacher-mobile persian-number">{{
               this.$store.state.login.phoneNumber
-            }}</span
-            >&#41;
+            }}</span>
+            ارسال شد.
           </h3>
           <h3 class="hint-text" v-if="$route.params.id == 'register'">
-            حساب کاربری با شماره موبایل &#40;<span
-              class="teacher-mobile persian-number"
-              >{{ this.$store.state.login.phoneNumber }}</span
-            >&#41; وجود ندارد. برای ساخت حساب جدید کد تایید پیامک شده را وارد کنید
+            حساب کاربری با شماره موبایل
+            <span class="teacher-mobile persian-number">{{
+              this.$store.state.login.phoneNumber
+            }}</span>
+            وجود ندارد. برای ساخت حساب جدید کد تایید پیامک شده را وارد کنید
           </h3>
           <div class="pincode-container">
             <input
@@ -105,13 +107,13 @@
             >
             <div class="link-container align-center" v-else>
               <a class="form-link" href="" type="button" @click.prevent="sendCodeAgain"
-                >ارسال مجدد کد</a
+                >دریافت مجدد کد</a
               >
             </div>
           </div>
           <button class="enter-btn">
-            <span v-if="verifType == 'login'"> ورود به پنل </span>
-            <span v-else-if="verifType == 'register'"> ثبت نام </span>
+            <span v-if="verifType == 'login'"> ادامه </span>
+            <span v-else-if="verifType == 'register'"> ادامه </span>
           </button>
         </form>
       </main>
@@ -141,7 +143,7 @@
           <div>
             <div class="link-container">
               <a href="" type="button" @click.prevent="sendCode()" class="form-link"
-                >ورود با کد یکبار مصرف</a
+                >ورود با رمز یکبار مصرف</a
               >
             </div>
             <label for="remember-me" class="checkbox-label">
@@ -156,7 +158,7 @@
               مرا به خاطر بسپار
             </label>
           </div>
-          <button class="enter-btn">ورود به پنل</button>
+          <button class="enter-btn">ادامه</button>
         </form>
         <div class="link-container align-center">
           اگر رمز عبور خود را فراموش کردید،
@@ -180,7 +182,11 @@ export default {
   layout: "withoutSidebar",
   head() {
     return {
-      title: "verification",
+      title:
+        this.$route.params.id == "register"
+          ? "ثبت نام | دانشکده آنلاین"
+          : "ورود | دانشکده آنلاین",
+      meta: [{ name: "robots", content: "noindex,nofollow" }],
     };
   },
   data() {

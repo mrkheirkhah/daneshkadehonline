@@ -111,7 +111,9 @@
             <label for="" class="form-row-col"> </label>
           </div>
 
-          <button class="form-btn" @click.prevent="setCommision">تائید کردن</button>
+          <button class="form-btn" @click.prevent="setCommision" :disabled="isSending">
+            تائید کردن
+          </button>
         </template>
       </form>
       <div class="section-title">
@@ -574,6 +576,7 @@ export default {
       loading: true,
       commision: "",
       cardsDetails: "",
+      isSending: false,
     };
   },
   async beforeMount() {
@@ -637,6 +640,7 @@ export default {
       this.$router.push(`/package-request/${this.$route.params.id}`);
     },
     async setCommision() {
+      this.isSending = true;
       const setCommisionResp = await this.$axios.get(
         `/api/Admin/AdminManageTeacher/ChangeTeacherCommission/${this.$route.params.id}/${this.commision}`,
         {
@@ -656,6 +660,7 @@ export default {
           confirmButtonText: "تایید",
         });
       }
+      this.isSending = false;
     },
   },
 };

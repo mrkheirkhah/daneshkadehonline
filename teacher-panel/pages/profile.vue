@@ -225,7 +225,13 @@
             </label>
             <div class="form-row-col"></div>
           </div>
-          <button class="form-btn success" @click.prevent="editProf">ویرایش</button>
+          <button
+            class="form-btn success"
+            @click.prevent="editProf"
+            :disabled="isSending"
+          >
+            ویرایش
+          </button>
         </template>
       </form>
     </div>
@@ -301,8 +307,8 @@ export default {
       },
       aboutTeacher: "",
       loading: true,
-      selectedDegreGroup: "",
-      selectedDegreGroupImage: "",
+      selectedDegreGroup: null,
+      selectedDegreGroupImage: undefined,
       needImage: [],
       dontNeedImage: [],
       courseGroups: [],
@@ -310,6 +316,7 @@ export default {
       selectedCourseGroupsNames: [],
       profImageFile: undefined,
       profileType: "",
+      isSending: false,
     };
   },
   async beforeMount() {
@@ -466,7 +473,8 @@ export default {
     },
 
     async editProf() {
-      if (this.cropped != "") {
+      this.isSending = true;
+      if (this.cropped != null) {
         this.profImageFile = new File([this.cropped], this.profImageName, {
           type: this.profileType,
         });
@@ -481,7 +489,7 @@ export default {
       }
       formData.append("ProfileImage", this.profImageFile);
       formData.append("Email", this.profData.email);
-      formData.append("Description ", this.aboutTeacher);
+      formData.append("Description", this.aboutTeacher);
       const editProfResponse = await this.$axios.post(
         "/api/Teacher/TeacherProfile/Profile",
         formData,
@@ -503,6 +511,7 @@ export default {
           confirmButtonText: "تایید",
         });
       }
+      this.isSending = false;
     },
   },
   watch: {

@@ -12,7 +12,7 @@ export const mutations = {
     SET_PASSWORD(state, password){
         state.password = password
     },
-    SET_LOGIN_DETAILS(state,{name,phone,token}){
+    SET_LOGIN_DETAILS(state,{name,phone}){
         state.name=name
         state.phoneNumber=phone
     },

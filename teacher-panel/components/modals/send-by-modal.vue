@@ -35,14 +35,14 @@ export default {
   methods: {
     async sendCodeWithSms() {
       const sendWithSms = await this.$axios.get(
-        "/Teacher/TeacherAccount/SendRecoveryPassword/" +
+        "/api/Teacher/TeacherAccount/SendRecoveryPassword/" +
           this.$store.state.login.phoneNumber +
           "/sms"
       );
     },
     async sendCodeWithEmail() {
       const sendWithSms = await this.$axios.get(
-        "/Teacher/TeacherAccount/SendRecoveryPassword/" +
+        "/api/Teacher/TeacherAccount/SendRecoveryPassword/" +
           this.$store.state.login.phoneNumber +
           "/email"
       );

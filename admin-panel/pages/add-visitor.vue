@@ -94,7 +94,11 @@
           </label>
           <label for="" class="form-row-col"> </label>
         </div>
-        <button class="form-btn success" @click.prevent="addVisitor">
+        <button
+          class="form-btn success"
+          @click.prevent="addVisitor"
+          :disabled="isSending"
+        >
           ثبت و نهایی کردن
         </button>
       </form>
@@ -328,7 +332,8 @@ export default {
       shebaNumber: "",
       commision: "",
       profImageName: "",
-      profileType:''
+      profileType: "",
+      isSending: false,
     };
   },
   async beforeMount() {
@@ -400,6 +405,7 @@ export default {
       document.querySelector(".profModal").classList.toggle("show");
     },
     async addVisitor() {
+      this.isSending = true;
       if (this.cropped != "") {
         this.profImageFile = new File([this.cropped], this.profImageName, {
           type: this.profileType,
@@ -489,6 +495,7 @@ export default {
           confirmButtonText: "تایید",
         });
       }
+      this.isSending = false;
     },
     resetData() {
       this.croppieImage = "";

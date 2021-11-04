@@ -101,7 +101,7 @@
         <label for="" class="form-row-col"> </label>
       </div> -->
 
-      <button class="form-btn success" @click.prevent="editFooter">
+      <button class="form-btn success" @click.prevent="editFooter" :disabled="isSending">
         ثبت و تائید نهایی
       </button>
     </form>
@@ -117,6 +117,7 @@ export default {
       instagram: "",
       phoneNumber: "",
       address: "",
+      isSending: false,
     };
   },
   async mounted() {
@@ -144,6 +145,7 @@ export default {
       }
     },
     async editFooter() {
+      this.isSending = true;
       const setFooterDetails = await this.$axios.post(
         "/api/Admin/AdminManageSiteInfo/FooterInfo",
         {
@@ -170,6 +172,7 @@ export default {
         });
         this.footerDetails();
       }
+      this.isSending = false;
     },
   },
 };

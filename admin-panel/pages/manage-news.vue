@@ -182,7 +182,7 @@
           <p class="section-title-text">توضیحات</p>
         </div>
         <div>
-          <ckeditorNuxt v-model="content" />
+          <ckeditorNuxt v-model="content" :config="editorConfig" />
         </div>
         <div class="section-title">
           <svg
@@ -252,12 +252,14 @@
             />
           </label>
         </div>
-        <header class="mt-5">
+        <!-- <header class="mt-5">
           <p class="section-header">مشاهده نظرات این خبر</p>
-        </header>
-        <a href="#" class="form-btn" target="_blank">مشاهده</a>
+        </header> -->
+        <!-- <a href="#" class="form-btn" target="_blank">مشاهده</a> -->
 
-        <button class="form-btn" @click.prevent="submitNewNews">ثبت و نهایی کردن</button>
+        <button class="form-btn" @click.prevent="submitNewNews" :disabled="isSending">
+          ثبت و نهایی کردن
+        </button>
       </form>
     </div>
     <div class="panel-admin-content-item">
@@ -525,6 +527,10 @@ export default {
       replayTo: "",
       replayToId: "",
       replayCommentText: "",
+      editorConfig: {
+        language: "fa",
+      },
+      isSending: false,
     };
   },
   async mounted() {
@@ -699,6 +705,7 @@ export default {
     //   reader.readAsDataURL(fileObject);
     // },
     async submitNewNews() {
+      this.isSending = true;
       if (this.submitType == "add") {
         if (
           this.selectedGroup != "" &&
@@ -784,6 +791,7 @@ export default {
           this.getNewsData();
         }
       }
+      this.isSending = false;
     },
     async editNews(id) {
       this.submitType = "edit";

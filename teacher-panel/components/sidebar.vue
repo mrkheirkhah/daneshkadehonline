@@ -90,7 +90,7 @@
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"
-              v-html="require('@/static/panel-teacher-icons/brush-icon.svg?raw')"
+              v-html="require('@/static/panel-teacher-icons/book.svg?raw')"
             />
             ایجاد اشتراک آموزشی
           </div>
@@ -105,7 +105,7 @@
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"
-              v-html="require('@/static/panel-teacher-icons/user.svg?raw')"
+              v-html="require('@/static/panel-teacher-icons/zip.svg?raw')"
             />
             ثبت پکیج آموزشی
           </div>
@@ -121,7 +121,7 @@
             <!-- most be change icon -->
             <div
               class="sidebar-links-icon"
-              v-html="require('@/static/panel-teacher-icons/headphone.svg?raw')"
+              v-html="require('@/static/panel-teacher-icons/percent.svg?raw')"
             />
             ایجاد کد تخفیف
           </div>
@@ -136,7 +136,7 @@
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"
-              v-html="require('@/static/panel-teacher-icons/headphone.svg?raw')"
+              v-html="require('@/static/panel-teacher-icons/storage.svg?raw')"
             />
             خرید حجم
           </div>
@@ -151,7 +151,7 @@
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"
-              v-html="require('@/static/panel-teacher-icons/diagram-icon.svg?raw')"
+              v-html="require('@/static/panel-teacher-icons/wallet.svg?raw')"
             />
             برداشت از کیف پول
           </div>
@@ -174,7 +174,7 @@
             <!-- most be change icon -->
             <div
               class="sidebar-links-icon"
-              v-html="require('@/static/panel-teacher-icons/headphone.svg?raw')"
+              v-html="require('@/static/panel-teacher-icons/messages.svg?raw')"
             />
             پیام ها و اعلانات
           </div>
@@ -301,7 +301,7 @@
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"
-              v-html="require('@/static/panel-teacher-icons/brush-icon.svg?raw')"
+              v-html="require('@/static/panel-teacher-icons/settings.svg?raw')"
             />
             تنظیمات
           </div>
@@ -325,7 +325,7 @@
           <div class="sidebar-links">
             <div
               class="sidebar-links-icon"
-              v-html="require('@/static/panel-teacher-icons/headphone.svg?raw')"
+              v-html="require('@/static/panel-teacher-icons/info.svg?raw')"
             />
             راهنمای پنل
           </div>
@@ -351,8 +351,6 @@ export default {
     if (this.$store.state.login.name != "") {
       this.name = this.$store.state.login.name;
       this.loading = false;
-
-      this.$intro().start();
     } else {
       const getData = await this.$axios
         .post(
@@ -380,6 +378,18 @@ export default {
   methods: {
     startIntro() {
       this.$intro().start();
+      const introNext = document.querySelector(".introjs-nextbutton");
+      if (introNext) {
+        introNext.innerHTML = "بعدی";
+      }
+      const introPrev = document.querySelector(".introjs-prevbutton");
+      if (introPrev) {
+        introPrev.innerHTML = "قبلی";
+      }
+      const introDone = document.querySelector(".introjs-donebutton");
+      if (introDone) {
+        introDone.innerHTML = "اتمام";
+      }
     },
     toggle_teacher_panel() {
       const panel_teacher_aside = document.querySelector(".panel-teacher-aside");
@@ -408,3 +418,8 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.introjs-tooltipReferenceLayer * {
+  font-family: "IRANSansX" !important;
+}
+</style>

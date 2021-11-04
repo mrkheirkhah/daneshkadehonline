@@ -63,7 +63,9 @@
             </label>
           </label>
         </div>
-        <button class="form-btn" @click.prevent="changeContactUs">تائید</button>
+        <button class="form-btn" @click.prevent="changeContactUs" :disabled="isSending">
+          تائید
+        </button>
       </form>
     </div>
     <div class="panel-table contact-us-list">
@@ -191,6 +193,7 @@ export default {
       replayToThisMessage: "",
       replayText: "",
       filterMessages: "",
+      isSending: false,
     };
   },
   async mounted() {
@@ -221,6 +224,7 @@ export default {
       }
     },
     async changeContactUs() {
+      this.isSending = true;
       const changeResp = await this.$axios.post(
         "/api/Admin/AdminManageSiteInfo/ContactInfo",
         {
@@ -240,6 +244,7 @@ export default {
       if (changeResp.data.statusCode == 200 && changeResp.data.message == "Success") {
         this.getContactUsData();
       }
+      this.isSending = false;
     },
 
     // get contact messages

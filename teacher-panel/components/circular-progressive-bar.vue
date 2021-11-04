@@ -14,16 +14,16 @@
       </svg>
       <p class="status">
         <span class="consumed persian-number">
-          {{ consumed }}
-        </span>
-        مگابایت
-        <br />
-        حجم باقی مانده
-        <br />
-        <span class="remaining persian-number">
           {{ remaining }}
         </span>
-        مگابایت
+        {{type}}
+        <br />
+        باقی مانده از
+        <br />
+        <span class="remaining persian-number">
+          {{ consumed }}
+        </span>
+        {{type}}
       </p>
     </div>
   </div>
@@ -42,6 +42,10 @@ export default {
       type: Number,
       required: true,
     },
+    type:{
+      type: String,
+      required: true,
+    },  
     remaining: {
       type: Number,
       required: true,

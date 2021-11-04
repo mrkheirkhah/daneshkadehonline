@@ -73,7 +73,9 @@
             ></textarea>
           </label>
         </div>
-        <button class="form-btn" @click.prevent="changeAboutInfo">تائید</button>
+        <button class="form-btn" @click.prevent="changeAboutInfo" :disabled="isSending">
+          تائید
+        </button>
       </form>
       <div class="section-title">
         <svg
@@ -164,10 +166,22 @@
             />
           </label>
         </div>
-        <button class="form-btn" @click.prevent="addMember" v-if="submitType == 'add'">
+        <button
+          class="form-btn"
+          @click.prevent="addMember"
+          v-if="submitType == 'add'"
+          :disabled="isSendingMember"
+        >
           افزودن
         </button>
-        <button class="form-btn" @click.prevent="submitEditMember" v-else>ویرایش</button>
+        <button
+          class="form-btn"
+          @click.prevent="submitEditMember"
+          v-else
+          :disabled="isSendingMember"
+        >
+          ویرایش
+        </button>
       </form>
     </div>
     <div class="panel-table about-us-list">
@@ -225,6 +239,8 @@ export default {
       teamMembersList: "",
       submitType: "add",
       editThisId: "",
+      isSending: false,
+      isSendingMember: true,
     };
   },
   async mounted() {
@@ -267,6 +283,7 @@ export default {
       }
     },
     async changeAboutInfo() {
+      this.isSending = true;
       const changeAboutResp = await this.$axios.post(
         "/api/Admin/AdminManageSiteInfo/AboutInfo",
         {
@@ -294,6 +311,7 @@ export default {
         });
         this.aboutDetails();
       }
+      this.isSending = false;
     },
 
     // add member
@@ -327,6 +345,7 @@ export default {
       }
     },
     async addMember() {
+      this.isSendingMember = true;
       if (this.memberName != "" && this.role != "" && this.memberImageBase64 != "") {
         let formData = new FormData();
         formData.append("name", this.memberName);
@@ -368,8 +387,10 @@ export default {
           confirmButtonText: "تایید",
         });
       }
+      this.isSendingMember = false;
     },
     async submitEditMember() {
+      this.isSendingMember = true;
       if (this.memberName != "" && this.role != "") {
         let formData = new FormData();
         formData.append("name", this.memberName);
@@ -410,6 +431,7 @@ export default {
           confirmButtonText: "تایید",
         });
       }
+      this.isSendingMember = false;
     },
     async editMember(id) {
       this.editThisId = id;

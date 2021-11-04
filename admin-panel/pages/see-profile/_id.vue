@@ -305,10 +305,18 @@
             </label>
           </div>
           <div class="options-buttons">
-            <button class="form-btn success" @click.prevent="setTeacherProf('accept')">
+            <button
+              class="form-btn success"
+              @click.prevent="setTeacherProf('accept')"
+              :disabled="isSendingAccept"
+            >
               تایید اطلاعات
             </button>
-            <button class="form-btn red-color" @click.prevent="setTeacherProf('decline')">
+            <button
+              class="form-btn red-color"
+              @click.prevent="setTeacherProf('decline')"
+              :disabled="isSendingAccept"
+            >
               رد اطلاعات
             </button>
           </div>
@@ -451,6 +459,7 @@ export default {
       educationImageBase64: "",
       educationIsAccepted: "",
       profileType: "",
+      isSendingAccept: false,
     };
   },
   async beforeMount() {
@@ -617,6 +626,7 @@ export default {
       } catch {}
     },
     async setTeacherProf(type) {
+      this.isSendingAccept = true;
       if (this.cropped != "") {
         this.profImageFile = new File([this.cropped], this.profImageName, {
           type: this.profileType,
@@ -691,6 +701,7 @@ export default {
           this.$router.push("/teachers-list");
         });
       }
+      this.isSendingAccept = false;
     },
     async degreStatus(type) {
       const acceptDegreResp = await this.$axios.get(

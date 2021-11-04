@@ -103,22 +103,12 @@
           </div>
           <div class="form-row">
             <div for="" class="form-row-col darken-color">
-              <div class="separator pseudo-form-input">
-                <input type="file" id="upload-profile-image" accept="image/*" />
-                <span>تصویر پروفایل</span>
-
-                <span>
-                  <!-- <label for="upload-file-croppie" class="cover-btn select-profile-btn"
-                    >انتخاب</label
-                  > -->
-                  <label
-                    for="upload-course-image"
-                    class="cover-btn"
-                    @click.prevent="seeProfImage('prof')"
-                    >مشاهده</label
-                  >
-                </span>
-              </div>
+              <input
+                type="tel"
+                class="form-input has-cover-btn"
+                placeholder="شماره موبایل"
+                v-model="phoneNumber"
+              />
             </div>
             <label for="" class="form-row-col">
               <input
@@ -183,17 +173,21 @@
               />
             </label>
             <label for="" class="form-row-col">
-              <input
+              <!-- <input
                 type="tel"
                 class="form-input has-cover-btn"
                 placeholder="شماره موبایل"
                 v-model="phoneNumber"
-              />
+              /> -->
             </label>
           </div>
 
           <div class="options-buttons">
-            <button class="form-btn success" @click.prevent="editStudentProf">
+            <button
+              class="form-btn success"
+              @click.prevent="editStudentProf"
+              :disabled="isSending"
+            >
               ویرایش اطلاعات
             </button>
           </div>
@@ -282,6 +276,7 @@ export default {
       notificationText: "",
       modalPicTitle: "",
       profileImageName: "person-avatar.png",
+      isSending: false,
     };
   },
   async beforeMount() {
@@ -327,16 +322,6 @@ export default {
     toggleDropdown() {
       event.stopPropagation();
       event.target.closest(".floated-list-container").classList.toggle("show");
-    },
-    seeProfImage(type) {
-      document.querySelector(".show-image").style.display = "flex";
-      if (type == "prof") {
-        this.modalPicSrc = this.profileImageBase64;
-        this.modalPicTitle = "پروفایل";
-      } else {
-        this.modalPicSrc = this.nationalCardImageBase64;
-        this.modalPicTitle = "کارت ملی";
-      }
     },
     async setDegre(event, id) {
       this.degre = event.target.innerHTML.trim();
@@ -384,6 +369,7 @@ export default {
       reader.readAsDataURL(fileObject);
     },
     async editStudentProf() {
+      this.isSending = true;
       const editStudentResp = await this.$axios.put(
         "/api/Admin/AdminManageStudent/EditStudent",
         {
@@ -414,6 +400,7 @@ export default {
           this.$router.push("/students-list");
         });
       }
+      this.isSending = false;
     },
   },
 };

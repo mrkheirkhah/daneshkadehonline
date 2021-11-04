@@ -459,12 +459,20 @@
         </div>
         <div class="form-row">
           <label for="" class="form-row-col">
-            <button class="form-btn success" @click.prevent="submitCommision">
+            <button
+              class="form-btn success"
+              @click.prevent="submitCommision"
+              :disabled="isSendingCom"
+            >
               ثبت کمیسیون
             </button>
           </label>
           <label for="" class="form-row-col">
-            <button class="form-btn success" @click.prevent="submitVolume">
+            <button
+              class="form-btn success"
+              @click.prevent="submitVolume"
+              :disabled="isSendingVol"
+            >
               ثبت حجم
             </button>
           </label>
@@ -587,12 +595,15 @@ export default {
       loading: true,
       chartData: null,
       chartSort: 0,
+      isSendingVol: false,
+      isSendingCom: false,
       options: {
         scales: {
           yAxes: [
             {
               ticks: {
                 beginAtZero: true,
+                fontFamily: "IRANSansX",
               },
               gridLines: {
                 display: true,
@@ -601,6 +612,9 @@ export default {
           ],
           xAxes: [
             {
+              ticks: {
+                fontFamily: "IRANSansX",
+              },
               gridLines: {
                 display: false,
               },
@@ -715,6 +729,7 @@ export default {
       }
     },
     async submitVolume() {
+      this.isSendingVol = true;
       const submitVolumeResp = await this.$axios.get(
         `/api/Admin/AdminManageSiteInfo/DefaultVolume/${this.defVolume}`,
         {
@@ -735,8 +750,10 @@ export default {
         });
         this.getDefVolume();
       }
+      this.isSendingVol = false;
     },
     async submitCommision() {
+      this.isSendingCom = true;
       const submitCommisionResp = await this.$axios.get(
         `/api/Admin/AdminManageSiteInfo/DefaultCommission/${this.defCommision}`,
         {
@@ -757,6 +774,7 @@ export default {
         });
         this.getDefCommision();
       }
+      this.isSendingCom = false;
     },
   },
 };

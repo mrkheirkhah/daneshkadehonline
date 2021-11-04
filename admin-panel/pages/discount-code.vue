@@ -295,10 +295,16 @@
           class="form-btn success"
           @click.prevent="addDiscount"
           v-if="submitType == 'add'"
+          :disabled="isSending"
         >
           اضافه کردن
         </button>
-        <button class="form-btn success" @click.prevent="editDiscount" v-else>
+        <button
+          class="form-btn success"
+          @click.prevent="editDiscount"
+          v-else
+          :disabled="isSending"
+        >
           ویرایش کردن
         </button>
       </div>
@@ -370,6 +376,7 @@ export default {
       restartDatePicker: true,
       submitType: "add",
       editThisId: "",
+      isSending: false,
     };
   },
   async beforeMount() {
@@ -463,6 +470,7 @@ export default {
       }
     },
     async addDiscount() {
+      this.isSending = true;
       const selectedCourses = this.$store.state.selectedCourses.selectedCourses;
       const selectedCoursesList =
         this.discountForCourceRadio == "notAll" ? selectedCourses : [];
@@ -511,8 +519,10 @@ export default {
         this.$store.commit("selectedCourses/CLEAR_DISCOUNT_DETAIL");
         this.resetData();
       }
+      this.isSending = false;
     },
     async editDiscount() {
+      this.isSending = true;
       const selectedCourses = this.$store.state.selectedCourses.selectedCourses;
       const selectedCoursesList =
         this.discountForCourceRadio == "notAll" ? selectedCourses : [];
@@ -563,6 +573,7 @@ export default {
         this.resetData();
         this.getDiscounts();
       }
+      this.isSending = false;
     },
     async deleteDiscount(id) {
       this.$swal({

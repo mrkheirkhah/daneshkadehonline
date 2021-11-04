@@ -13,6 +13,7 @@
               type="tel"
               name=""
               id="mobile-number"
+              :class="wrongNumber ? 'red' : ''"
               placeholder="شماره موبایل خود را وارد کنید"
               maxlength="11"
             />
@@ -22,9 +23,10 @@
                 alt="آیکون موبایل"
               />
             </span>
+            <p class="wrong-text" v-if="wrongNumber">شماره خود را صحیح وارد کنید</p>
           </label>
 
-          <a class="enter-btn" @click.prevent="setNumberForVerify"> ورود به پنل </a>
+          <a class="enter-btn" @click.prevent="setNumberForVerify"> ادامه </a>
         </form>
       </main>
       <div class="empty"></div>
@@ -68,16 +70,21 @@ export default {
     return {
       phoneNumber: "",
       showModal: false,
+      wrongNumber: false,
     };
+  },
+  mounted() {
+    document.querySelector("body").style.backgroundColor = "#f3f3f3";
   },
   head() {
     return {
-      title: "ورود / ثبت نام",
+      title: "ورود / ثبت نام | دانشکده آنلاین",
       script: [
         {
           src: "https://trk.tablighdrive.com/pixel/init.action.js",
         },
       ],
+      meta: [{ name: "robots", content: "noindex,nofollow" }],
     };
   },
   methods: {
@@ -100,12 +107,7 @@ export default {
           this.goToRegister();
         }
       } else {
-        this.$swal({
-          text: "شماره تلفن خود را وارد کنید",
-          icon: "error",
-          showCloseButton: true,
-          confirmButtonText: "تلاش مجدد!",
-        });
+        this.wrongNumber = true;
       }
     },
     goToRegister() {

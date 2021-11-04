@@ -172,7 +172,12 @@
 .panel-teacher-aside.show {
     transform: translateX(0);
 }
-
+@media screen and (max-width: 1090px) {
+    .sidebar-links{
+        font-size:14px;
+        column-gap: 5px!important;
+    }
+}
 @media screen and (max-width: $laptop-responsive) {
     .panel-teacher-aside {
         width: 250px;

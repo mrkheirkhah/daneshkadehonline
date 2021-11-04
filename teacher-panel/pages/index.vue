@@ -225,6 +225,7 @@ export default {
             {
               ticks: {
                 beginAtZero: true,
+                fontFamily: "IRANSansX",
               },
               gridLines: {
                 display: true,
@@ -233,6 +234,9 @@ export default {
           ],
           xAxes: [
             {
+              ticks: {
+                fontFamily: "IRANSansX",
+              },
               scaleFontSize: 80,
               gridLines: {
                 display: false,
@@ -317,6 +321,7 @@ export default {
           shortDescription: n.shortDescription,
         });
       }
+      this.coursesData.slice(0, 5);
       if (getOrders.data.data.length != 0) {
         for (const n of getOrders.data.data) {
           this.orders.push({

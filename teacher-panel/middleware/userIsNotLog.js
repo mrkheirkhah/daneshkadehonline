@@ -12,11 +12,14 @@ export default async function ({ app,store, redirect,$axios,route }) {
           }
         )
         if(getData.data.statusCode==200&&getData.data.message=="Success"){
+          const name = getData.data.data.teacherName
+          const phone = getData.data.data.phoneNumber
+          store.commit('login/SET_LOGIN_DETAILS',{name,phone});
           if(getData.data.data.isBlock==true){
             return redirect('/ban')
           }
           if(getData.data.data.isFullyAccepted==false){
-            return redirect('/register-one')
+            return redirect('/complete-profile')
           }
         }
         else{
@@ -33,7 +36,7 @@ export default async function ({ app,store, redirect,$axios,route }) {
             if(getToken.data.statusCode==200 && getToken.data.message == "Success"){
               store.dispatch('login/setLoginDetails',getToken);
               if(getToken.data.data.isFullyAccepted==false){
-                return redirect('/register-one')
+                return redirect('/complete-profile')
               }
               if(getToken.data.data.isBlock==true){
                 return redirect('/ban')

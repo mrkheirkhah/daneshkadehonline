@@ -180,6 +180,7 @@ export default {
   head() {
     return {
       title: "verification",
+      meta: [{ name: "robots", content: "noindex,nofollow" }],
     };
   },
   beforeCreate() {

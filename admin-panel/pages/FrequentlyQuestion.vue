@@ -42,7 +42,9 @@
             />
           </label>
         </div>
-        <button class="form-btn" @click.prevent="changePageTitle">تائید</button>
+        <button class="form-btn" @click.prevent="changePageTitle" :disabled="isSending">
+          تائید
+        </button>
       </form>
       <div class="section-title">
         <svg
@@ -85,10 +87,20 @@
           </label>
         </div>
 
-        <button class="form-btn" @click.prevent="addQuestion" v-if="submitType == 'add'">
+        <button
+          class="form-btn"
+          @click.prevent="addQuestion"
+          v-if="submitType == 'add'"
+          :disabled="isSendingQuestion"
+        >
           افزودن
         </button>
-        <button class="form-btn" @click.prevent="submitEditQuestion" v-else>
+        <button
+          class="form-btn"
+          @click.prevent="submitEditQuestion"
+          v-else
+          :disabled="isSendingQuestion"
+        >
           ویرایش
         </button>
       </form>
@@ -138,6 +150,8 @@ export default {
       answerText: "",
 
       editThisId: "",
+      isSending: false,
+      isSendingQuestion: false,
     };
   },
   async mounted() {
@@ -175,6 +189,7 @@ export default {
       }
     },
     async changePageTitle() {
+      this.isSending = true;
       const changePageResp = await this.$axios.post(
         "/api/Admin/AdminManageSiteInfo/FrequentlyQuestion",
         {
@@ -199,6 +214,7 @@ export default {
         });
         this.pageDetails();
       }
+      this.isSending = false;
     },
 
     // add question
@@ -216,6 +232,7 @@ export default {
       }
     },
     async addQuestion() {
+      this.isSendingQuestion = true;
       const addQuestionResp = await this.$axios.post(
         `/api/Admin/AdminManageSiteInfo/AddFrequentlyQuestion`,
         {
@@ -241,8 +258,10 @@ export default {
         this.resetData();
         this.questions();
       }
+      this.isSendingQuestion = false;
     },
     async submitEditQuestion() {
+      this.isSendingQuestion = true;
       const editQuestionResp = await this.$axios.put(
         `/api/Admin/AdminManageSiteInfo/EditFrequentlyQuestion`,
         {
@@ -269,6 +288,7 @@ export default {
         this.resetData();
         this.questions();
       }
+      this.isSendingQuestion = false;
     },
     async editQuestion(id) {
       this.editThisId = id;

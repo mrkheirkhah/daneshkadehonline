@@ -25,11 +25,13 @@
       <template v-else>
         <circular-progressive-bar
           title="حجم مصرف شده برای بارگذاری دوره"
+          type="مگابایت"
           :consumed="volumes.item2"
           :remaining="volumes.item2 - Math.round(volumes.item1)"
         />
         <circular-progressive-bar
           title="تعداد روزهای باقی مانده "
+          type="روز"
           :consumed="30"
           :remaining="0"
           color="green"
@@ -43,7 +45,7 @@
             "
           >
             <span class="plus">+</span>
-            <p>افزودن دوره جدید</p>
+            <p>افزودن اشتراک جدید</p>
           </button>
         </div>
       </template>
@@ -188,8 +190,12 @@
                 type="text"
                 class="form-input"
                 v-model="courseName"
+                :class="wrongName ? 'red' : ''"
                 placeholder="نام دوره"
               />
+              <p class="wrong-text" style="bottom: -4px" v-if="wrongName">
+                نام دوره اجباری است
+              </p>
             </label>
 
             <label for="" class="form-row-col">
@@ -200,9 +206,13 @@
                     class="form-input"
                     v-model="groupDrop"
                     readonly
+                    :class="wrongGroupDrop ? 'red' : ''"
                     placeholder="دسته بندی"
                     @click="toggleDropDowns"
                   />
+                  <p class="wrong-text" style="bottom: -4px" v-if="wrongGroupDrop">
+                    انتخاب دسته دوره اجباری است
+                  </p>
                   <ul class="floated-list custom-scrollbar">
                     <li
                       v-for="option in courseGroups"
@@ -275,20 +285,28 @@
                 id=""
                 cols="22"
                 rows="0"
+                :class="wrongShortDescription ? 'red' : ''"
                 v-model="shortDescription"
                 placeholder="توضیحات دوره"
                 class="form-input form-textarea"
               >
               </textarea>
+              <p class="wrong-text" style="bottom: -4px" v-if="wrongShortDescription">
+                نوشتن توضیحات دوره اجباری است
+              </p>
             </label>
             <div class="form-row">
               <label for="" class="form-row-col">
                 <input
                   type="text"
                   v-model="newTopic"
+                  :class="wrongTopics ? 'red' : ''"
                   class="form-input has-cover-btn"
                   placeholder="افزودن سرفصل های دوره"
                 />
+                <p class="wrong-text" style="bottom: -4px" v-if="wrongTopics">
+                  افزودن سرفصل های دوره اجباری است
+                </p>
                 <button type="button" class="cover-btn" @click="addTopic">افزودن</button>
                 <div class="course-topics">
                   <div class="topic" v-for="topic in topics" :key="topic.index">
@@ -301,7 +319,7 @@
             </div>
           </div>
           <div class="next-part-box">
-            <button class="next-part-btn" type="button" @click.prevent="showAddPart = 2">
+            <button class="next-part-btn" type="button" @click.prevent="complateSecPart">
               مرحله بعد
             </button>
           </div>
@@ -327,7 +345,10 @@
             <p class="section-title-text">معرفی دوره</p>
           </div>
           <div>
-            <ckeditorNuxt v-model="content" />
+            <ckeditorNuxt v-model="content" :config="editorConfig" />
+            <p class="wrong-text" style="width: auto" v-if="wrongContent">
+              معرفی دوره اجباری است
+            </p>
           </div>
           <div class="section-title">
             <svg
@@ -366,9 +387,13 @@
                 type="number"
                 class="form-input"
                 v-model="coursePrice"
+                :class="wrongPrice ? 'red' : ''"
                 placeholder="قیمت دوره"
                 :disabled="subscriptionRadio == 'money' ? false : 'disabled'"
               />
+              <p class="wrong-text" style="bottom: -4px" v-if="wrongPrice">
+                قیمت دوره اجباری است
+              </p>
               <span class="hint-text persian-number"
                 >{{ priceUnderSuggestionPrice }} تومان</span
               >
@@ -387,7 +412,11 @@
           <br />
           <br />
           <div class="next-part-box">
-            <button class="next-part-btn" @click.prevent="showAddPart = 3" type="button">
+            <button
+              class="next-part-btn"
+              @click.prevent="complateThirdPart"
+              type="button"
+            >
               مرحله بعد
             </button>
           </div>
@@ -428,7 +457,11 @@
               <a href="#" class="guide-text"> راهنمای انتخاب عکس مناسب </a>
             </label>
           </div>
-          <button class="form-btn success" @click.prevent="uploadCourse">
+          <button
+            class="form-btn success"
+            @click.prevent="uploadCourse"
+            :disabled="addCourseDis"
+          >
             ثبت و نهایی کردن
           </button>
           <div class="options-buttons" v-if="SubmitType == 'edit'">
@@ -468,7 +501,7 @@ export default {
   },
   head() {
     return {
-      title: "دوره ها",
+      title: "ایجاد اشتراک آموزشی",
     };
   },
   data() {
@@ -509,6 +542,18 @@ export default {
       newTopic: "",
       contentHolder: "",
       priceUnderSuggestionPrice: 0,
+      editorConfig: {
+        language: "fa",
+      },
+
+      // validation
+      wrongName: false,
+      wrongTopics: false,
+      wrongGroupDrop: false,
+      wrongShortDescription: false,
+      wrongContent: false,
+      wrongPrice: false,
+      addCourseDis: false,
     };
   },
   async beforeMount() {
@@ -520,6 +565,57 @@ export default {
   //   }, 4000);
   // },
   methods: {
+    complateSecPart() {
+      if (this.groupDrop == "") {
+        this.wrongGroupDrop = true;
+      } else {
+        this.wrongGroupDrop = false;
+      }
+      if (this.courseName == "") {
+        this.wrongName = true;
+      } else {
+        this.wrongName = false;
+      }
+      if (this.topics.length == 0) {
+        this.wrongTopics = true;
+      } else {
+        this.wrongTopics = false;
+      }
+      if (this.shortDescription == "") {
+        this.wrongShortDescription = true;
+      } else {
+        this.wrongShortDescription = false;
+      }
+      if (
+        this.groupDrop != "" &&
+        this.courseName != "" &&
+        this.shortDescription != "" &&
+        this.topics.length != 0
+      ) {
+        this.wrongName = false;
+        this.wrongTopics = false;
+        this.wrongGroupDrop = false;
+        this.wrongShortDescription = false;
+        this.showAddPart = 2;
+      }
+    },
+    complateThirdPart() {
+      if (this.content == "") {
+        this.wrongContent = true;
+      } else {
+        this.wrongContent = false;
+      }
+      if (this.coursePrice == "") {
+        this.wrongPrice = true;
+      } else {
+        this.wrongPrice = false;
+      }
+      if (this.coursePrice != "" && this.content != "") {
+        this.wrongContent = false;
+        this.wrongPrice = false;
+        this.showAddPart = 3;
+      }
+    },
     seeAll() {
       const table = document.getElementById("courses-table");
       table.style.overflowY = "scroll";
@@ -653,15 +749,53 @@ export default {
     //   reader.readAsDataURL(fileObject);
     // },
     async uploadCourse() {
-      if (
-        this.courseName != "" &&
-        this.content != "" &&
-        this.coursePrice != "" &&
-        this.topicsString != "" &&
-        this.subscriptionRadio != "" &&
-        this.shortDescription != ""
-      ) {
-        if (this.SubmitType == "add") {
+      this.addCourseDis = true;
+      if (this.SubmitType == "add") {
+        if (this.groupDrop == "") {
+          this.wrongGroupDrop = true;
+        } else {
+          this.wrongGroupDrop = false;
+        }
+        if (this.courseName == "") {
+          this.wrongName = true;
+        } else {
+          this.wrongName = false;
+        }
+        if (this.topics.length == 0) {
+          this.wrongTopics = true;
+        } else {
+          this.wrongTopics = false;
+        }
+        if (this.shortDescription == "") {
+          this.wrongShortDescription = true;
+        } else {
+          this.wrongShortDescription = false;
+        }
+        if (this.content == "") {
+          this.wrongContent = true;
+        } else {
+          this.wrongContent = false;
+        }
+        if (this.coursePrice == "") {
+          this.wrongPrice = true;
+        } else {
+          this.wrongPrice = false;
+        }
+
+        if (
+          this.groupDrop != "" &&
+          this.courseName != "" &&
+          this.shortDescription != "" &&
+          this.topics.length != 0 &&
+          this.coursePrice != "" &&
+          this.content != ""
+        ) {
+          this.wrongName = false;
+          this.wrongTopics = false;
+          this.wrongGroupDrop = false;
+          this.wrongShortDescription = false;
+          this.wrongContent = false;
+          this.wrongPrice = false;
           if (this.selectedGroup != "") {
             try {
               if (this.courseDiscount >= 0 && this.courseDiscount <= 100) {
@@ -729,8 +863,49 @@ export default {
               });
             }
           }
-        } else if (this.SubmitType == "edit") {
-          try {
+        }
+      } else if (this.SubmitType == "edit") {
+        try {
+          0;
+          if (this.courseName == "") {
+            this.wrongName = true;
+          } else {
+            this.wrongName = false;
+          }
+          if (this.topics.length == 0) {
+            this.wrongTopics = true;
+          } else {
+            this.wrongTopics = false;
+          }
+          if (this.shortDescription == "") {
+            this.wrongShortDescription = true;
+          } else {
+            this.wrongShortDescription = false;
+          }
+          if (this.content == "") {
+            this.wrongContent = true;
+          } else {
+            this.wrongContent = false;
+          }
+          if (this.coursePrice == "") {
+            this.wrongPrice = true;
+          } else {
+            this.wrongPrice = false;
+          }
+
+          if (
+            this.groupDrop != "" &&
+            this.courseName != "" &&
+            this.shortDescription != "" &&
+            this.topics.length != 0 &&
+            this.coursePrice != "" &&
+            this.content != ""
+          ) {
+            this.wrongName = false;
+            this.wrongTopics = false;
+            this.wrongShortDescription = false;
+            this.wrongContent = false;
+            this.wrongPrice = false;
             if (this.courseDiscount >= 0 && this.courseDiscount <= 100) {
               let formData = new FormData();
               formData.append("courseId", this.courseId);
@@ -774,6 +949,8 @@ export default {
                 this.coursesData = [];
                 this.courseGroups = [];
                 this.getLoadData();
+                this.SubmitType = "add";
+                this.showAddPart = 0;
                 this.showAddCourse = false;
               }
             } else {
@@ -784,23 +961,25 @@ export default {
                 confirmButtonText: "ادامه",
               });
             }
-          } catch {
-            this.$swal({
-              text: "مشکلی رخ داده است!لطفا بعدا دوباره تلاش کنید",
-              icon: "error",
-              showCloseButton: true,
-              confirmButtonText: "ادامه",
-            });
           }
+        } catch {
+          this.$swal({
+            text: "مشکلی رخ داده است!لطفا بعدا دوباره تلاش کنید",
+            icon: "error",
+            showCloseButton: true,
+            confirmButtonText: "ادامه",
+          });
         }
-      } else {
-        this.$swal({
-          text: "همه فیلد ها را پر کنید",
-          icon: "warning",
-          showCloseButton: true,
-          confirmButtonText: "تلاش مجدد",
-        });
       }
+      this.addCourseDis = false;
+      // } else {
+      //   this.$swal({
+      //     text: "همه فیلد ها را پر کنید",
+      //     icon: "warning",
+      //     showCloseButton: true,
+      //     confirmButtonText: "تلاش مجدد",
+      //   });
+      // }
     },
     async deleteCourse(courseID) {
       const deleteCourseResponse = await this.$axios.delete(

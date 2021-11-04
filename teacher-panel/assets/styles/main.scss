@@ -22,3 +22,10 @@
 @import '@/assets/styles/custom-styles/layout/panel-teacher-package';
 @import '@/assets/styles/custom-styles/layout/panel-content-sell-host';
 @import '@/assets/styles/custom-styles/layout/panel-content-withdraw';
+.wrong-text{
+    position: absolute;
+    display: block;
+    width: 100%;
+    font-size: 10px;
+    color: $active-color;
+}

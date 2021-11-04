@@ -71,9 +71,13 @@
               <input
                 type="text"
                 class="form-input"
+                :class="wrongTitle ? 'red' : ''"
                 v-model="packTitle"
                 placeholder="عنوان پکیج"
               />
+              <p class="wrong-text" style="bottom: 0px" v-if="wrongTitle">
+                وارد کردن عنوان پکیج اجباری است
+              </p>
             </label>
             <label for="" class="form-row-col">
               <!-- <dropdownInp
@@ -87,10 +91,14 @@
                   type="text"
                   class="form-input"
                   v-model="groupDrop"
+                  :class="wrongGroup ? 'red' : ''"
                   readonly
                   placeholder="دسته بندی "
                   @click="toggleDropDowns"
                 />
+                <p class="wrong-text" style="bottom: -4px" v-if="wrongGroup">
+                  انتخاب کردن دسته بندی اجباری است
+                </p>
                 <ul class="floated-list custom-scrollbar">
                   <li
                     v-for="anyDegree in degree"
@@ -153,9 +161,13 @@
               <input
                 type="number"
                 class="form-input"
+                :class="wrongPrice ? 'red' : ''"
                 v-model="suggestionPrice"
                 placeholder="قیمت پیشنهادی شما برای دوره"
               />
+              <p class="wrong-text" style="bottom: 0px" v-if="wrongPrice">
+                وارد کردن قیمت اجباری است
+              </p>
               <span class="hint-text persian-number"
                 >{{ priceUnderSuggestionPrice }} تومان</span
               >
@@ -165,21 +177,31 @@
               <input
                 type="number"
                 v-model="sectionsCount"
+                :class="wrongCount ? 'red' : ''"
                 class="form-input"
                 placeholder="تعداد قسمت ها"
               />
+              <p class="wrong-text" style="bottom: 0px" v-if="wrongCount">
+                وارد کردن تعداد قسمت ها اجباری است
+              </p>
             </label>
           </div>
           <div class="form-row">
             <div class="form-row-col">
               <textarea
+                :class="wrongContent ? 'red' : ''"
                 class="form-textarea large-height form-input"
                 placeholder="توضیحات پکیج"
                 v-model="description"
               ></textarea>
+              <p class="wrong-text" style="bottom: 0px" v-if="wrongContent">
+                وارد کردن توضیحات پکیج اجباری است
+              </p>
             </div>
           </div>
-          <button class="form-btn" @click.prevent="packageReq">ارسال درخواست</button>
+          <button class="form-btn" @click.prevent="packageReq" :disabled="isSending">
+            ارسال درخواست
+          </button>
         </template>
       </form>
     </div>
@@ -258,6 +280,12 @@ export default {
       description: "",
       loading: true,
       priceUnderSuggestionPrice: 0,
+      wrongTitle: false,
+      wrongGroup: false,
+      wrongPrice: false,
+      wrongCount: false,
+      wrongContent: false,
+      isSending: false,
     };
   },
   async beforeMount() {
@@ -371,6 +399,31 @@ export default {
       event.target.closest(".floated-list-container").classList.toggle("show");
     },
     async packageReq() {
+      if (this.packTitle == "") {
+        this.wrongTitle = true;
+      } else {
+        this.wrongTitle = false;
+      }
+      if (this.selectedGroup == "") {
+        this.wrongGroup = true;
+      } else {
+        this.wrongGroup = false;
+      }
+      if (this.suggestionPrice == "") {
+        this.wrongPrice = true;
+      } else {
+        this.wrongPrice = false;
+      }
+      if (this.sectionsCount == "") {
+        this.wrongCount = true;
+      } else {
+        this.wrongCount = false;
+      }
+      if (this.description == "") {
+        this.wrongContent = true;
+      } else {
+        this.wrongContent = false;
+      }
       if (
         this.packTitle != "" &&
         this.selectedDegree != "" &&
@@ -378,6 +431,7 @@ export default {
         this.sectionsCount != "" &&
         this.description != ""
       ) {
+        this.isSending = true;
         // const cc = { goToLogin: false, fullResponse: true };
         const packReqResponse = await this.$axios.post(
           "/api/Teacher/TeacherPackageRequest/PackageRequest",
@@ -405,14 +459,8 @@ export default {
             confirmButtonText: "ادامه",
           });
           this.getLoadData();
+          this.isSending = false;
         }
-      } else {
-        this.$swal({
-          text: "فیلد ها را پر کنید",
-          icon: "error",
-          showCloseButton: true,
-          confirmButtonText: "تلاش مجدد",
-        });
       }
     },
     async deleteReq(reqId) {

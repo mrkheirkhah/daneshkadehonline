@@ -79,6 +79,7 @@
           class="form-btn success"
           v-if="submitType == 'add'"
           @click.prevent="addNewAdmin"
+          :disabled="isSending"
         >
           تائید
         </button>
@@ -86,6 +87,7 @@
           class="form-btn success"
           v-if="submitType == 'edit'"
           @click.prevent="editAdmin"
+          :disabled="isSending"
         >
           ثبت ویرایشات
         </button>
@@ -204,6 +206,7 @@ export default {
       roleDrop: "",
       submitType: "add",
       editThisId: "",
+      isSending: false,
     };
   },
   mounted() {
@@ -249,6 +252,7 @@ export default {
       }
     },
     async addNewAdmin() {
+      this.isSending = true;
       if (
         this.newAdminPhotoBase64 != "" &&
         this.adminName.trim() != "" &&
@@ -297,6 +301,7 @@ export default {
           confirmButtonText: "تایید",
         });
       }
+      this.isSending = false;
     },
     async getEditDetails(id) {
       this.submitType = "edit";
@@ -324,6 +329,7 @@ export default {
       }
     },
     async editAdmin() {
+      this.isSending = true;
       if (
         this.adminName.trim() != "" &&
         this.adminPhone != "" &&
@@ -370,6 +376,7 @@ export default {
           confirmButtonText: "تایید",
         });
       }
+      this.isSending = false;
     },
     async blockAdmin(id, type) {
       this.$swal({

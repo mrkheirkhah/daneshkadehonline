@@ -179,7 +179,11 @@
               </nuxt-link>
             </label>
           </div>
-          <button class="form-btn success" @click.prevent="editProf">
+          <button
+            class="form-btn success"
+            @click.prevent="editProf"
+            :disabled="isSending"
+          >
             ثبت و نهایی کردن
           </button>
         </template>
@@ -252,6 +256,7 @@ export default {
           src: "https://trk.tablighdrive.com/pixel/submit.action.js",
         },
       ],
+      meta: [{ name: "robots", content: "noindex,nofollow" }],
     };
   },
   data() {
@@ -263,6 +268,7 @@ export default {
       drop: "",
       selectedDegree: "",
       prtofAvatarName: "person-avatar.png",
+      isSending: false,
     };
   },
   async beforeMount() {
@@ -288,6 +294,7 @@ export default {
       this.prtofAvatarName = name;
     },
     async editProf() {
+      this.isSending = true;
       const editProfResp = await this.$axios.post(
         "/api/Student/StudentProfile/Profile",
         {
@@ -310,6 +317,7 @@ export default {
         });
         this.onLoadData();
       }
+      this.isSending = false;
     },
     async onLoadData() {
       this.loading = true;

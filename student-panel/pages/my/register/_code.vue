@@ -112,6 +112,7 @@ export default {
           src: "https://trk.tablighdrive.com/pixel/init.action.js",
         },
       ],
+      meta: [{ name: "robots", content: "noindex,nofollow" }],
     };
   },
   data() {

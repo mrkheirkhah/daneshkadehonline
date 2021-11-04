@@ -424,7 +424,7 @@ export default {
     async getNews() {
       const news = await this.$axios.get("/api/News/Index");
       if (news.data.statusCode == "200" && news.data.message == "Success") {
-        this.news = news.data.data.newsItems;
+        this.news = news.data.data.newsItems.slice(0, 3);
       }
     },
     async logout() {

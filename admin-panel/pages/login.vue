@@ -53,6 +53,7 @@ export default {
   head() {
     return {
       title: "ورود ادمین",
+      meta: [{ name: "robots", content: "noindex,nofollow" }],
     };
   },
   middleware: "userIsLog",

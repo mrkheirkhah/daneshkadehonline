@@ -57,13 +57,19 @@
                 انتخاب بعنوان قسمت رایگان
               </label>
             </label>
-            <button class="form-btn success" v-if="!edit" @click.prevent="uploadVideo">
+            <button
+              class="form-btn success"
+              v-if="!edit"
+              @click.prevent="uploadVideo"
+              :disabled="isSending"
+            >
               ثبت قسمت
             </button>
             <button
               class="form-btn success"
               v-if="edit"
               @click.prevent="submitEditEpisode"
+              :disabled="isSending"
             >
               ویرایش قسمت
             </button>
@@ -147,6 +153,7 @@ export default {
       episodId: "",
       uploadPercentage: "",
       videoPartName: "",
+      isSending: false,
     };
   },
   methods: {
@@ -185,6 +192,7 @@ export default {
       reader.readAsDataURL(fileObject);
     },
     async uploadVideo() {
+      this.isSending = true;
       let formData = new FormData();
       const imagefile = document.querySelector("#upload-course-parts");
       if (imagefile.files[0].type != "video/mp4") {
@@ -254,6 +262,7 @@ export default {
           }
         }
       }
+      this.isSending = false;
     },
     async getVideos() {
       const videos = await this.$axios.get(
@@ -284,6 +293,7 @@ export default {
       this.edit = true;
     },
     async submitEditEpisode() {
+      this.isSending = true;
       var formData = new FormData();
       var imagefile = document.querySelector("#upload-course-parts");
       if (imagefile.files[0].type != "video/mp4") {
@@ -353,6 +363,7 @@ export default {
           }
         }
       }
+      this.isSending = false;
     },
     async removeEpisode(id) {
       this.$swal({

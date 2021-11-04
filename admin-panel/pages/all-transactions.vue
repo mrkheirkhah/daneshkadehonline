@@ -46,8 +46,8 @@
       </div>
       <section class="box-content custom-scrollbar" id="transactions-table">
         <header class="table-row table-header">
-          <span class="date">تاریخ </span>
-          <span class="time">ساعت</span>
+          <!-- <span class="date">تاریخ </span>
+          <span class="time">ساعت</span> -->
           <span>شماره پیگیری</span>
           <span class="name">نام مدرس</span>
           <span class="name">نام دانشجو</span>
@@ -60,8 +60,8 @@
           v-for="transaction in transactions"
           :key="transactions.indexOf(transaction)"
         >
-          <span class="date persian-number">1400/10/04</span>
-          <span class="time persian-number">13:45</span>
+          <!-- <span class="date persian-number">1400/10/04</span>
+          <span class="time persian-number">13:45</span> -->
           <span class="persian-number">{{ transaction.trackingCode }}</span>
           <span class="name">{{ transaction.teacherName }}</span>
           <span class="name">{{ transaction.studentName }}</span>

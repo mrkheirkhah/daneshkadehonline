@@ -100,7 +100,7 @@ export default {
       this.$router.push("/teachers-list");
     } else {
       const transactions = await this.$axios.get(
-        `/api/Admin/AdminManageTeacher/GetTeacherWallets/${this.$route.params.id}`,
+        `/api/Admin/AdminManageTeacher/GetTeacherTransactions/${this.$route.params.id}`,
         {
           headers: {
             Authorization: `Bearer ${this.$cookies.get("key")}`,

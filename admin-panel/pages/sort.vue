@@ -55,7 +55,9 @@
             </label>
           </label>
         </div>
-        <button class="form-btn success" @click.prevent="editDegre">تائید</button>
+        <button class="form-btn success" @click.prevent="editDegre" :disabled="isSending">
+          تائید
+        </button>
         <div class="panel-table specialty-list">
           <div class="box-header">
             <h3>لیست تخصص ها</h3>
@@ -403,6 +405,8 @@ export default {
       // see sub group
       seeSubGroupData: "",
       seeTwoSubGroupData: "",
+
+      isSending: false,
     };
   },
   async mounted() {
@@ -616,6 +620,7 @@ export default {
       }
     },
     async editDegre() {
+      this.isSending = true;
       if (this.addNewDegre == false) {
         const editResp = await this.$axios.put(
           `/api/Admin/AdminGroup/DegreeEducation?eduId=${this.editThisIdDegre}&educationTitle=${this.degreText}&isRequiredImage=${this.degreImageRequired}`,
@@ -652,6 +657,7 @@ export default {
           this.degreImageRequired = false;
         }
       }
+      this.isSending = false;
     },
     editGroup(id, title) {
       this.buttonForEdit = true;

@@ -56,7 +56,13 @@
           </div>
         </label>
       </div>
-      <button class="form-btn success" @click.prevent="uploadLanding">تائید</button>
+      <button
+        class="form-btn success"
+        @click.prevent="uploadLanding"
+        :disabled="isSendingOptions"
+      >
+        تائید
+      </button>
     </form>
     <header>
       <p class="section-header">توضیحات و فوتر</p>
@@ -96,7 +102,13 @@
         </label>
         <label for="" class="form-row-col"> </label>
       </div>
-      <button class="form-btn success" @click.prevent="uploadBodyData">تائید</button>
+      <button
+        class="form-btn success"
+        @click.prevent="uploadBodyData"
+        :disabled="isSending"
+      >
+        تائید
+      </button>
     </form>
   </div>
 </template>
@@ -117,6 +129,9 @@ export default {
       footerDescription: "",
       bodyDescription: "",
       bodyTitle: "",
+
+      isSendingOptions: false,
+      isSending: false,
     };
   },
   mounted() {
@@ -162,6 +177,7 @@ export default {
       }
     },
     async uploadLanding() {
+      this.isSendingOptions = true;
       if (this.optionId != "") {
         let formData = new FormData();
         formData.append("id", this.optionId);
@@ -199,8 +215,10 @@ export default {
           confirmButtonText: "تایید",
         });
       }
+      this.isSendingOptions = false;
     },
     async uploadBodyData() {
+      this.isSending = true;
       const uploadResp = await this.$axios.post(
         "/api/Admin/AdminCooperation/CooperationInfo",
         {
@@ -222,6 +240,7 @@ export default {
           confirmButtonText: "تایید",
         });
       }
+      this.isSending = false;
     },
   },
   watch: {

@@ -1,7 +1,7 @@
 <template>
   <div class="signin-signup">
     <main class="signin-signup-content">
-      <form action="" class="form-box" @submit.prevent="changePass">
+      <form action="" class="form-box">
         <header class="signin-signup-header">
           <img src="@/static/logo.png" alt="لوگو" />
         </header>
@@ -31,7 +31,9 @@
           </span>
         </label>
 
-        <button class="enter-btn">تغییر رمز</button>
+        <button class="enter-btn" @click.prevent="changePass" :disabled="isSending">
+          تغییر رمز
+        </button>
       </form>
     </main>
     <div class="empty"></div>
@@ -56,10 +58,12 @@ export default {
     return {
       password: "",
       repeatPassword: "",
+      isSending: false,
     };
   },
   methods: {
     async changePass() {
+      this.isSending = true;
       try {
         const changePassResp = await this.$axios.post(
           "/api/Teacher/TeacherAccount/UpdatePassword",
@@ -77,6 +81,7 @@ export default {
       } catch (e) {
         console.log(e);
       }
+      this.isSending = false;
     },
   },
 };

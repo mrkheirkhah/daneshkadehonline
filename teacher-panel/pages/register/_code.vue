@@ -137,7 +137,8 @@ export default {
   middleware: "userIsLog",
   head() {
     return {
-      title: "ثبت نام",
+      title: "ثبت نام | دانشکده آنلاین",
+      meta: [{ name: "robots", content: "noindex,nofollow" }],
     };
   },
   data() {
@@ -176,7 +177,7 @@ export default {
         this.wrongPassLength = true;
       } else {
         this.wrongPassLength = false;
-        if (this.password === this.repeatPassword) {
+        if (this.password !== this.repeatPassword) {
           this.wrongPass = true;
         } else {
           this.wrongPass = false;
@@ -209,7 +210,7 @@ export default {
             );
             if (registerData.data.tokenString) {
               this.$store.dispatch("login/setRegisterData", registerData);
-              this.$router.push("/register-one");
+              this.$router.push("/complete-profile");
             }
           } catch (e) {
             this.$swal({
@@ -241,7 +242,7 @@ export default {
       //       );
       //       if (registerData.data.tokenString) {
       //         this.$store.dispatch("login/setRegisterData", registerData);
-      //         this.$router.push("/register-one");
+      //         this.$router.push("/complete-profile");
       //       }
       //     } catch (e) {
       //       this.$swal({

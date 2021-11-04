@@ -232,7 +232,11 @@
             </div>
           </div>
         </div>
-        <button class="form-btn success" @click.prevent="addTeacher">
+        <button
+          class="form-btn success"
+          @click.prevent="addTeacher"
+          :disabled="isSending"
+        >
           ثبت و نهایی کردن
         </button>
       </form>
@@ -311,6 +315,7 @@ export default {
       selectedCourseGroupsNames: [],
       profImageFile: undefined,
       profileType: "",
+      isSending: false,
     };
   },
   async beforeMount() {
@@ -453,6 +458,7 @@ export default {
       } catch {}
     },
     async addTeacher() {
+      this.isSending = true;
       if (this.cropped != "") {
         this.profImageFile = new File([this.cropped], this.profImageName, {
           type: this.profileType,
@@ -528,6 +534,7 @@ export default {
           confirmButtonText: "تایید",
         });
       }
+      this.isSending = false;
     },
   },
   watch: {

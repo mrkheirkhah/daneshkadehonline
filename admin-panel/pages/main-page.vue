@@ -81,7 +81,13 @@
           /> -->
         </label>
       </div>
-      <button class="form-btn success" @click.prevent="uploadLanding">تائید</button>
+      <button
+        class="form-btn success"
+        @click.prevent="uploadLanding"
+        :disabled="isSendingLanding"
+      >
+        تائید
+      </button>
 
       <div class="section-title">
         <svg
@@ -356,7 +362,11 @@
           </div>
         </form>
       </div>
-      <button class="form-btn success" @click.prevent="setSideAds">
+      <button
+        class="form-btn success"
+        @click.prevent="setSideAds"
+        :disabled="isSendingAds"
+      >
         ثبت و تائید نهایی
       </button>
     </form>
@@ -398,6 +408,9 @@ export default {
       jadidBanner: undefined,
       packageBannerName: "",
       packageBanner: undefined,
+      isSendingAds: false,
+
+      isSendingLanding: false,
     };
   },
   mounted() {
@@ -517,6 +530,7 @@ export default {
       this.packageRadio = adsActivate.packageIsActive;
     },
     async setSideAds() {
+      this.isSendingAds = true;
       let formData = new FormData();
       formData.append("AmazingImage", this.ShegeftBanner);
       formData.append("AmazingIsActive", this.shegeftRadio);
@@ -570,8 +584,10 @@ export default {
         this.packageBanner = undefined;
         this.$store.commit("selectedCourses/CLEAR_SELECTED");
       }
+      this.isSendingAds = false;
     },
     async uploadLanding() {
+      this.isSendingLanding = true;
       if (this.headerId != "" && this.headerTitle != "" && this.buttonName != "") {
         let formData = new FormData();
         formData.append("id", this.headerId);
@@ -612,7 +628,7 @@ export default {
           confirmButtonText: "تایید",
         });
       }
-      null;
+      this.isSendingLanding = false;
     },
   },
   watch: {

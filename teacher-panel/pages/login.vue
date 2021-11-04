@@ -76,7 +76,8 @@ export default {
   },
   head() {
     return {
-      title: "ثبت نام/ورود",
+      title: "ثبت نام/ورود | دانشکده آنلاین",
+      meta: [{ name: "robots", content: "noindex,nofollow" }],
     };
   },
   methods: {

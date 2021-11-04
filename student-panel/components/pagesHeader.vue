@@ -326,15 +326,15 @@ export default {
   },
   methods: {
     async getMags() {
-      // const mags = await this.$axios.get(
-      //   "https://mag.daneshkadeonline.ir/wp-json/wp/v2/posts"
-      // );
-      // this.mags = mags.data;
+      const mags = await this.$axios.get(
+        "https://mag.daneshkadeonline.ir/wp-json/wp/v2/posts"
+      );
+      this.mags = mags.data;
     },
     async getNews() {
       const alerts = await this.$axios.get("/api/News/Index");
       if (alerts.data.statusCode == "200" && alerts.data.message == "Success") {
-        this.news = alerts.data.data.newsItems;
+        this.news = alerts.data.data.newsItems.slice(0, 3);
       }
     },
     async logout() {

@@ -73,9 +73,11 @@
               <input
                 type="number"
                 class="form-input"
+                :class="wrongValue ? 'red' : ''"
                 v-model="withdrawReq"
                 placeholder="به تومان وارد شود"
               />
+              <p class="wrong-text" v-if="wrongValue">مبلغ برداشت را وارد کنید</p>
               <span class="hint-text persian-number"
                 >{{ priceUnderSuggestionPrice }} تومان</span
               >
@@ -89,7 +91,9 @@
               >برداشت کل مبلغ!</a
             >
           </div>
-          <button class="form-btn" @click.prevent="witdraw">برداشت</button>
+          <button class="form-btn" @click.prevent="witdraw" :disabled="isSending">
+            برداشت
+          </button>
         </template>
       </form>
     </div>
@@ -152,6 +156,8 @@ export default {
       walletAmount: "",
       settlements: "",
       priceUnderSuggestionPrice: 0,
+      wrongValue: false,
+      isSending: false,
     };
   },
   async mounted() {
@@ -189,41 +195,47 @@ export default {
       this.withdrawReq = Number(this.walletAmount);
     },
     async witdraw() {
-      if (
-        this.withdrawReq != "" &&
-        Number(this.withdrawReq) <= Number(this.walletAmount) &&
-        Number(this.withdrawReq) > 0
-      ) {
-        const withdrawResp = await this.$axios.post(
-          `/api/Teacher/TeacherSettlementRequest/AddSettlementRequest?requestAmount=${this.withdrawReq}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
-          }
-        );
+      this.isSending = true;
+      if (this.withdrawReq != "") {
+        this.wrongValue = false;
         if (
-          withdrawResp.data.statusCode == 200 &&
-          withdrawResp.data.message == "Success"
+          Number(this.withdrawReq) <= Number(this.walletAmount) &&
+          Number(this.withdrawReq) > 0
         ) {
+          const withdrawResp = await this.$axios.post(
+            `/api/Teacher/TeacherSettlementRequest/AddSettlementRequest?requestAmount=${this.withdrawReq}`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${this.$cookies.get("key")}`,
+              },
+            }
+          );
+          if (
+            withdrawResp.data.statusCode == 200 &&
+            withdrawResp.data.message == "Success"
+          ) {
+            this.$swal({
+              text: "ثبت شد!منتظر تایید ادمین باشید",
+              icon: "success",
+              showCloseButton: true,
+              confirmButtonText: "تایید",
+            });
+            this.withdrawReq = "";
+            this.getSettlements();
+          }
+        } else {
           this.$swal({
-            text: "ثبت شد!منتظر تایید ادمین باشید",
-            icon: "success",
+            text: "مبلغ درخواستی بیشتر از موجودی است",
+            icon: "error",
             showCloseButton: true,
-            confirmButtonText: "تایید",
+            confirmButtonText: "ویرایش",
           });
-          this.withdrawReq = "";
-          this.getSettlements();
         }
       } else {
-        this.$swal({
-          text: "مبلغ درخواستی بیشتر از موجودی است",
-          icon: "error",
-          showCloseButton: true,
-          confirmButtonText: "ویرایش",
-        });
+        this.wrongValue = true;
       }
+      this.isSending = false;
     },
   },
   watch: {
@@ -238,4 +250,11 @@ export default {
 </script>
 <style lang="scss">
 @import "@/assets/styles/swal-style.scss";
+.wrong-text {
+  position: absolute;
+  display: block;
+  width: 100%;
+  font-size: 10px;
+  color: $active-color;
+}
 </style>

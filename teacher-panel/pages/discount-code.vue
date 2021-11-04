@@ -85,17 +85,25 @@
               v-model="discountTitle"
               class="form-input"
               placeholder="عنوان کد تخفیف"
+              :class="wrongTitle ? 'red' : ''"
               :disabled="formType == 'show'"
             />
+            <p class="wrong-text" style="bottom: -4px" v-if="wrongTitle">
+              وارد کردن عنوان کد تخفیف اجباری است
+            </p>
           </label>
           <label for="" class="form-row-col">
             <input
               type="number"
               v-model="discountPercent"
+              :class="wrongPercent ? 'red' : ''"
               class="form-input"
               placeholder="درصد کد تخفیف"
               :disabled="formType == 'show'"
             />
+            <p class="wrong-text" style="bottom: -4px" v-if="wrongPercent">
+              درصد کد تخفیف را به طور صحیح وارد کنید
+            </p>
           </label>
         </div>
         <div class="form-row">
@@ -103,10 +111,14 @@
             <input
               type="number"
               class="form-input"
+              :class="wrongDays ? 'red' : ''"
               v-model="endDays"
               placeholder="زمان اعتبار کد تخفیف"
               :disabled="formType == 'show'"
             />
+            <p class="wrong-text" style="bottom: 0px" v-if="wrongDays">
+              وارد کردن زمان اعتبار کد تخفیف اجباری است
+            </p>
             <label for="" class="cover-btn" style="cursor: context-menu">روز</label>
           </label>
           <label for="" class="form-row-col">
@@ -114,9 +126,13 @@
               type="text"
               class="form-input"
               v-model="discountCode"
+              :class="wrongCode ? 'red' : ''"
               placeholder="کد تخفیف را انتخاب کنید"
               :disabled="formType == 'show'"
             />
+            <p class="wrong-text" style="bottom: 0px" v-if="wrongCode">
+              وارد کردن کد تخفیف اجباری است
+            </p>
             <span class="hint-text">به لاتین وارد کنید</span>
           </label>
         </div>
@@ -211,6 +227,7 @@
         v-else
         class="form-btn success"
         @click.prevent="submitDiscount"
+        :disabled="isSending"
         v-show="formType != 'show'"
       >
         ثبت و نهایی کردن
@@ -297,6 +314,11 @@ export default {
       discountCode: "",
       discountPercent: "",
       DiscountForCourseId: null,
+      wrongTitle: false,
+      wrongPercent: false,
+      wrongDays: false,
+      wrongCode: false,
+      isSending: false,
     };
   },
   beforeMount() {
@@ -353,7 +375,32 @@ export default {
       }
     },
     async submitDiscount() {
+      this.isSending = true;
       if (this.formType == "add") {
+        if (this.discountTitle == "") {
+          this.wrongTitle = true;
+        } else {
+          this.wrongTitle = false;
+        }
+        if (this.discountCode == "") {
+          this.wrongCode = true;
+        } else {
+          this.wrongCode = false;
+        }
+        if (
+          this.discountPercent == "" ||
+          Number(this.discountPercent) < 0 ||
+          Number(this.discountPercent) > 100
+        ) {
+          this.wrongPercent = true;
+        } else {
+          this.wrongPercent = false;
+        }
+        if (this.endDays == "") {
+          this.wrongDays = true;
+        } else {
+          this.wrongDays = false;
+        }
         if (
           this.DiscountForCourseId != "" &&
           this.discountTitle != "" &&
@@ -407,15 +454,32 @@ export default {
               confirmButtonText: "ادامه",
             });
           }
-        } else {
-          this.$swal({
-            text: "فیلد ها را پر کنید",
-            icon: "error",
-            showCloseButton: true,
-            confirmButtonText: "ادامه",
-          });
         }
       } else if (this.formType == "edit") {
+        if (this.discountTitle == "") {
+          this.wrongTitle = true;
+        } else {
+          this.wrongTitle = false;
+        }
+        if (this.discountCode == "") {
+          this.wrongCode = true;
+        } else {
+          this.wrongCode = false;
+        }
+        if (
+          this.discountPercent == "" ||
+          Number(this.discountPercent) < 0 ||
+          Number(this.discountPercent) > 100
+        ) {
+          this.wrongPercent = true;
+        } else {
+          this.wrongPercent = false;
+        }
+        if (this.endDays == "") {
+          this.wrongDays = true;
+        } else {
+          this.wrongDays = false;
+        }
         if (
           this.DiscountForCourseId != "" &&
           this.discountTitle != "" &&
@@ -472,6 +536,7 @@ export default {
           }
         }
       }
+      this.isSending = false;
     },
     deleteDiscount(id) {
       this.$swal({
