@@ -267,11 +267,24 @@ export default {
       messageModal.style.visibility = "hidden";
     },
     async downloadAttachFile(id) {
-      const download = this.$axios.get(`/api/Student/StudentTicket/GetAttachFile/${id}`, {
+      const download = await this.$axios.get(`/api/Student/StudentTicket/GetAttachFile/${id}`, {
         headers: {
           Authorization: `Bearer ${this.$cookies.get("key")}`,
         },
       });
+      if (download.data.data != null) {
+        var a = document.createElement("a");
+        a.href = "data:image/png;base64," + download.data.data;
+        a.download = "Image" + new Date().getTime() + ".png";
+        a.click();
+      } else {
+        this.$swal({
+          text: "عکسی وجود ندارد",
+          icon: "error",
+          showCloseButton: true,
+          confirmButtonText: "ادامه",
+        });
+      }
     },
     async closeTicket() {
       this.$swal({
