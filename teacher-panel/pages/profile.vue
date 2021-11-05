@@ -98,24 +98,14 @@
                 disabled
               />
             </label>
-            <label for="" class="form-row-col floated-list-container in-panel">
+            <label for="" class="form-row-col">
               <input
                 type="text"
                 class="form-input"
                 v-model="drop"
                 readonly
                 placeholder="آخرین مدرک تحصیلی"
-                @click="toggleDropDowns"
               />
-              <ul class="floated-list custom-scrollbar">
-                <li
-                  v-for="option in degree"
-                  :key="option.index"
-                  @click="chooseDegre($event, option.id, option.imageNeed)"
-                >
-                  {{ option.title }}
-                </li>
-              </ul>
             </label>
           </div>
           <div class="form-row">
@@ -340,8 +330,8 @@ export default {
     if (profData.data.statusCode == 200) {
       this.selectedCourseGroups = profData.data.data.groupIds;
       this.aboutTeacher = profData.data.data.description;
-      this.selectedDegreGroup = profData.data.data.degreeEducationId;
-      for (const i in this.degree) {
+      this.selectedDegreGroup = profData.data.data.educationId;
+      for (const i of this.degree) {
         if (this.selectedDegreGroup == i.id) {
           this.drop = i.title;
         }

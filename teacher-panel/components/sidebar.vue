@@ -348,30 +348,26 @@ export default {
   },
   async beforeMount() {
     const token = this.$cookies.get("key");
-    if (this.$store.state.login.name != "") {
-      this.name = this.$store.state.login.name;
+
+    const getData = await this.$axios
+      .post(
+        "/api/Teacher/TeacherAccount/check-teacher-auth",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("key")}`,
+          },
+        }
+      )
+      .catch((e) => {
+        console.log("e");
+      });
+    if (getData.data.statusCode == "200") {
+      const name = getData.data.data.teacherName;
+      const phone = getData.data.data.phoneNumber;
+      this.name = name;
       this.loading = false;
-    } else {
-      const getData = await this.$axios
-        .post(
-          "/api/Teacher/TeacherAccount/check-teacher-auth",
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
-          }
-        )
-        .catch((e) => {
-          console.log("e");
-        });
-      if (getData.data.statusCode == "200") {
-        const name = getData.data.data.teacherName;
-        const phone = getData.data.data.phoneNumber;
-        this.name = name;
-        this.loading = false;
-        this.profImage = getData.data.data.profileImageName;
-      }
+      this.profImage = getData.data.data.profileImageName;
     }
   },
   mounted() {},

@@ -725,111 +725,124 @@
                 </a>
               </header>
               <!-- <client-only> -->
-              <!-- <div class="custom-video-player">
-                  <div class="video-container" tabindex="0" id="video-container">
-                    <div class="playback-animation">
-                      <svg class="playback-icons">
-                        <use class="hidden" href="#play-icon"></use>
-                        <use href="#pause"></use>
-                      </svg>
+              <div class="custom-video-player" v-if="courseEpisodes.length > 0">
+                <div class="video-container" tabindex="0" id="video-container">
+                  <div class="playback-animation">
+                    <svg class="playback-icons">
+                      <use class="hidden" href="#play-icon"></use>
+                      <use href="#pause"></use>
+                    </svg>
+                  </div>
+                  <video
+                    @ended="showVideo"
+                    class="video"
+                    preload="metadata"
+                    id="logoVid"
+                    :poster="
+                      'https://api.daneshkadeonline.ir/Images/Public/Course/' +
+                      courseDetail.imageName
+                    "
+                  >
+                    <source src="" id="logoSrc" type="video/mp4" />
+                  </video>
+                  <!-- <video
+                    v-else
+                    dir="ltr"
+                    controls
+                    class="video"
+                    preload="metadata"
+                    :poster="
+                      'https://api.daneshkadeonline.ir/Images/Public/Course/' +
+                      courseDetail.imageName
+                    "
+                  >
+                    <source dir="ltr" id="videoSrc" src="" type="video/mp4" />
+                  </video> -->
+                  <div class="video-controls">
+                    <div class="video-progress">
+                      <progress class="progress-bar" value="0" min="0"></progress>
+                      <input
+                        class="seek"
+                        value="0"
+                        min="0"
+                        max="1"
+                        type="range"
+                        step="1"
+                      />
+                      <div class="seek-tooltip">00:00</div>
                     </div>
-                    <video
-                      dir="ltr"
-                      controls
-                      class="video"
-                      preload="metadata"
-                      :poster="
-                        'https://api.daneshkadeonline.ir/Images/Public/Course/' +
-                        courseDetail.imageName
-                      "
-                    >
-                      <source dir="ltr" id="videoSrc" src="" type="video/mp4" />
-                    </video>
-                    <div class="video-controls">
-                      <div class="video-progress">
-                        <progress class="progress-bar" value="0" min="0"></progress>
-                        <input
-                          class="seek"
-                          value="0"
-                          min="0"
-                          max="1"
-                          type="range"
-                          step="1"
-                        />
-                        <div class="seek-tooltip">00:00</div>
+
+                    <div class="bottom-controls">
+                      <div class="left-controls">
+                        <button data-title="پخش (k)" class="play">
+                          <svg class="playback-icons">
+                            <use href="#play-icon"></use>
+                            <use class="hidden" href="#pause"></use>
+                          </svg>
+                        </button>
+                        <button
+                          class="forward-backward-btn backward-10"
+                          data-title="10 ثانیه قبل"
+                        >
+                          <img
+                            src="@/plugins/our-videoplayer/backward-10.png"
+                            alt="10 ثانیه قبل"
+                          />
+                        </button>
+                        <button
+                          class="forward-backward-btn forward-30"
+                          data-title="30 ثانیه بعد"
+                        >
+                          <img
+                            src="@/plugins/our-videoplayer/forward-30.png"
+                            alt="30 ثانیه بعد"
+                          />
+                        </button>
+                        <div class="volume-controls">
+                          <button data-title="بیصدا (m)" class="volume-button">
+                            <svg>
+                              <use class="hidden" href="#volume-mute"></use>
+                              <use class="hidden" href="#volume-low"></use>
+                              <use href="#volume-high"></use>
+                            </svg>
+                          </button>
+
+                          <input
+                            class="volume"
+                            value="1"
+                            data-mute="0.5"
+                            type="range"
+                            max="1"
+                            min="0"
+                            step="0.01"
+                          />
+                        </div>
+
+                        <div class="time">
+                          <time class="time-elapsed">00:00</time>
+                          <span> / </span>
+                          <time class="duration">00:00</time>
+                        </div>
                       </div>
 
-                      <div class="bottom-controls">
-                        <div class="left-controls">
-                          <button data-title="پخش (k)" class="play">
-                            <svg class="playback-icons">
-                              <use href="#play-icon"></use>
-                              <use class="hidden" href="#pause"></use>
-                            </svg>
-                          </button>
-                          <button
-                            class="forward-backward-btn backward-10"
-                            data-title="10 ثانیه قبل"
-                          >
-                            <img
-                              src="@/plugins/our-videoplayer/backward-10.png"
-                              alt="10 ثانیه قبل"
-                            />
-                          </button>
-                          <button
-                            class="forward-backward-btn forward-30"
-                            data-title="30 ثانیه بعد"
-                          >
-                            <img
-                              src="@/plugins/our-videoplayer/forward-30.png"
-                              alt="30 ثانیه بعد"
-                            />
-                          </button>
-                          <div class="volume-controls">
-                            <button data-title="بیصدا (m)" class="volume-button">
-                              <svg>
-                                <use class="hidden" href="#volume-mute"></use>
-                                <use class="hidden" href="#volume-low"></use>
-                                <use href="#volume-high"></use>
-                              </svg>
-                            </button>
-
-                            <input
-                              class="volume"
-                              value="1"
-                              data-mute="0.5"
-                              type="range"
-                              max="1"
-                              min="0"
-                              step="0.01"
-                            />
-                          </div>
-
-                          <div class="time">
-                            <time class="time-elapsed">00:00</time>
-                            <span> / </span>
-                            <time class="duration">00:00</time>
-                          </div>
-                        </div>
-
-                        <div class="right-controls">
-                          <button data-title="تصویر در تصویر (p)" class="pip-button">
-                            <svg>
-                              <use href="#pip"></use>
-                            </svg>
-                          </button>
-                          <button data-title="تمام صفحه (f)" class="fullscreen-button">
-                            <svg>
-                              <use href="#fullscreen"></use>
-                              <use href="#fullscreen-exit" class="hidden"></use>
-                            </svg>
-                          </button>
-                        </div>
+                      <div class="right-controls">
+                        <button data-title="تصویر در تصویر (p)" class="pip-button">
+                          <svg>
+                            <use href="#pip"></use>
+                          </svg>
+                        </button>
+                        <button data-title="تمام صفحه (f)" class="fullscreen-button">
+                          <svg>
+                            <use href="#fullscreen"></use>
+                            <use href="#fullscreen-exit" class="hidden"></use>
+                          </svg>
+                        </button>
                       </div>
                     </div>
                   </div>
-                </div> -->
-              <div v-if="videoLoading">
+                </div>
+              </div>
+              <!-- <div v-if="videoLoading">
                 <vue-plyr v-if="courseEpisodes.length > 0">
                   <video
                     v-if="showLogomotion"
@@ -855,7 +868,7 @@
                     <source id="videoSrc" :src="episodeVideoSrc" type="video/mp4" />
                   </video>
                 </vue-plyr>
-              </div>
+              </div> -->
               <!-- </client-only> -->
               <div class="course-parts">
                 <button
@@ -2047,26 +2060,25 @@ export default {
       }
     },
     async showVideo() {
-      this.videoLoading = false;
       this.showLogomotion = false;
-      await this.$nextTick(() => {
-        // Add the component back in
-        this.videoLoading = true;
-      });
-      await this.$nextTick(() => {
-        var videoPlayer = document.querySelector("#mainVideoPlayer");
-        if (videoPlayer) {
-          videoPlayer.play();
-        }
+      this.$nextTick(() => {
+        document
+          .querySelector("#logoSrc")
+          .setAttribute(
+            "src",
+            "https://api.daneshkadeonline.ir/Course/Video/" + this.seeThisVideo
+          );
+        const videoPlayer = document.querySelector("video");
+        videoPlayer.load();
       });
     },
     seeVideo(id) {
       this.showLogomotion = true;
       this.seeThisVideo = id;
-      this.videoLoading = false;
-      this.episodeVideoSrc = "https://api.daneshkadeonline.ir/Course/Video/" + id;
       this.$nextTick(() => {
-        this.videoLoading = true;
+        document.querySelector("#logoSrc").setAttribute("src", "/logomotion.mp4");
+        const videoPlayer = document.querySelector("#logoVid");
+        videoPlayer.load();
       });
     },
     async downloadAttachAudio(id) {

@@ -38,7 +38,7 @@
                 <button
                   class="close-btn"
                   @click.prevent="deleteOrder(item.detailId)"
-                  !showHistory
+                  v-if="!showHistory"
                 >
                   حذف
                 </button>

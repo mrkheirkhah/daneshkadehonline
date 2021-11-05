@@ -17,11 +17,13 @@
 @import '@/assets/styles/custom-styles/components/modal-send-message';
 @import '@/assets/styles/custom-styles/components/circular-progressive-bar';
 @import '@/assets/styles/custom-styles/components/basic-modal';
+@import '@/assets/styles/custom-styles/components/ticket-chat';
 @import '@/assets/styles/custom-styles/components/floated-list';
 @import '@/assets/styles/custom-styles/layout/signin-signup-teacher';
 @import '@/assets/styles/custom-styles/layout/panel-teacher-package';
 @import '@/assets/styles/custom-styles/layout/panel-content-sell-host';
 @import '@/assets/styles/custom-styles/layout/panel-content-withdraw';
+@import '@/assets/styles/custom-styles/layout/panel-content-tickets';
 .wrong-text{
     position: absolute;
     display: block;

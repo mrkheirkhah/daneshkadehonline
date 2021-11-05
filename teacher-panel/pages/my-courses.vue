@@ -29,13 +29,13 @@
           :consumed="volumes.item2"
           :remaining="volumes.item2 - Math.round(volumes.item1)"
         />
-        <circular-progressive-bar
+        <!-- <circular-progressive-bar
           title="تعداد روزهای باقی مانده "
           type="روز"
           :consumed="30"
           :remaining="0"
           color="green"
-        />
+        /> -->
         <div class="add-new-chart">
           <button
             class="content"
