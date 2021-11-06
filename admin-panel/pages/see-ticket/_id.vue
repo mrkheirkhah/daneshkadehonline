@@ -246,7 +246,7 @@ export default {
     },
     async getTicketDetails() {
       const ticket = await this.$axios.get(
-        `/api/ShowTicket?ticketId=${this.$route.params.id}`,
+        `/api/Admin/AdminTicket/ShowTicket?ticketId=${this.$route.params.id}`,
         {
           headers: {
             Authorization: `Bearer ${this.$cookies.get("key")}`,
@@ -254,7 +254,7 @@ export default {
         }
       );
       if (ticket.data.statusCode == 200 && ticket.data.message == "Success") {
-        console.log(ticket);
+        // console.log(ticket);
         const ticketDetails = ticket.data.data;
         this.ticketTitle = ticketDetails.title;
         this.departman = ticketDetails.department;
@@ -303,7 +303,7 @@ export default {
         formData.append("ParentId", this.$route.params.id);
         formData.append("Text", this.ticketText);
         formData.append("AttachImage", this.selectedTicketImage);
-        const postTicket = await this.$axios.post("/api/AddTicket", formData, {
+        const postTicket = await this.$axios.post("/api/Admin/AdminTicket/AddTicket", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${this.$cookies.get("key")}`,
@@ -311,7 +311,7 @@ export default {
         });
         if (postTicket.data.statusCode == 200 && postTicket.data.message == "Success") {
           this.$swal({
-            text: "تیکت شما ثبت شد.منتظر پاسخ ادمین ها بمانید",
+            text: "تیکت شما ثبت شد.",
             icon: "success",
             showCloseButton: true,
             confirmButtonText: "تایید",
@@ -326,7 +326,7 @@ export default {
       this.isSending = false;
     },
     async downloadAttachFile(id) {
-      const download =await this.$axios.get(`/api/GetAttachFile/${id}`, {
+      const download = await this.$axios.get(`/api/Admin/AdminTicket/GetAttachFile/${id}`, {
         headers: {
           Authorization: `Bearer ${this.$cookies.get("key")}`,
         },
@@ -356,7 +356,7 @@ export default {
       }).then(async (clickedBut) => {
         if (clickedBut.isConfirmed) {
           const close = await this.$axios.get(
-            `/api/closeTicket/${this.$route.params.id}`,
+            `/api/Admin/AdminTicket/closeTicket/${this.$route.params.id}`,
             {
               headers: {
                 Authorization: `Bearer ${this.$cookies.get("key")}`,

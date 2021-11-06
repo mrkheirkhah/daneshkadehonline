@@ -133,7 +133,7 @@ export default {
         query = query + i + "=" + this.$route.query[i] + "&";
       }
       query = query.slice(0, -1);
-      const tickets = await this.$axios.get(`/api/GetTickets?${query}`, {
+      const tickets = await this.$axios.get(`/api/Admin/AdminTicket/GetTickets?${query}`, {
         headers: {
           Authorization: `Bearer ${this.$cookies.get("key")}`,
         },
@@ -152,7 +152,7 @@ export default {
       document.querySelector(".table-footer").style.display = "none";
     },
     async getTickets() {
-      const tickets = await this.$axios.get("/api/GetTickets?userType=all", {
+      const tickets = await this.$axios.get("/api/Admin/AdminTicket/GetTickets?userType=all", {
         headers: {
           Authorization: `Bearer ${this.$cookies.get("key")}`,
         },
@@ -200,7 +200,7 @@ export default {
         cancelButtonText: "خیر",
       }).then(async (clickedBut) => {
         if (clickedBut.isConfirmed) {
-          const deleteResp = await this.$axios.delete(`/api/RemoveTicket/${id}`, {
+          const deleteResp = await this.$axios.delete(`/api/Admin/AdminTicket/RemoveTicket/${id}`, {
             headers: {
               Authorization: `Bearer ${this.$cookies.get("key")}`,
             },
@@ -228,7 +228,7 @@ export default {
             query = query + i + "=" + this.$route.query[i] + "&";
           }
           query = query.slice(0, -1);
-          const tickets = await this.$axios.get(`/api/GetTickets?${query}`, {
+          const tickets = await this.$axios.get(`/api/Admin/AdminTicket/GetTickets?${query}`, {
             headers: {
               Authorization: `Bearer ${this.$cookies.get("key")}`,
             },

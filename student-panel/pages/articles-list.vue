@@ -324,7 +324,7 @@ export default {
         this.newsCount = news.data.data.newsCount;
       }
     } else {
-      if (this.$store.state.search.courseItems != "") {
+      if (this.$store.state.search.newsItems != "") {
         this.newsItems = this.$store.state.search.newsItems;
         this.filter = this.$store.state.search.newsFilter;
         this.newsCount = this.$store.state.search.newsCount;
@@ -439,21 +439,21 @@ export default {
           query = query.slice(0, -1);
           const news = await this.$axios.get(`/api/News/Index?${query}`);
           if (news.data.statusCode == 200 && news.data.message == "Success") {
-            this.courseItems = news.data.data.courseItems;
+            this.newsItems = news.data.data.newsItems;
             this.filter = news.data.data.filter;
-            this.studentCount = news.data.data.studentCount;
+            this.newsCount = news.data.data.newsCount;
           }
         } else {
-          if (this.$store.state.search.courseItems != "") {
-            this.courseItems = this.$store.state.search.courseItems;
-            this.filter = this.$store.state.search.filter;
-            this.studentCount = this.$store.state.search.studentCount;
+          if (this.$store.state.search.newsItems != "") {
+            this.newsItems = this.$store.state.search.newsItems;
+            this.filter = this.$store.state.search.newsFilter;
+            this.newsCount = this.$store.state.search.newsCount;
           } else {
             const news = await this.$axios.get("/api/News/Index");
             if (news.data.statusCode == 200 && news.data.message == "Success") {
-              this.courseItems = news.data.data.courseItems;
+              this.newsItems = news.data.data.newsItems;
               this.filter = news.data.data.filter;
-              this.studentCount = news.data.data.studentCount;
+              this.newsCount = news.data.data.newsCount;
             }
           }
         }
