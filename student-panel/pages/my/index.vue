@@ -253,7 +253,7 @@ export default {
           charset: "utf-8",
         },
         {
-          src: "https://trk.tablighdrive.com/pixel/submit.action.js",
+          src: "https://trk.tablighdrive.com/pixel/submit.action2.js",
         },
       ],
       meta: [{ name: "robots", content: "noindex,nofollow" }],

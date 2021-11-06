@@ -81,7 +81,7 @@ export default {
       title: "ورود / ثبت نام | دانشکده آنلاین",
       script: [
         {
-          src: "https://trk.tablighdrive.com/pixel/init.action.js",
+          src: "https://trk.tablighdrive.com/pixel/init.action2.js",
         },
       ],
       meta: [{ name: "robots", content: "noindex,nofollow" }],
