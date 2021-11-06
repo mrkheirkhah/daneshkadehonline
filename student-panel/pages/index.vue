@@ -893,6 +893,13 @@ export default {
   head() {
     return {
       title: "بزرگترین پلتفرم آموزش آنلاین در ایران | دانشکده آنلاین",
+      script: [
+        {
+          type: "text/javascript",
+          innerHTML: `!function (t, e, n) { t.yektanetAnalyticsObject = n, t[n] = t[n] || function () { t[n].q.push(arguments) }, t[n].q = t[n].q || []; var a = new Date, r = a.getFullYear().toString() + "0" + a.getMonth() + "0" + a.getDate() + "0" + a.getHours(), c = e.getElementsByTagName("script")[0], s = e.createElement("script"); s.id = "ua-script-5A0MB9l9"; s.dataset.analyticsobject = n; s.async = 1; s.type = "text/javascript"; s.src = "https://cdn.yektanet.com/rg_woebegone/scripts_v3/5A0MB9l9/rg.complete.js?v=" + r, c.parentNode.insertBefore(s, c) }(window, document, "yektanet");`,
+          charset: "utf-8",
+        },
+      ],
       meta: [
         {
           hid: "description",
