@@ -2,7 +2,7 @@
   <div class="successful-box">
     <div class="container-fluid px-md-3 px-xl-5 container-lg">
       <div class="row">
-        <div class="col" v-if="status == true">
+        <div class="col" v-if="status === true">
           <h1>پرداخت موفقیت آمیز</h1>
           <ul class="successful-list">
             <li class="persian-number">
@@ -34,7 +34,7 @@
             </li>
           </ul>
         </div>
-        <div class="col" v-if="status == false" style="height: 50vh">
+        <div class="col" v-if="status === false" style="height: 50vh">
           <h1 class="red-text">خرید ناموفق</h1>
         </div>
       </div>
@@ -48,19 +48,15 @@ export default {
     return {
       status: null,
       factor: null,
-      test: 120000,
+      test: 120000
     };
   },
   layout: "mainPages",
   middleware: "mainPage",
   mounted() {
-    // console.log(this.$route.query);
-    this.checkdata();
-  },
-  methods: {
-    async checkdata() {
-      const datac = await this.$axios.post(
-        "/api/Payment/VerifyPaymentOrder",
+    if (this.$route.query["MID"]) {
+      this.$store.dispatch(
+        "saveBankResponseObject",
         {
           mid: this.$route.query["MID"],
           refNum: this.$route.query["RefNum"],
@@ -72,12 +68,27 @@ export default {
           securePan: this.$route.query["SecurePan"],
           status: Number(this.$route.query["Status"]),
           token: this.$route.query["Token"],
-          hashedCardNumber: this.$route.query["HashedCardNumber"],
+          hashedCardNumber: this.$route.query["HashedCardNumber"]
         },
+        { root: true }
+      );
+      this.$router.push(this.$route.path);
+    }
+  },
+  watch: {
+    bankResponse(newVal) {
+      if (newVal && newVal.MID) this.checkdata();        
+    }
+  },
+  methods: {
+    async checkdata() {
+      const datac = await this.$axios.post(
+        "/api/Payment/VerifyPaymentOrder",
+        this.bankResponse,
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
       if (datac.data.isSuccess == true) {
@@ -87,9 +98,18 @@ export default {
         this.status = false;
         this.factor = null;
       }
-      console.log(datac);
-    },
+      this.$store.dispatch(
+        "saveBankResponseObject",
+        null,
+        { root: true }
+      );
+    }
   },
+  computed: {
+    bankResponse() {
+      this.$store.state.bankResponse;
+    }
+  }
 };
 </script>
 <style lang="scss">

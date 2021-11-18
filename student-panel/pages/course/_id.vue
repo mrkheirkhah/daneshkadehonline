@@ -162,7 +162,9 @@
                   </li> -->
                   <li>
                     <span>مدت زمان دوره</span>
-                    <span class="persian-number">{{ courseDetail.time }} ساعت</span>
+                    <span class="persian-number"
+                      >{{ courseDetail.time }} ساعت</span
+                    >
                   </li>
 
                   <li class="course-status">
@@ -209,7 +211,10 @@
                   </li>
                 </ul>
               </div>
-              <div class="footer" v-if="detailBox.coursePrice != 0 && item1 != 1">
+              <div
+                class="footer"
+                v-if="detailBox.coursePrice != 0 && item1 != 1"
+              >
                 <a href="" type="button" @click.prevent="buyCourse">{{
                   item1 == 2 ? "خرید دوره" : item1 == 0 ? "تمدید دوره" : ""
                 }}</a>
@@ -294,7 +299,7 @@
                   <img
                     :src="
                       'https://api.daneshkadeonline.ir/Images/Public/Teacher/' +
-                      teacherBox.teacherImageName
+                        teacherBox.teacherImageName
                     "
                     alt="عکس مدرس دوره"
                   />
@@ -313,13 +318,20 @@
                     {{ education }}
                   </li>
                 </ul>
-                <template v-if="!loading && teacherBox.shortDescription != null">
-                  <p class="details" v-if="teacherBox.shortDescription.length < 100">
+                <template
+                  v-if="!loading && teacherBox.shortDescription != null"
+                >
+                  <p
+                    class="details"
+                    v-if="teacherBox.shortDescription.length < 100"
+                  >
                     {{ teacherBox.shortDescription }}
                   </p>
                   <p class="details" v-else>
                     {{ teacherBox.shortDescription.substring(0, 100) + " ..." }}
-                    <a href="" @click.prevent="seeMoreTeacherDetail($event)">بیشتر</a>
+                    <a href="" @click.prevent="seeMoreTeacherDetail($event)"
+                      >بیشتر</a
+                    >
                   </p>
                 </template>
               </div>
@@ -336,7 +348,7 @@
                   <a
                     :href="
                       'https://twitter.com/intent/tweet?url=https://www.daneshkadeonline.ir' +
-                      $route.fullPath
+                        $route.fullPath
                     "
                     target="blank"
                     type="button"
@@ -357,7 +369,7 @@
                   <a
                     :href="
                       'https://www.linkedin.com/sharing/share-offsite/?url=https://www.daneshkadeonline.ir' +
-                      $route.fullPath
+                        $route.fullPath
                     "
                     type="button"
                     target="blank"
@@ -428,7 +440,10 @@
                 </ul>
               </div>
             </div>
-            <a href="#" class="ask-questions" v-if="studentIsLogin && item1 == 1"
+            <a
+              href="#"
+              class="ask-questions"
+              v-if="studentIsLogin && item1 == 1"
               >سوالات خود را بپرسید</a
             >
             <div class="aside-item related-courses">
@@ -530,7 +545,10 @@
             </template>
             <template v-else>
               <div class="item">
-                <img src="@/static/images/main-page-images/chat.png" alt="آیکون نظرات" />
+                <img
+                  src="@/static/images/main-page-images/chat.png"
+                  alt="آیکون نظرات"
+                />
                 <div class="bottom">
                   <h6>نظرات</h6>
                   <span class="count persian-number">{{
@@ -548,17 +566,27 @@
                 </div>
               </div> -->
               <div class="item">
-                <img src="@/static/images/main-page-images/video.png" alt="ایکون ویدئو" />
+                <img
+                  src="@/static/images/main-page-images/video.png"
+                  alt="ایکون ویدئو"
+                />
                 <div class="bottom">
                   <h6>جلسات</h6>
-                  <span class="count persian-number">{{ courseDetail.fileCount }}</span>
+                  <span class="count persian-number">{{
+                    courseDetail.fileCount
+                  }}</span>
                 </div>
               </div>
               <div class="item">
-                <img src="@/static/images/main-page-images/time.png" alt="آیکون زمان" />
+                <img
+                  src="@/static/images/main-page-images/time.png"
+                  alt="آیکون زمان"
+                />
                 <div class="bottom">
                   <h6>زمان دوره</h6>
-                  <span class="count persian-number">{{ courseDetail.time }}</span>
+                  <span class="count persian-number">{{
+                    courseDetail.time
+                  }}</span>
                 </div>
               </div>
             </template>
@@ -717,7 +745,9 @@
                 <a
                   href=""
                   type="button"
-                  @click.prevent="studentIsLogin == true ? reportVideo : loginAlert"
+                  @click.prevent="
+                    studentIsLogin == true ? reportVideo : loginAlert
+                  "
                   class="video-alert"
                 >
                   <span>⚠</span>
@@ -740,7 +770,7 @@
                     id="logoVid"
                     :poster="
                       'https://api.daneshkadeonline.ir/Images/Public/Course/' +
-                      courseDetail.imageName
+                        courseDetail.imageName
                     "
                   >
                     <source src="" id="logoSrc" type="video/mp4" />
@@ -760,7 +790,11 @@
                   </video> -->
                   <div class="video-controls">
                     <div class="video-progress">
-                      <progress class="progress-bar" value="0" min="0"></progress>
+                      <progress
+                        class="progress-bar"
+                        value="0"
+                        min="0"
+                      ></progress>
                       <input
                         class="seek"
                         value="0"
@@ -826,12 +860,18 @@
                       </div>
 
                       <div class="right-controls">
-                        <button data-title="تصویر در تصویر (p)" class="pip-button">
+                        <button
+                          data-title="تصویر در تصویر (p)"
+                          class="pip-button"
+                        >
                           <svg>
                             <use href="#pip"></use>
                           </svg>
                         </button>
-                        <button data-title="تمام صفحه (f)" class="fullscreen-button">
+                        <button
+                          data-title="تمام صفحه (f)"
+                          class="fullscreen-button"
+                        >
                           <svg>
                             <use href="#fullscreen"></use>
                             <use href="#fullscreen-exit" class="hidden"></use>
@@ -897,7 +937,9 @@
                   </div>
                   <div class="info">
                     <span class="isFree" v-if="episode.isFree">رایگان</span>
-                    <span class="duration persian-number">{{ episode.episodeTime }}</span>
+                    <span class="duration persian-number">{{
+                      episode.episodeTime
+                    }}</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="34"
@@ -1002,7 +1044,10 @@
                   </div>
                   <div class="body">
                     <ul class="redbullet-list">
-                      <li v-for="course in relatedCourses" :key="course.courseId">
+                      <li
+                        v-for="course in relatedCourses"
+                        :key="course.courseId"
+                      >
                         <nuxt-link :to="'/course/' + course.courseId">{{
                           course.courseName
                         }}</nuxt-link>
@@ -1090,7 +1135,10 @@
 
             <section class="course-content comments" v-if="item1 != 1">
               <header>
-                <img src="@/static/images/main-page-images/chat.svg" alt="آیکون چت" />
+                <img
+                  src="@/static/images/main-page-images/chat.svg"
+                  alt="آیکون چت"
+                />
                 <h3>نظرات کاربران</h3>
               </header>
               <div class="messages custom-scrollbar">
@@ -1123,7 +1171,8 @@
                             {{
                               Math.floor(
                                 (new Date(
-                                  Date.now() + new Date().getTimezoneOffset() * 60000
+                                  Date.now() +
+                                    new Date().getTimezoneOffset() * 60000
                                 ).getTime() -
                                   new Date(comment.createDate).getTime()) /
                                   3600000
@@ -1134,7 +1183,9 @@
                           <span
                             class="like"
                             :class="
-                              likedComments.includes(comment.commentId) ? 'liked' : ''
+                              likedComments.includes(comment.commentId)
+                                ? 'liked'
+                                : ''
                             "
                             @click="likeComment($event, comment.commentId)"
                           >
@@ -1147,7 +1198,10 @@
                               height="31.126"
                               viewBox="0 0 33.736 31.126"
                             >
-                              <g data-name="heart (1)" transform="translate(1 1)">
+                              <g
+                                data-name="heart (1)"
+                                transform="translate(1 1)"
+                              >
                                 <path
                                   data-name="Path 713"
                                   d="M23.255,0a8.474,8.474,0,0,0-7.387,4.323A8.474,8.474,0,0,0,8.481,0C3.8,0,0,4.344,0,9.028,0,20.792,15.868,29,15.868,29S31.736,20.792,31.736,9.028C31.736,4.344,27.938,0,23.255,0Zm0,0"
@@ -1163,7 +1217,9 @@
                           href=""
                           type="button"
                           class="reply-btn"
-                          @click.prevent="replayThis(comment.commentId, comment.userName)"
+                          @click.prevent="
+                            replayThis(comment.commentId, comment.userName)
+                          "
                           >پاسخ</a
                         >
                       </div>
@@ -1210,7 +1266,10 @@
               v-if="studentIsLogin && item1 == 1"
             >
               <header>
-                <img src="@/static/images/main-page-images/chat.svg" alt="آیکون چت" />
+                <img
+                  src="@/static/images/main-page-images/chat.svg"
+                  alt="آیکون چت"
+                />
                 <h3>پرسش و پاسخ</h3>
               </header>
               <div class="messages custom-scrollbar">
@@ -1226,20 +1285,25 @@
                     <template v-for="message in messageBox">
                       <div
                         class="person-message"
-                        :class="{ 'replied-message': message.sendBy == 'Teacher' }"
+                        :class="{
+                          'replied-message': message.sendBy == 'Teacher'
+                        }"
                         :key="message.questionId"
                       >
                         <img
                           v-if="message.sendBy != 'Teacher'"
                           :src="
                             'https://api.daneshkadeonline.ir/Images/Public/Teacher/' +
-                            message.profileImageName
+                              message.profileImageName
                           "
                           class="person-message__image"
                           alt="تصویر پروفایل"
                         />
                         <div class="person-message__info">
-                          <h4 class="person-name" v-if="message.sendBy != 'Teacher'">
+                          <h4
+                            class="person-name"
+                            v-if="message.sendBy != 'Teacher'"
+                          >
                             {{ message.name }}
                           </h4>
                           <p class="person-text">
@@ -1253,7 +1317,8 @@
                               {{
                                 Math.floor(
                                   (new Date(
-                                    Date.now() + new Date().getTimezoneOffset() * 60000
+                                    Date.now() +
+                                      new Date().getTimezoneOffset() * 60000
                                   ).getTime() -
                                     new Date(message.sendDate).getTime()) /
                                     3600000
@@ -1263,7 +1328,9 @@
                             ساعت قبل
                           </span>
                           <form action="#">
-                            <label @click="downloadAttachAudio(message.questionId)">
+                            <label
+                              @click="downloadAttachAudio(message.questionId)"
+                            >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="12.593"
@@ -1271,7 +1338,10 @@
                                 viewBox="0 0 12.593 19.9"
                               >
                                 <g transform="translate(0.2 0.2)">
-                                  <g data-name="Group 9896" transform="translate(2.681)">
+                                  <g
+                                    data-name="Group 9896"
+                                    transform="translate(2.681)"
+                                  >
                                     <g data-name="Group 9895">
                                       <path
                                         data-name="Path 722"
@@ -1331,7 +1401,9 @@
                                 </g>
                               </svg>
                             </label>
-                            <label @click="downloadAttachFile(message.questionId)">
+                            <label
+                              @click="downloadAttachFile(message.questionId)"
+                            >
                               <svg
                                 data-name="link (2)"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -1339,7 +1411,10 @@
                                 height="15.618"
                                 viewBox="0 0 15.618 15.618"
                               >
-                                <g data-name="Group 9893" transform="translate(0 0)">
+                                <g
+                                  data-name="Group 9893"
+                                  transform="translate(0 0)"
+                                >
                                   <g data-name="Group 9892">
                                     <path
                                       data-name="Path 720"
@@ -1360,7 +1435,7 @@
                             <button
                               v-if="
                                 message.sendBy != 'Teacher' &&
-                                messageBox[0].status != 'Closed'
+                                  messageBox[0].status != 'Closed'
                               "
                               type="button"
                               class="reply-btn"
@@ -1392,8 +1467,13 @@
                   href=""
                   type="button"
                   class="prev"
-                  v-if="questionFilters.endPage > 1 && questionFilters.activePage != 1"
-                  @click.prevent="Number(goTo) > 1 ? (goTo = Number(goTo) - 1) : {}"
+                  v-if="
+                    questionFilters.endPage > 1 &&
+                      questionFilters.activePage != 1
+                  "
+                  @click.prevent="
+                    Number(goTo) > 1 ? (goTo = Number(goTo) - 1) : {}
+                  "
                   ><img
                     src="@/static/images/main-page-images/chevron-bottom.svg"
                     title="قبلی"
@@ -1415,13 +1495,17 @@
                   type="button"
                   @click.prevent="goToPage"
                   class="persian-number"
-                  v-if="Number(questionFilters.activePage) + 1 < questionFilters.endPage"
+                  v-if="
+                    Number(questionFilters.activePage) + 1 <
+                      questionFilters.endPage
+                  "
                   >{{ Number(questionFilters.activePage) + 1 }}</a
                 >
                 <span
                   v-if="
                     questionFilters.endPage > 4 &&
-                    Number(questionFilters.activePage) + 1 < questionFilters.endPage
+                      Number(questionFilters.activePage) + 1 <
+                        questionFilters.endPage
                   "
                   >...</span
                 >
@@ -1667,7 +1751,30 @@ import skeleton from "@/components/skeleto-creator";
 export default {
   components: { skeleton },
   layout: "mainPages",
-
+  head() {
+    return {
+      title: this.pageTitle,
+      meta: [
+        {
+          hid: "og_title",
+          name: "og:title",
+          content: this.pageTitle
+        },
+        {
+          hid: "og_description",
+          name: "og:description",
+          content:
+            this.pageDescription
+        },
+        {
+          hid: "description",
+          name: "description",
+          content:
+            this.pageDescription
+        }
+      ]
+    };
+  },
   data() {
     return {
       loading: true,
@@ -1703,14 +1810,15 @@ export default {
       item2: null,
 
       audioBase64Data: "",
-
+      courseName: "",
+      courseDescription: '',
       // form validation
       noText: false,
       noName: false,
 
       seeThisVideo: "",
-      courseDescription: "",
-      showLogomotion: false,
+      courseShortDescription: "",
+      showLogomotion: false
     };
   },
   async beforeMount() {
@@ -1719,15 +1827,16 @@ export default {
     }
     var myIp = "";
     await fetch("https://api.ipify.org?format=json")
-      .then((x) => x.json())
+      .then(x => x.json())
       .then(({ ip }) => {
         myIp = ip;
       });
     var [course, comments, questions] = await Promise.all([
       this.$axios.get(`/api/Course/Show/${this.$route.params.id}?ip=${myIp}`),
       this.getComments(),
-      this.getQuestions(),
+      this.getQuestions()
     ]);
+    debugger;
     if (course.data.statusCode == 200 && course.data.message == "Success") {
       // console.log(course);
       this.courseEpisodes = course.data.data.episodeItems;
@@ -1741,6 +1850,8 @@ export default {
             "<a href='' type='button' class='see-more'>... بیشتر<a>"
           : course.data.data.detail.description;
       this.detailBox = course.data.data.detailBox;
+      this.courseName = course.data.data.detail.courseName;
+      this.courseShortDescription = course.data.data.detail.shortDescription
       this.teacherBox = course.data.data.teacherBox;
       this.relatedCourses = course.data.data.relatedCourses;
       this.newCourses = course.data.data.newCourses;
@@ -1755,11 +1866,14 @@ export default {
         {},
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
-      if (getData.data.statusCode == "200" && getData.data.message == "Success") {
+      if (
+        getData.data.statusCode == "200" &&
+        getData.data.message == "Success"
+      ) {
         this.studentIsLogin = true;
         await this.IsUserInCourse();
       } else {
@@ -1769,10 +1883,16 @@ export default {
       }
     } else if (this.$cookies.get("refreshToken")) {
       var token = this.$cookies.get("refreshToken");
-      var getToken = await this.$axios.post("/api/Student/StudentAccount/refresh", {
-        refreshToken: token,
-      });
-      if (getToken.data.statusCode == 200 && getToken.data.message == "Success") {
+      var getToken = await this.$axios.post(
+        "/api/Student/StudentAccount/refresh",
+        {
+          refreshToken: token
+        }
+      );
+      if (
+        getToken.data.statusCode == 200 &&
+        getToken.data.message == "Success"
+      ) {
         this.studentIsLogin = true;
         this.$store.dispatch("login/setLoginDetails", getToken);
         await this.IsUserInCourse();
@@ -1807,8 +1927,8 @@ export default {
         showCloseButton: true,
         showCancelButton: true,
         confirmButtonText: "ورود",
-        cancelButtonText: "لغو",
-      }).then(async (clickedBut) => {
+        cancelButtonText: "لغو"
+      }).then(async clickedBut => {
         if (clickedBut.isConfirmed) {
           this.$router.push("/my/login");
         }
@@ -1819,8 +1939,8 @@ export default {
         `/api/Course/SendVideoCrashReport/${this.seeThisVideo}`,
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
       console.log(repResp);
@@ -1843,8 +1963,8 @@ export default {
       var video = document.getElementById("videoSrc");
       var r = await this.$axios.get("/api2/2010/05/sintel/trailer.mp4", {
         headers: {
-          Authorization: `Bearer ${this.$cookies.get("key")}`,
-        },
+          Authorization: `Bearer ${this.$cookies.get("key")}`
+        }
       });
     },
 
@@ -1878,8 +1998,8 @@ export default {
         `/api/Course/IsUserInCourse/${this.$route.params.id}`,
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
       this.item1 = userInCourseResp.data.data.item1;
@@ -1890,7 +2010,10 @@ export default {
       var comments = await this.$axios.get(
         `/api/Course/GetComments/${this.$route.params.id}`
       );
-      if (comments.data.statusCode == 200 && comments.data.message == "Success") {
+      if (
+        comments.data.statusCode == 200 &&
+        comments.data.message == "Success"
+      ) {
         for (var comment of comments.data.data) {
           if (comment.parentId == null) {
             var group = [];
@@ -1916,7 +2039,7 @@ export default {
         text: "برای مشاهده ی این قسمت دوره را خریداری نمایید",
         icon: "warning",
         showCloseButton: true,
-        confirmButtonText: "تایید",
+        confirmButtonText: "تایید"
       });
     },
     async replayThis(id, name) {
@@ -1939,19 +2062,21 @@ export default {
         } else {
           var commentResp = await this.$axios.post("/api/Course/AddComment", {
             id: this.$route.params.id,
-            parentId: this.replayToCommentId == "" ? null : this.replayToCommentId,
+            parentId:
+              this.replayToCommentId == "" ? null : this.replayToCommentId,
             userName: this.commentName,
-            commentText: this.commentText,
+            commentText: this.commentText
           });
           if (
             commentResp.data.statusCode == 200 &&
             commentResp.data.message == "Success"
           ) {
             this.$swal({
-              text: "کامنت شما ثبت شد! بعد از تایید ادمین ها نشان داده خواهد شد",
+              text:
+                "کامنت شما ثبت شد! بعد از تایید ادمین ها نشان داده خواهد شد",
               icon: "success",
               showCloseButton: true,
-              confirmButtonText: "تایید",
+              confirmButtonText: "تایید"
             });
             this.getComments();
             this.commentName = "";
@@ -1962,8 +2087,11 @@ export default {
             this.replayToCommentName = "";
           }
         }
-      } else if (!this.$cookies.get("key") && this.$cookies.get("refreshToken")) {
-        this.refreshToken().then((res) => {
+      } else if (
+        !this.$cookies.get("key") &&
+        this.$cookies.get("refreshToken")
+      ) {
+        this.refreshToken().then(res => {
           if (res == true) {
             this.commentLogin();
           }
@@ -1980,22 +2108,26 @@ export default {
           "/api/Course/AddComment",
           {
             id: this.$route.params.id,
-            parentId: this.replayToCommentId == "" ? null : this.replayToCommentId,
+            parentId:
+              this.replayToCommentId == "" ? null : this.replayToCommentId,
             userName: this.commentName,
-            commentText: this.commentText,
+            commentText: this.commentText
           },
           {
             headers: {
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
+              Authorization: `Bearer ${this.$cookies.get("key")}`
+            }
           }
         );
-        if (commentResp.data.statusCode == 200 && commentResp.data.message == "Success") {
+        if (
+          commentResp.data.statusCode == 200 &&
+          commentResp.data.message == "Success"
+        ) {
           this.$swal({
             text: "کامنت شما ثبت شد! بعد از تایید ادمین ها نشان داده خواهد شد",
             icon: "success",
             showCloseButton: true,
-            confirmButtonText: "تایید",
+            confirmButtonText: "تایید"
           });
           this.noText = false;
           this.getComments();
@@ -2009,8 +2141,11 @@ export default {
     async buyCourse() {
       if (!this.$cookies.get("key") && !this.$cookies.get("refreshToken")) {
         this.$router.push("/my/login");
-      } else if (!this.$cookies.get("key") && this.$cookies.get("refreshToken")) {
-        this.refreshToken().then((res) => {
+      } else if (
+        !this.$cookies.get("key") &&
+        this.$cookies.get("refreshToken")
+      ) {
+        this.refreshToken().then(res => {
           if (res == true) {
             this.buyLogin();
           }
@@ -2024,8 +2159,8 @@ export default {
         `/api/Student/StudentOrder/BuyCourse/${this.$route.params.id}`,
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
       if (buyResp.data.data == 3) {
@@ -2033,23 +2168,33 @@ export default {
           text: "به سبد خرید اضافه شد",
           icon: "success",
           showCloseButton: true,
-          confirmButtonText: "تایید",
-        });
+          confirmButtonText: "تایید"
+        }).then(() => {
+            this.$router.push({ path: '/cart' })
+        })
       } else if (buyResp.data.data == 2) {
         this.$swal({
           text: "در سبد خرید موجود است",
           icon: "error",
           showCloseButton: true,
-          confirmButtonText: "تایید",
-        });
+          confirmButtonText: "تایید"
+        }).then(() => {
+            this.$router.push({ path: '/cart' })
+        })
       }
     },
     async refreshToken() {
       var token = this.$cookies.get("refreshToken");
-      var getToken = await this.$axios.post("/api/Student/StudentAccount/refresh", {
-        refreshToken: token,
-      });
-      if (getToken.data.statusCode == 200 && getToken.data.message == "Success") {
+      var getToken = await this.$axios.post(
+        "/api/Student/StudentAccount/refresh",
+        {
+          refreshToken: token
+        }
+      );
+      if (
+        getToken.data.statusCode == 200 &&
+        getToken.data.message == "Success"
+      ) {
         await this.$store.dispatch("login/setLoginDetails", getToken);
         this.studentIsLogin = true;
         return true;
@@ -2076,7 +2221,9 @@ export default {
       this.showLogomotion = true;
       this.seeThisVideo = id;
       this.$nextTick(() => {
-        document.querySelector("#logoSrc").setAttribute("src", "/logomotion.mp4");
+        document
+          .querySelector("#logoSrc")
+          .setAttribute("src", "/logomotion.mp4");
         const videoPlayer = document.querySelector("#logoVid");
         videoPlayer.load();
       });
@@ -2086,12 +2233,15 @@ export default {
         "/api/Student/StudentQuestion/GetQuestionAudioBase64/" + id,
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
 
-      if (audioresp.data.statusCode == 200 && audioresp.data.message == "Success") {
+      if (
+        audioresp.data.statusCode == 200 &&
+        audioresp.data.message == "Success"
+      ) {
         var audioPlayerModal = document.querySelector(".audioPlayerModal");
         this.audioBase64Data = audioresp.data.data.audioBase64;
         audioPlayerModal.style.display = "flex";
@@ -2108,14 +2258,18 @@ export default {
         "/api/Student/StudentQuestion/GetQuestionAttachImageBase64/" + id,
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
-      if (download.data.statusCode == 200 && download.data.message == "Success") {
+      if (
+        download.data.statusCode == 200 &&
+        download.data.message == "Success"
+      ) {
         if (download.data.data.attachImageBase64 != null) {
           var a = document.createElement("a");
-          a.href = "data:image/png;base64," + download.data.data.attachImageBase64;
+          a.href =
+            "data:image/png;base64," + download.data.data.attachImageBase64;
           a.download = "Image" + new Date().getTime() + ".png";
           a.click();
         } else {
@@ -2123,17 +2277,20 @@ export default {
             text: "عکسی وجود ندارد",
             icon: "error",
             showCloseButton: true,
-            confirmButtonText: "ادامه",
+            confirmButtonText: "ادامه"
           });
         }
       }
     },
     async seeResponses(id) {
-      var msgResp = await this.$axios.get(`/api/Course/GetQuestionResponses/${id}`, {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get("key")}`,
-        },
-      });
+      var msgResp = await this.$axios.get(
+        `/api/Course/GetQuestionResponses/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
+        }
+      );
       for (var i of this.messageGroups) {
         if (i[0].questionId == Number(id)) {
           for (var j of msgResp.data.data) {
@@ -2147,49 +2304,57 @@ export default {
       event.target.closest(".like").classList.toggle("liked");
       var myIp = "";
       await fetch("https://api.ipify.org?format=json")
-        .then((x) => x.json())
+        .then(x => x.json())
         .then(({ ip }) => {
           myIp = ip;
         });
       if (this.studentIsLogin == true) {
         if (!this.$cookies.get("key") && this.$cookies.get("refreshToken")) {
-          this.refreshToken().then(async (res) => {
+          this.refreshToken().then(async res => {
             if (res == true) {
-              var likeResp = await this.$axios.get(`/api/Course/CommentLike/${id}`, {
-                headers: {
-                  Authorization: `Bearer ${this.$cookies.get("key")}`,
-                },
-              });
+              var likeResp = await this.$axios.get(
+                `/api/Course/CommentLike/${id}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${this.$cookies.get("key")}`
+                  }
+                }
+              );
             }
           });
         } else if (this.$cookies.get("key")) {
-          var likeResp = await this.$axios.get(`/api/Course/CommentLike/${id}`, {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
-          });
+          var likeResp = await this.$axios.get(
+            `/api/Course/CommentLike/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${this.$cookies.get("key")}`
+              }
+            }
+          );
         }
       } else {
-        var likeResp = await this.$axios.get(`/api/Course/CommentLike/${id}?ip=${myIp}`);
+        var likeResp = await this.$axios.get(
+          `/api/Course/CommentLike/${id}?ip=${myIp}`
+        );
       }
     },
     async commentLiked(id) {
       var myIp = "";
       await fetch("https://api.ipify.org?format=json")
-        .then((x) => x.json())
+        .then(x => x.json())
         .then(({ ip }) => {
           myIp = ip;
         });
       if (this.studentIsLogin == true) {
         if (!this.$cookies.get("key") && this.$cookies.get("refreshToken")) {
-          this.refreshToken().then(async (res) => {
+          this.refreshToken().then(async res => {
             if (res == true) {
               var checkLike = await this.$axios.get(
                 `/api/Course/GetCourseLikeList/${id}`,
                 {
                   headers: {
-                    Authorization: `Bearer ${this.$cookies.get("key")}`,
-                  },
+                    Authorization: `Bearer ${this.$cookies.get("key")}`
+                  }
                 }
               );
               if (
@@ -2201,12 +2366,18 @@ export default {
             }
           });
         } else if (this.$cookies.get("key")) {
-          var checkLike = await this.$axios.get(`/api/Course/GetCourseLikeList/${id}`, {
-            headers: {
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
-          });
-          if (checkLike.data.statusCode == 200 && checkLike.data.message == "Success") {
+          var checkLike = await this.$axios.get(
+            `/api/Course/GetCourseLikeList/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${this.$cookies.get("key")}`
+              }
+            }
+          );
+          if (
+            checkLike.data.statusCode == 200 &&
+            checkLike.data.message == "Success"
+          ) {
             this.likedComments = checkLike.data.data;
           }
         }
@@ -2214,11 +2385,14 @@ export default {
         var checkLike = await this.$axios.get(
           `/api/Course/GetCourseLikeList/${id}?ip=${myIp}`
         );
-        if (checkLike.data.statusCode == 200 && checkLike.data.message == "Success") {
+        if (
+          checkLike.data.statusCode == 200 &&
+          checkLike.data.message == "Success"
+        ) {
           this.likedComments = checkLike.data.data;
         }
       }
-    },
+    }
   },
   watch: {
     goTo: {
@@ -2244,9 +2418,17 @@ export default {
           }
         }
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
+  computed: {
+    pageTitle() {
+      return this.courseName + " | دانشکده آنلاین";
+    },
+    pageDescription() {
+      return this.courseShortDescription
+    }
+  }
 };
 </script>
 <style lang="scss">
@@ -2270,7 +2452,8 @@ export default {
   box-shadow: 0 0 0 5px rgba($active-color, 0.5) !important;
 }
 
-.plyr__menu__container .plyr__control[role="menuitemradio"][aria-checked="true"]::before {
+.plyr__menu__container
+  .plyr__control[role="menuitemradio"][aria-checked="true"]::before {
   background: $active-color !important;
 }
 

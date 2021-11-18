@@ -400,6 +400,30 @@ import skeleton from "@/components/skeleto-creator";
 export default {
   layout: "mainPages",
   components: { skeleton },
+  head() {
+    return {
+      title: this.pageTitle,
+      meta: [
+        {
+          hid: "og_title",
+          name: "og:title",
+          content: this.pageTitle
+        },
+        {
+          hid: "og_description",
+          name: "og:description",
+          content:
+            this.pageDescription
+        },
+        {
+          hid: "description",
+          name: "description",
+          content:
+            this.pageDescription
+        }
+      ],
+    }
+  },
   data() {
     return {
       newsDetail: "",
@@ -698,6 +722,14 @@ export default {
       }
     },
   },
+  computed: {
+    pageTitle() {
+      return this.newsDetail.title + ' | دانشکده آنلاین'
+    },
+    pageDescription() {
+      return this.newsDetail.shortDescription
+    },
+  }
 };
 </script>
 <style lang="scss">

@@ -84,7 +84,7 @@ export default {
           src: "https://trk.tablighdrive.com/pixel/init.action2.js",
         },
       ],
-      meta: [{ name: "robots", content: "noindex,nofollow" }],
+      meta: [{ name: "robots", content: "noindex, nofollow" }],
     };
   },
   methods: {
