@@ -77,7 +77,7 @@ export default {
   },
   watch: {
     bankResponse(newVal) {
-      if (newVal && newVal.MID) this.checkdata();        
+      if (newVal && (newVal.mid || newVal.token)) this.checkdata();        
     }
   },
   methods: {
