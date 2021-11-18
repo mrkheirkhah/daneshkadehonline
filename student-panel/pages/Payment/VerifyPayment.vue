@@ -76,15 +76,25 @@ export default {
     }
   },
   watch: {
-    bankResponse(newVal) {
-      if (newVal && (newVal.mid || newVal.token)) this.checkdata();        
+    bankResponse: {
+      immediate: true,
+      deep: true,
+      handler(newVal) {
+      debugger
+      console.log('log lati from mrkheirkhah ===============', this.$store.state.bankResponse)
+      if (this.$store.state.bankResponse && (this.$store.state.bankResponse.mid || this.$store.state.bankResponse.token)) {
+        debugger
+        this.checkdata();  
+      }      
+    }
     }
   },
   methods: {
     async checkdata() {
+      debugger
       const datac = await this.$axios.post(
         "/api/Payment/VerifyPaymentOrder",
-        this.bankResponse,
+        this.$store.state.bankResponse,
         {
           headers: {
             Authorization: `Bearer ${this.$cookies.get("key")}`
@@ -107,6 +117,7 @@ export default {
   },
   computed: {
     bankResponse() {
+      debugger
       this.$store.state.bankResponse;
     }
   }
