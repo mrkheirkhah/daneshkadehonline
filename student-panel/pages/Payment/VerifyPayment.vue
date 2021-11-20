@@ -80,10 +80,7 @@ export default {
       immediate: true,
       deep: true,
       handler(newVal) {
-      debugger
-      console.log('log lati from mrkheirkhah ===============', this.$store.state.bankResponse)
       if (this.$store.state.bankResponse && (this.$store.state.bankResponse.mid || this.$store.state.bankResponse.token)) {
-        debugger
         this.checkdata();  
       }      
     }
@@ -91,7 +88,6 @@ export default {
   },
   methods: {
     async checkdata() {
-      debugger
       const datac = await this.$axios.post(
         "/api/Payment/VerifyPaymentOrder",
         this.$store.state.bankResponse,
@@ -117,7 +113,6 @@ export default {
   },
   computed: {
     bankResponse() {
-      debugger
       this.$store.state.bankResponse;
     }
   }

@@ -1836,7 +1836,6 @@ export default {
       this.getComments(),
       this.getQuestions()
     ]);
-    debugger;
     if (course.data.statusCode == 200 && course.data.message == "Success") {
       // console.log(course);
       this.courseEpisodes = course.data.data.episodeItems;
@@ -2215,9 +2214,19 @@ export default {
           );
         const videoPlayer = document.querySelector("video");
         videoPlayer.load();
+        videoPlayer.play();
       });
     },
     seeVideo(id) {
+      var token = this.$cookies.get("refreshToken");
+      if(!token) {
+        return this.$swal({
+            text: "برای مشاهده ویدئو باید وارد حساب کاربری خود شوید",
+            icon: "error",
+            showCloseButton: true,
+            confirmButtonText: "ثبت نام / ورود"
+          }).then(() => this.$router.push({path: '/my/login'}));
+      }
       this.showLogomotion = true;
       this.seeThisVideo = id;
       this.$nextTick(() => {
@@ -2226,6 +2235,7 @@ export default {
           .setAttribute("src", "/logomotion.mp4");
         const videoPlayer = document.querySelector("#logoVid");
         videoPlayer.load();
+        videoPlayer.play();
       });
     },
     async downloadAttachAudio(id) {
