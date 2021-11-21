@@ -213,7 +213,7 @@
               </div>
               <div
                 class="footer"
-                v-if="detailBox.coursePrice != 0 && item1 != 1"
+                v-if="isCourseFree && detailBox.coursePrice != 0 && item1 != 1"
               >
                 <a href="" type="button" @click.prevent="buyCourse">{{
                   item1 == 2 ? "خرید دوره" : item1 == 0 ? "تمدید دوره" : ""
@@ -2437,6 +2437,9 @@ export default {
     },
     pageDescription() {
       return this.courseShortDescription
+    },
+    isCourseFree() {
+      return this.detailBox?.originalPrice !== 0 && this.detailBox?.finalPrice !== 0
     }
   }
 };
