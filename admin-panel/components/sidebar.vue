@@ -38,7 +38,7 @@
           <nuxt-link
             to="/teachers-list"
             class="panel-item"
-            v-if="role == 'SuperAdmin' || role == 'Admin' || role == 'Supprot'"
+            v-if="role == 'SuperAdmin' || role == 'Admin' || role == 'Support'"
           >
             <div class="sidebar-links">
               <svg
@@ -64,7 +64,7 @@
           <nuxt-link
             to="/students-list"
             class="panel-item"
-            v-if="role == 'SuperAdmin' || role == 'Admin' || role == 'Supprot'"
+            v-if="role == 'SuperAdmin' || role == 'Admin' || role == 'Support'"
           >
             <div class="sidebar-links">
               <svg
@@ -814,7 +814,7 @@
           <nuxt-link
             to="/add-teacher"
             class="panel-item"
-            v-if="role == 'SuperAdmin' || role == 'Admin' || role == 'Supprot'"
+            v-if="role == 'SuperAdmin' || role == 'Admin' || role == 'Support'"
           >
             <div class="sidebar-links">
               <svg
@@ -961,7 +961,7 @@
                 />
             </g>
         </g>
-</svg>
+            </svg>
             پشتیبانی
           </div>
         </nuxt-link>

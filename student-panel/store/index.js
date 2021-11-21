@@ -12,7 +12,6 @@ export const mutations = {
 
 export const actions = {
   saveBankResponseObject({ commit }, bankResponseObject) {
-    debugger
     commit("SET_BANK_RESPONSE_OBJECT", { bankResponseObject });
   }
 };
