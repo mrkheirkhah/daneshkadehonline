@@ -25,9 +25,10 @@
     <span>
       <button class="edit btn" @click.prevent="$parent.addVideos(id)">افزودن</button>
     </span>
-    <span class="green" v-if="isAccept == true"> تایید شده </span>
-    <span class="red" v-else-if="isAccept == false"> رد شده </span>
-    <span class="yellow" v-else-if="isAccept == null"> در انتظار تایید </span>
+    <span class="green" v-if="acceptStatus === 'Accepted'"> تایید شده </span>
+    <span class="red" v-else-if="acceptStatus === 'NotAccepted'"> رد شده </span>
+    <span class="yellow" v-else-if="acceptStatus === 'InAcceptList'"> در انتظار تایید </span>
+    <span class="yellow" v-else-if="acceptStatus === 'NewEdit'"> در انتظار تایید </span>
   </div>
 </template>
 
@@ -68,8 +69,8 @@ export default {
       type: String,
       required: false,
     },
-    isAccept: {
-      type: Boolean,
+    acceptStatus: {
+      type: String,
       required: false,
     },
   },

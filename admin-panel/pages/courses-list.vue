@@ -58,7 +58,11 @@
                 <li @click="selectFilter($event, 'course')">دوره</li>
               </ul>
             </div>
-            <label for="teacher-courses-search-btn" class="search-box" tabindex="0">
+            <label
+              for="teacher-courses-search-btn"
+              class="search-box"
+              tabindex="0"
+            >
               <input
                 type="search"
                 placeholder="جستجو کنید"
@@ -79,7 +83,12 @@
         <header class="table-row table-header">
           <template v-if="loading">
             <span v-for="i in 7" :key="i">
-              <skeleton class="skeleton" width="35px" height="20px" borderRadius="5px" />
+              <skeleton
+                class="skeleton"
+                width="35px"
+                height="20px"
+                borderRadius="5px"
+              />
             </span>
           </template>
           <template v-else>
@@ -99,12 +108,21 @@
         <template v-if="loading">
           <div class="table-row" v-for="i in 4" :key="i.index">
             <span v-for="j in 7" :key="j">
-              <skeleton class="skeleton" width="35px" height="20px" borderRadius="5px" />
+              <skeleton
+                class="skeleton"
+                width="35px"
+                height="20px"
+                borderRadius="5px"
+              />
             </span>
           </div>
         </template>
         <template v-else>
-          <div class="table-row" v-for="course in courses" :key="course.courseId">
+          <div
+            class="table-row"
+            v-for="course in courses"
+            :key="course.courseId"
+          >
             <span>{{ course.courseName }}</span>
             <span class="name">{{ course.teacherName }}</span>
             <span class="persian-number">{{ course.phoneNumber }}</span>
@@ -126,32 +144,50 @@
                 ویرایش دوره
               </button>
             </span>
-            <span class="state edited" v-if="course.isAccepted == 'NewEdit'">
+            <span class="state edited" v-if="course.acceptStatus == 'NewEdit'">
               ویرایشات جدید
             </span>
-            <span class="state accepted" v-else-if="course.isAccepted == 'Accepted'">
+            <span
+              class="state accepted"
+              v-else-if="course.acceptStatus == 'Accepted'"
+            >
               تائید شده
             </span>
             <span
+              class="state edited"
+              v-else-if="course.acceptStatus == 'InAcceptList'"
+            >
+              در انتظار تایید
+            </span>
+            <span
               class="state not-accepted"
-              v-else-if="course.isAccepted == 'NotAccepted'"
+              v-else-if="course.acceptStatus == 'NotAccepted'"
             >
               تائید نشده
             </span>
             <span class="state edited" v-if="course.status == 'InProgress'">
               در حال پخش
             </span>
-            <span class="state accepted" v-else-if="course.status == 'Completed'">
+            <span
+              class="state accepted"
+              v-else-if="course.status == 'Completed'"
+            >
               کامل شده
             </span>
-            <span class="state not-accepted" v-else-if="course.status == 'Stopped'">
+            <span
+              class="state not-accepted"
+              v-else-if="course.status == 'Stopped'"
+            >
               مسدود شده
             </span>
             <span class="state not-accepted" v-else-if="course.status == null">
               وضعیت نامشخص(موقتی)
             </span>
             <span>
-              <button class="view" @click.prevent="seeCourseComments(course.courseId)">
+              <button
+                class="view"
+                @click.prevent="seeCourseComments(course.courseId)"
+              >
                 مشاهده
               </button>
             </span>
@@ -184,16 +220,19 @@ export default {
       commentGroups: [],
       audioBase64Data: "",
       questionsFilter: "",
-      goTo: "",
+      goTo: ""
     };
   },
   async mounted() {
     await Promise.all([this.getCoursesQuestions(), this.getCoursesComments()]);
-    const courses = await this.$axios.get("/api/Admin/AdminCourse/Course?filterBy=all", {
-      headers: {
-        Authorization: `Bearer ${this.$cookies.get("key")}`,
-      },
-    });
+    const courses = await this.$axios.get(
+      "/api/Admin/AdminCourse/Course?filterBy=all",
+      {
+        headers: {
+          Authorization: `Bearer ${this.$cookies.get("key")}`
+        }
+      }
+    );
     if (courses.data.statusCode == 200 && courses.data.message == "Success") {
       this.courses = courses.data.data;
       this.loading = false;
@@ -205,11 +244,14 @@ export default {
     },
     async getCoursesQuestions() {
       this.messageGroups = [];
-      const questions = await this.$axios.get(`/api/Admin/AdminQuestion/GetQuestions`, {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get("key")}`,
-        },
-      });
+      const questions = await this.$axios.get(
+        `/api/Admin/AdminQuestion/GetQuestions`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
+        }
+      );
       // console.log(questions);
       this.questionsFilter = questions.data.data.filter;
       for (const eachMessage of questions.data.data.questionItems) {
@@ -233,8 +275,8 @@ export default {
         `/api/Admin/AdminQuestion/GetQuestionResponses/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
       for (const i of this.messageGroups) {
@@ -250,11 +292,14 @@ export default {
         "/api/Admin/AdminQuestion/GetQuestionAudioBase64/" + id,
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
-      if (audioresp.data.statusCode == 200 && audioresp.data.message == "Success") {
+      if (
+        audioresp.data.statusCode == 200 &&
+        audioresp.data.message == "Success"
+      ) {
         const audioPlayerModal = document.querySelector(".audioPlayerModal");
         this.audioBase64Data = audioresp.data.data.audioBase64;
         audioPlayerModal.style.display = "flex";
@@ -266,14 +311,18 @@ export default {
         "/api/Admin/AdminQuestion/GetQuestionAttachImageBase64/" + id,
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
-      if (download.data.statusCode == 200 && download.data.message == "Success") {
+      if (
+        download.data.statusCode == 200 &&
+        download.data.message == "Success"
+      ) {
         if (download.data.data.attachImageBase64 != null) {
           var a = document.createElement("a");
-          a.href = "data:image/png;base64," + download.data.data.attachImageBase64;
+          a.href =
+            "data:image/png;base64," + download.data.data.attachImageBase64;
           a.download = "Image" + new Date().getTime() + ".png";
           a.click();
         } else {
@@ -281,7 +330,7 @@ export default {
             text: "عکسی وجود ندارد",
             icon: "error",
             showCloseButton: true,
-            confirmButtonText: "ادامه",
+            confirmButtonText: "ادامه"
           });
         }
       }
@@ -296,8 +345,8 @@ export default {
         "/api/Admin/AdminComment/GetCourseComments",
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
       // console.log(coursesComments);
@@ -326,7 +375,8 @@ export default {
     seeAll() {
       const table = document.getElementById("courses-table");
       table.style.overflowY = "scroll";
-      const footer = (document.querySelector(".table-footer").style.display = "none");
+      const footer = (document.querySelector(".table-footer").style.display =
+        "none");
     },
     toggleDropdown() {
       event.stopPropagation();
@@ -351,16 +401,19 @@ export default {
         `/api/Admin/AdminQuestion/RemoveQuestion/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
-      if (deleteResp.data.statusCode == 200 && deleteResp.data.message == "Success") {
+      if (
+        deleteResp.data.statusCode == 200 &&
+        deleteResp.data.message == "Success"
+      ) {
         this.$swal({
           text: "حذف شد",
           icon: "success",
           showCloseButton: true,
-          confirmButtonText: "تایید",
+          confirmButtonText: "تایید"
         });
         this.getCoursesQuestions();
       }
@@ -381,8 +434,8 @@ export default {
         `/api/Admin/AdminComment/UpdateCourseCommentStatus/${id}/true`,
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
       if (
@@ -393,7 +446,7 @@ export default {
           text: "تایید شد",
           icon: "success",
           showCloseButton: true,
-          confirmButtonText: "تایید",
+          confirmButtonText: "تایید"
         });
         this.getCoursesComments();
       }
@@ -403,16 +456,19 @@ export default {
         `/api/Admin/AdminComment/DeleteCourseCommentStatus/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
-      if (deleteResp.data.statusCode == 200 && deleteResp.data.message == "Success") {
+      if (
+        deleteResp.data.statusCode == 200 &&
+        deleteResp.data.message == "Success"
+      ) {
         this.$swal({
           text: "حذف شد",
           icon: "success",
           showCloseButton: true,
-          confirmButtonText: "تایید",
+          confirmButtonText: "تایید"
         });
         this.getCoursesComments();
       }
@@ -424,11 +480,14 @@ export default {
           `/api/Admin/AdminCourse/Course?filterBy=all&search=${this.searchInput}`,
           {
             headers: {
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
+              Authorization: `Bearer ${this.$cookies.get("key")}`
+            }
           }
         );
-        if (courses.data.statusCode == 200 && courses.data.message == "Success") {
+        if (
+          courses.data.statusCode == 200 &&
+          courses.data.message == "Success"
+        ) {
           this.courses = courses.data.data;
         }
       } else {
@@ -436,18 +495,21 @@ export default {
           `/api/Admin/AdminCourse/Course?filterBy=${this.selectedFilter}&search=${this.searchInput}`,
           {
             headers: {
-              Authorization: `Bearer ${this.$cookies.get("key")}`,
-            },
+              Authorization: `Bearer ${this.$cookies.get("key")}`
+            }
           }
         );
-        if (courses.data.statusCode == 200 && courses.data.message == "Success") {
+        if (
+          courses.data.statusCode == 200 &&
+          courses.data.message == "Success"
+        ) {
           this.courses = courses.data.data;
         }
       }
     },
     seeCourseComments(id) {
       this.$router.push("/course-questions/" + id);
-    },
+    }
   },
 
   watch: {
@@ -458,11 +520,14 @@ export default {
             `/api/Admin/AdminCourse/Course?filterBy=${this.selectedFilter}`,
             {
               headers: {
-                Authorization: `Bearer ${this.$cookies.get("key")}`,
-              },
+                Authorization: `Bearer ${this.$cookies.get("key")}`
+              }
             }
           );
-          if (courses.data.statusCode == 200 && courses.data.message == "Success") {
+          if (
+            courses.data.statusCode == 200 &&
+            courses.data.message == "Success"
+          ) {
             this.courses = courses.data.data;
           }
         } else {
@@ -470,22 +535,28 @@ export default {
             `/api/Admin/AdminCourse/Course?filterBy=${this.selectedFilter}&search=${this.searchInput}`,
             {
               headers: {
-                Authorization: `Bearer ${this.$cookies.get("key")}`,
-              },
+                Authorization: `Bearer ${this.$cookies.get("key")}`
+              }
             }
           );
-          if (courses.data.statusCode == 200 && courses.data.message == "Success") {
+          if (
+            courses.data.statusCode == 200 &&
+            courses.data.message == "Success"
+          ) {
             this.courses = courses.data.data;
           }
         }
-      },
+      }
     },
     goTo: {
       async handler() {
         const questions = await this.$axios.get(
           `/api/Admin/AdminComment/GetCourseComments?pageId=${this.goTo}`
         );
-        if (questions.data.statusCode == 200 && questions.data.message == "Success") {
+        if (
+          questions.data.statusCode == 200 &&
+          questions.data.message == "Success"
+        ) {
           this.questionsFilter = questions.data.data.filter;
           this.messageGroups = [];
           for (const eachMessage of questions.data.data.questionItems) {
@@ -505,9 +576,9 @@ export default {
           }
         }
       },
-      deep: true,
-    },
-  },
+      deep: true
+    }
+  }
 };
 </script>
 <style lang="scss">

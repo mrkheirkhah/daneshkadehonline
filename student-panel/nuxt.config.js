@@ -37,13 +37,22 @@ export default {
         hid: "og_site_name",
         name: "og:site_name",
         content: "daneshkadeonline"
-      },
+      }
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/logo.png" }],
     script: [
       {
         src: "https://www.googletagmanager.com/gtag/js?id=G-6N54C4LD3T",
         async: true
+      },
+      {
+        hid: "yektanet-script",
+        innerHTML: `
+          !function (t, e, n) { t.yektanetAnalyticsObject = n, t[n] = t[n] || function () { t[n].q.push(arguments) }, t[n].q = t[n].q || []; var a = new Date, r = a.getFullYear().toString() + "0" + a.getMonth() + "0" + a.getDate() + "0" + a.getHours(), c = e.getElementsByTagName("script")[0], s = e.createElement("script"); s.id = "ua-script-5A0MB9l9"; s.dataset.analyticsobject = n; s.async = 1; s.type = "text/javascript"; s.src = "https://cdn.yektanet.com/rg_woebegone/scripts_v3/5A0MB9l9/rg.complete.js?v=" + r, c.parentNode.insertBefore(s, c) }(window, document, "yektanet");
+        `,
+        type: "text/javascript",
+        charset: "utf-8",
+        async: true,
       }
     ]
   },

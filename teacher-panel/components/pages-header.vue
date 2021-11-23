@@ -157,6 +157,7 @@
                 <a
                   :href="'https://daneshkadeonline.ir/news/' + anyNews.newsId"
                   class="item"
+                  target="_blank"
                   v-for="anyNews in news"
                   :key="anyNews.newsId"
                 >
@@ -176,7 +177,11 @@
             height="19"
             viewBox="0 0 19 19"
           >
-            <g id="Group_9698" data-name="Group 9698" transform="translate(-361 -47)">
+            <g
+              id="Group_9698"
+              data-name="Group 9698"
+              transform="translate(-361 -47)"
+            >
               <g
                 id="Rectangle_104"
                 class="stroke-1"
@@ -187,7 +192,14 @@
                 stroke-width="1"
               >
                 <rect width="9" height="9" rx="2" stroke="none" />
-                <rect x="0.5" y="0.5" width="8" height="8" rx="1.5" fill="none" />
+                <rect
+                  x="0.5"
+                  y="0.5"
+                  width="8"
+                  height="8"
+                  rx="1.5"
+                  fill="none"
+                />
               </g>
               <g
                 id="Rectangle_105"
@@ -219,7 +231,14 @@
                 stroke-width="1"
               >
                 <rect width="9" height="9" rx="2" stroke="none" />
-                <rect x="0.5" y="0.5" width="8" height="8" rx="1.5" fill="none" />
+                <rect
+                  x="0.5"
+                  y="0.5"
+                  width="8"
+                  height="8"
+                  rx="1.5"
+                  fill="none"
+                />
               </g>
               <g
                 id="Rectangle_107"
@@ -231,7 +250,14 @@
                 stroke-width="1"
               >
                 <rect width="9" height="9" rx="2" stroke="none" />
-                <rect x="0.5" y="0.5" width="8" height="8" rx="1.5" fill="none" />
+                <rect
+                  x="0.5"
+                  y="0.5"
+                  width="8"
+                  height="8"
+                  rx="1.5"
+                  fill="none"
+                />
               </g>
             </g>
           </svg>
@@ -258,13 +284,19 @@
                     />
                     <img v-else src="" alt="عکس مقاله" />
                   </div>
-                  <h4 class="article-name" v-if="mag.title.rendered.length > 15">
+                  <h4
+                    class="article-name"
+                    v-if="mag.title.rendered.length > 15"
+                  >
                     {{ mag.title.rendered.substring(0, 15) }}...
                   </h4>
                   <h4 class="article-name" v-else>
                     {{ mag.title.rendered }}
                   </h4>
-                  <p class="article-detail" v-if="mag.yoast_head_json.description">
+                  <p
+                    class="article-detail"
+                    v-if="mag.yoast_head_json.description"
+                  >
                     {{ mag.yoast_head_json.description.substring(0, 45) }}...
                   </p>
                   <p class="article-detail" v-else>بدون متن!</p>
@@ -272,12 +304,16 @@
               </div>
             </div>
             <div class="hover-box__footer">
-              <a href="https://mag.daneshkadeonline.ir/" target="_blank">مشاهده همه</a>
+              <a href="https://mag.daneshkadeonline.ir/" target="_blank"
+                >مشاهده همه</a
+              >
             </div>
           </div>
         </button>
         <button href="#" class="notifications-btn dashboard-btn bell">
-          <span class="unread-notification-count persian-number">{{ alertCount }}</span>
+          <span class="unread-notification-count persian-number">{{
+            alertCount
+          }}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="21.515"
@@ -339,7 +375,11 @@
             viewBox="0 0 20.346 20.278"
           >
             <g id="logout" transform="translate(0 -0.85)">
-              <g id="Group_192" data-name="Group 192" transform="translate(0 0.85)">
+              <g
+                id="Group_192"
+                data-name="Group 192"
+                transform="translate(0 0.85)"
+              >
                 <g id="Group_191" data-name="Group 191">
                   <path
                     id="Path_95"
@@ -351,7 +391,11 @@
                   />
                 </g>
               </g>
-              <g id="Group_194" data-name="Group 194" transform="translate(6.759 5.075)">
+              <g
+                id="Group_194"
+                data-name="Group 194"
+                transform="translate(6.759 5.075)"
+              >
                 <g id="Group_193" data-name="Group 193">
                   <path
                     id="Path_96"
@@ -381,7 +425,7 @@ export default {
       alerts: [],
       alertCount: 0,
       news: "",
-      mags: [],
+      mags: []
     };
   },
   mounted() {
@@ -405,8 +449,8 @@ export default {
         "/api/Teacher/TeacherQuestionAndAlert/GetTeacherAlerts",
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       );
       if (alerts.data.statusCode == "200" && alerts.data.message == "Success") {
@@ -414,7 +458,7 @@ export default {
           if (n.isRead == false) {
             this.alerts.push({
               title: n.alertText,
-              id: n.id,
+              id: n.id
             });
             this.alertCount += 1;
           }
@@ -428,15 +472,18 @@ export default {
       }
     },
     async logout() {
-      const logout = await this.$axios.get("/api/Teacher/TeacherAccount/LogOut", {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get("key")}`,
-        },
-      });
+      const logout = await this.$axios.get(
+        "/api/Teacher/TeacherAccount/LogOut",
+        {
+          headers: {
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
+        }
+      );
       this.$cookies.remove("key");
       this.$cookies.remove("refreshToken");
       this.$router.push("/login");
-    },
-  },
+    }
+  }
 };
 </script>

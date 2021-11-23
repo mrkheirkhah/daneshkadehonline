@@ -2,9 +2,18 @@
   <aside class="panel-teacher-aside">
     <!-- button for mobile sidebar -->
     <span class="hamburger-button hamburger-skeleton" v-if="loading">
-      <skeleton class="skeleton" width="30px" height="18px" borderRadius="5px" />
+      <skeleton
+        class="skeleton"
+        width="30px"
+        height="18px"
+        borderRadius="5px"
+      />
     </span>
-    <button class="hamburger-button" @click.prevent="toggle_teacher_panel" v-else>
+    <button
+      class="hamburger-button"
+      @click.prevent="toggle_teacher_panel"
+      v-else
+    >
       <div class="hamburger-line"></div>
       <div class="hamburger-line"></div>
       <div class="hamburger-line"></div>
@@ -27,7 +36,12 @@
           alt="تصویر پروفایل مدرس"
         />
         <span v-if="loading" class="dis-block mt">
-          <skeleton class="skeleton" width="110px" height="35px" borderRadius="5px" />
+          <skeleton
+            class="skeleton"
+            width="110px"
+            height="35px"
+            borderRadius="5px"
+          />
         </span>
         <h2 v-else>{{ name }}</h2>
       </div>
@@ -53,7 +67,12 @@
       <div v-if="loading" class="sidebar-skeleton">
         <div v-for="i in 6" :key="i">
           <span v-if="loading">
-            <skeleton class="skeleton" width="30px" height="30px" borderRadius="5px" />
+            <skeleton
+              class="skeleton"
+              width="30px"
+              height="30px"
+              borderRadius="5px"
+            />
           </span>
           <span v-if="loading">
             <skeleton
@@ -159,7 +178,9 @@
         <nuxt-link
           class="panel-item"
           to="/transactions"
-          v-intro="'در این قسمت میتوانید گزارش های مربوط به تراکنش ها را مشاهده کنید .'"
+          v-intro="
+            'در این قسمت میتوانید گزارش های مربوط به تراکنش ها را مشاهده کنید .'
+          "
         >
           <div class="sidebar-links">
             <div
@@ -279,7 +300,12 @@
         <!-- create 3 row of skeleton for bottom sidebar -->
         <div v-for="i in 4" :key="i">
           <span v-if="loading">
-            <skeleton class="skeleton" width="30px" height="30px" borderRadius="5px" />
+            <skeleton
+              class="skeleton"
+              width="30px"
+              height="30px"
+              borderRadius="5px"
+            />
           </span>
           <span v-if="loading">
             <skeleton
@@ -343,7 +369,7 @@ export default {
     return {
       loading: true,
       name: "",
-      profImage: "",
+      profImage: ""
     };
   },
   async beforeMount() {
@@ -355,11 +381,11 @@ export default {
         {},
         {
           headers: {
-            Authorization: `Bearer ${this.$cookies.get("key")}`,
-          },
+            Authorization: `Bearer ${this.$cookies.get("key")}`
+          }
         }
       )
-      .catch((e) => {
+      .catch(e => {
         console.log("e");
       });
     if (getData.data.statusCode == "200") {
@@ -373,45 +399,46 @@ export default {
   mounted() {},
   methods: {
     startIntro() {
-      this.$intro().start();
-      const introNext = document.querySelector(".introjs-nextbutton");
-      if (introNext) {
-        introNext.innerHTML = "بعدی";
-      }
-      const introPrev = document.querySelector(".introjs-prevbutton");
-      if (introPrev) {
-        introPrev.innerHTML = "قبلی";
-      }
-      const introDone = document.querySelector(".introjs-donebutton");
-      if (introDone) {
-        introDone.innerHTML = "اتمام";
-      }
+      this.$intro()
+        .setOption("nextLabel", "بعدی")
+        .setOption("prevLabel", "قبلی")
+        .setOption("doneLabel", "اتمام")
+        .start();
     },
     toggle_teacher_panel() {
-      const panel_teacher_aside = document.querySelector(".panel-teacher-aside");
+      const panel_teacher_aside = document.querySelector(
+        ".panel-teacher-aside"
+      );
       panel_teacher_aside.classList.toggle("show");
     },
     togglePanel() {
-      document.querySelector(".dropdown-preview").parentNode.classList.toggle("expanded");
-    },
+      document
+        .querySelector(".dropdown-preview")
+        .parentNode.classList.toggle("expanded");
+    }
   },
   computed: {
     profImagedata() {
-      return "https://api.daneshkadeonline.ir/Images/Public/Teacher/" + this.profImage;
-    },
+      return (
+        "https://api.daneshkadeonline.ir/Images/Public/Teacher/" +
+        this.profImage
+      );
+    }
   },
   // close sidebar when navigate between pages
   watch: {
     $route: {
       handler() {
-        const panel_teacher_aside = document.querySelector(".panel-teacher-aside");
+        const panel_teacher_aside = document.querySelector(
+          ".panel-teacher-aside"
+        );
         if (panel_teacher_aside.classList.contains("show")) {
           panel_teacher_aside.classList.remove("show");
         }
       },
-      deep: true,
-    },
-  },
+      deep: true
+    }
+  }
 };
 </script>
 <style lang="scss">
