@@ -4,7 +4,7 @@
       <div class="banner">
         <div class="bg-image"></div>
         <div class="banner-overlay"></div>
-        <div class="students-istatistic">
+        <!-- <div class="students-istatistic">
           <img
             src="@/static/images/main-page-images/student-body.png"
             alt="آیکون دانشجو"
@@ -22,7 +22,7 @@
             :key="headerGroups.indexOf(group)"
             >{{ group.groupTitle }}</a
           >
-        </div>
+        </div> -->
       </div>
       <main class="container-fluid px-2 px-md-4 py-5">
         <div class="row px-0 px-lg-2 px-xl-5 mx-xxl-4 mx-lg-2 mx-0">

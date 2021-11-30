@@ -195,14 +195,17 @@
                   </li>
                   <li>
                     <span>قیمت اصلی دوره</span>
-                    <span class="persian-number">{{
+                    <span v-if="Number(detailBox.discountPercentage !== 0)" class="persian-number" style="text-decoration: line-through; text-decoration-color: #e13535">{{
+                      Number(detailBox.originalPrice).toLocaleString()
+                    }}</span>
+                    <span v-else class="persian-number">{{
                       Number(detailBox.originalPrice).toLocaleString()
                     }}</span>
                   </li>
-                  <li>
+                  <li v-if="Number(detailBox.discountPercentage !== 0)" class="course-status">
                     <span>تخفیف دوره</span>
-                    <span class="persian-number">{{
-                      Number(detailBox.discountPercentage)
+                    <span class="persian-number ended">{{
+                      "%" + Number(detailBox.discountPercentage) + " تخفیف"
                     }}</span>
                   </li>
                   <li v-if="item1 == 1 && item2 != null">
