@@ -247,6 +247,9 @@ export default {
       title: "پنل دانش آموز",
       script: [
         {
+          src: 'https://trk.tablighdrive.com/pixel/submit.action2.js'
+        },
+        {
           type: "text/javascript",
           innerHTML:
             "const token = '8oo00c84gsc080040w00so0ks00400kcw4sskgss'; const tools = 'ThankUpixel';",

@@ -23,7 +23,9 @@
                 alt="آیکون موبایل"
               />
             </span>
-            <p class="wrong-text" v-if="wrongNumber">شماره خود را صحیح وارد کنید</p>
+            <p class="wrong-text" v-if="wrongNumber">
+              شماره خود را صحیح وارد کنید
+            </p>
           </label>
 
           <a class="enter-btn" @click.prevent="setNumberForVerify"> ادامه </a>
@@ -66,11 +68,20 @@
 export default {
   middleware: "userIsLog",
   layout: "default",
+  head() {
+    return {
+      script: [
+        {
+          src: "https://trk.tablighdrive.com/pixel/submit.action2.js"
+        }
+      ]
+    };
+  },
   data() {
     return {
       phoneNumber: "",
       showModal: false,
-      wrongNumber: false,
+      wrongNumber: false
     };
   },
   mounted() {
@@ -81,10 +92,10 @@ export default {
       title: "ورود / ثبت نام | دانشکده آنلاین",
       script: [
         {
-          src: "https://trk.tablighdrive.com/pixel/init.action2.js",
-        },
+          src: "https://trk.tablighdrive.com/pixel/init.action2.js"
+        }
       ],
-      meta: [{ name: "robots", content: "noindex, nofollow" }],
+      meta: [{ name: "robots", content: "noindex, nofollow" }]
     };
   },
   methods: {
@@ -113,8 +124,8 @@ export default {
     goToRegister() {
       this.$axios.get("/api/VerifyCode/Send/" + this.phoneNumber);
       this.$router.push("/my/verification-code/register");
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

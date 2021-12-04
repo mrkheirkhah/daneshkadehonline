@@ -15,7 +15,10 @@
             placeholder="رمز عبور خود را وارد کنید"
           />
           <span class="icon-container">
-            <img src="@/static/panel-student-icons/lock-icon.svg" alt="آیکون قفل" />
+            <img
+              src="@/static/panel-student-icons/lock-icon.svg"
+              alt="آیکون قفل"
+            />
           </span>
         </label>
         <div>
@@ -26,7 +29,12 @@
           </div>
           <label for="remember-me" class="checkbox-label">
             <span class="checkbox-container">
-              <input type="checkbox" name="" class="form-checkbox" id="remember-me" />
+              <input
+                type="checkbox"
+                name=""
+                class="form-checkbox"
+                id="remember-me"
+              />
               <img
                 src="@/static/panel-student-icons/checkmark-red.svg"
                 class="check-mark"
@@ -40,7 +48,9 @@
       </form>
       <div class="link-container align-center">
         اگر رمز عبور خود را فراموش کردید،
-        <a type="button" @click.prevent="toggleSendByModal" class="form-link">کلیک</a>
+        <a type="button" @click.prevent="toggleSendByModal" class="form-link"
+          >کلیک</a
+        >
         کنید.
       </div>
     </main>
@@ -59,8 +69,13 @@ export default {
   components: { sendByModal },
   head() {
     return {
+      script: [
+        {
+          src: "https://trk.tablighdrive.com/pixel/submit.action2.js"
+        }
+      ],
       title: "login with password",
-    };
+    }
   },
   data() {
     return {
